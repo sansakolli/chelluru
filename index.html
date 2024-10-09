@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>త్వరలో - చెల్లూరు గ్రామ వెబ్‌సైట్</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans Telugu', sans-serif;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-green-50 font-sans">
+    <div class="min-h-screen flex flex-col">
+        <header class="bg-green-600 text-white py-4">
+            <div class="container mx-auto px-4 flex items-center justify-between">
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <h1 class="text-2xl font-bold">చెల్లూరు గ్రామం</h1>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4">మా వెబ్‌సైట్ త్వరలో!</h2>
+                <p class="text-xl mb-8">
+                    చెల్లూరు గ్రామానికి స్వాగతం! మేము మీ కోసం ఒక అద్భుతమైన కొత్త వెబ్‌సైట్‌ను తయారు చేస్తున్నాము. ఈ వెబ్‌సైట్ ద్వారా మీరు మా గ్రామం గురించి మరింత తెలుసుకోవచ్చు.
+                </p>
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-2xl font-semibold mb-4">ప్రారంభం:</h3>
+                    <div id="countdown" class="text-4xl font-bold text-green-600"></div>
+                </div>
+                <div class="text-left bg-green-100 rounded-lg p-6 mb-8">
+                    <h3 class="text-2xl font-semibold mb-4">చెల్లూరు గ్రామం గురించి:</h3>
+                    <ul class="list-disc list-inside space-y-2 text-lg">
+                        <li>చెల్లూరు ఆంధ్ర ప్రదేశ్ రాష్ట్రంలోని ఒక సుందరమైన గ్రామం.</li>
+                        <li>మా గ్రామం వ్యవసాయం, విద్య మరియు సంస్కృతికి ప్రసిద్ధి చెందింది.</li>
+                        <li>ప్రకృతి సౌందర్యం, సాంప్రదాయం మరియు ఆధునికత కలగలిసిన ప్రదేశం.</li>
+                        <li>స్థానిక పండుగలు మరియు సాంస్కృతిక కార్యక్రమాలకు కేంద్రం.</li>
+                        <li>నాణ్యమైన విద్యా సంస్థలు మరియు ఆరోగ్య సౌకర్యాలు కలిగి ఉంది.</li>
+                    </ul>
+                </div>
+                <p class="text-lg">
+                    మా వెబ్‌సైట్ ప్రారంభోత్సవం కోసం వేచి ఉండండి! చెల్లూరు గ్రామ చరిత్ర, సంస్కృతి, మరియు అభివృద్ధి గురించి మరింత సమాచారం త్వరలో అందుబాటులోకి వస్తుంది.
+                </p>
+            </div>
+        </main>
+
+        <footer class="bg-green-200 py-4">
+            <div class="container mx-auto px-4 text-center text-green-800">
+                <p>&copy; 2024 చెల్లూరు గ్రామ పంచాయతీ. సర్వహక్కులు రక్షించబడినవి.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const launchDate = new Date("2024-10-13T00:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `
+                <span class="animate-pulse">${days}ద ${hours}గం ${minutes}ని ${seconds}సె</span>
+            `;
+
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("countdown").innerHTML = "వెబ్‌సైట్ ప్రారంభించబడింది!";
+            }
+        }
+
+        const countdownTimer = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
