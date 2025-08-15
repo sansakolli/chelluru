@@ -3,95 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>త్వరలో - చెల్లూరు గ్రామ వెబ్‌సైట్</title>
+    <title>మన చెల్లూరు - ఒక డిజిటల్ విప్లవం</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap');
         body {
             font-family: 'Noto Sans Telugu', sans-serif;
         }
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
             }
         }
-        .animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .gradient-text {
+            background: linear-gradient(90deg, #58508d, #bc5090, #ff6361);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            line-height: 1;
+            color: #58508d;
+        }
+        .gemini-response {
+            white-space: pre-wrap;
+            background-color: #f0f9ff;
+            border-left: 4px solid #58508d;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0 8px 8px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #58508d;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
+    <!-- Chosen Palette: Brilliant Blues (#003f5c, #58508d, #bc5090, #ff6361, #ffa600) -->
+    <!-- Application Structure Plan: The infographic tells a story in six sections. 1) "The Problem" uses icons to create an emotional hook by highlighting common village frustrations. 2) "The Solution" introduces the 'Mana Chelluru' platform as the central answer. 3) "Key Features" uses a grid of cards with charts and icons to detail the platform's benefits. 4) "The Process" employs a simple HTML/CSS flowchart to show the path to becoming a model village. 5) "Your Role" uses a pie chart to emphasize the foundational importance of community investment. 6) "Conclusion" provides a final, inspiring call to action. This narrative structure was chosen to mirror the proposal's persuasive arc, making the information easy to digest and emotionally resonant for villagers. -->
+    <!-- Visualization & Content Choices: 
+        - Daily Problems -> Goal: Inform -> Unicode Icons (💡, 📞, 🚑) -> Justification: Quick, universally understood symbols for the problems. Method: HTML/CSS.
+        - Emergency Directory -> Goal: Organize -> Donut Chart -> Justification: Shows the composition of available emergency services. Library: Chart.js (Canvas).
+        - Business Growth -> Goal: Compare -> Bar Chart -> Justification: Visualizes the potential increase in visibility for local businesses. Library: Chart.js (Canvas).
+        - Project Foundation -> Goal: Inform -> Pie Chart -> Justification: Symbolically shows that "Founding Members" are 100% of the project's foundation. Library: Chart.js (Canvas).
+        - Path to Model Village -> Goal: Organize -> HTML Flowchart -> Justification: Clearly illustrates the process flow without using prohibited libraries. Method: HTML/CSS with Tailwind.
+        - Other Features -> Goal: Inform -> Icon + Text Cards -> Justification: Provides a clean, consistent way to present information without overwhelming with too many charts. Method: HTML/CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
-<body class="bg-green-50 font-sans">
-    <div class="min-h-screen flex flex-col">
-        <header class="bg-green-600 text-white py-4">
-            <div class="container mx-auto px-4 flex items-center justify-between">
-                <div class="flex items-center">
-                    <svg class="h-8 w-8 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <h1 class="text-2xl font-bold">చెల్లూరు గ్రామం</h1>
-                </div>
-            </div>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold gradient-text mb-2">ప్రాజెక్ట్: మన చెల్లూరు, మన చేతుల్లో!</h1>
+            <p class="text-lg md:text-xl text-gray-600">ఒక డిజిటల్ విప్లవానికి మీరే పునాదిరాయి</p>
         </header>
 
-        <main class="flex-grow container mx-auto px-4 py-8">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl font-bold mb-4">మా వెబ్‌సైట్ త్వరలో!</h2>
-                <p class="text-xl mb-8">
-                    చెల్లూరు గ్రామానికి స్వాగతం! మేము మీ కోసం ఒక అద్భుతమైన కొత్త వెబ్‌సైట్‌ను తయారు చేస్తున్నాము. ఈ వెబ్‌సైట్ ద్వారా మీరు మా గ్రామం గురించి మరింత తెలుసుకోవచ్చు.
-                </p>
-                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                    <h3 class="text-2xl font-semibold mb-4">ప్రారంభం:</h3>
-                    <div id="countdown" class="text-4xl font-bold text-green-600"></div>
+        <section id="problems" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#003f5c]">మనందరి అనుభవం... ఈ సమస్యలు గుర్తున్నాయా?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl mb-4">💡</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#58508d]">కరెంట్ కోతలు</h3>
+                    <p>ఎప్పుడు వస్తుందో తెలియని నిరీక్షణ.</p>
                 </div>
-                <div class="text-left bg-green-100 rounded-lg p-6 mb-8">
-                    <h3 class="text-2xl font-semibold mb-4">చెల్లూరు గ్రామం గురించి:</h3>
-                    <ul class="list-disc list-inside space-y-2 text-lg">
-                        <li>చెల్లూరు ఆంధ్ర ప్రదేశ్ రాష్ట్రంలోని ఒక సుందరమైన గ్రామం.</li>
-                        <li>మా గ్రామం వ్యవసాయం, విద్య మరియు సంస్కృతికి ప్రసిద్ధి చెందింది.</li>
-                        <li>ప్రకృతి సౌందర్యం, సాంప్రదాయం మరియు ఆధునికత కలగలిసిన ప్రదేశం.</li>
-                        <li>స్థానిక పండుగలు మరియు సాంస్కృతిక కార్యక్రమాలకు కేంద్రం.</li>
-                        <li>నాణ్యమైన విద్యా సంస్థలు మరియు ఆరోగ్య సౌకర్యాలు కలిగి ఉంది.</li>
-                    </ul>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl mb-4">📞</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#bc5090]">అధికారుల నంబర్లు</h3>
+                    <p>అవసరానికి దొరకని సంప్రదింపులు.</p>
                 </div>
-                <p class="text-lg">
-                    మా వెబ్‌సైట్ ప్రారంభోత్సవం కోసం వేచి ఉండండి! చెల్లూరు గ్రామ చరిత్ర, సంస్కృతి, మరియు అభివృద్ధి గురించి మరింత సమాచారం త్వరలో అందుబాటులోకి వస్తుంది.
-                </p>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl mb-4">🚑</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#ff6361]">అత్యవసర సేవలు</h3>
+                    <p>ఆపదలో ఆదుకునే సమాచార లోపం.</p>
+                </div>
             </div>
-        </main>
+        </section>
 
-        <footer class="bg-green-200 py-4">
-            <div class="container mx-auto px-4 text-center text-green-800">
-                <p> Copyright &copy; 2024 chelluru.com - All rights Reserved. </p>
+        <section id="solution" class="text-center bg-white p-8 rounded-lg shadow-lg mb-16">
+            <h2 class="text-3xl font-bold text-[#003f5c] mb-4">ఈ సమస్యలకు పరిష్కారం ఒక్కటే!</h2>
+            <p class="text-5xl font-bold gradient-text mb-4">"మన చెల్లూరు"</p>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">మన ఐక్యతకు, మన గౌరవానికి, మన భవిష్యత్తుకు నిదర్శనం. మనందరినీ ఒకే తాటిపైకి తెచ్చే డిజిటల్ వేదిక.</p>
+        </section>
+
+        <section id="features" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#003f5c]">ప్రధాన ఫీచర్లు: మీ జీవితాన్ని సులభతరం చేసేవి</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-xl font-bold mb-2 text-[#58508d]">1. అత్యవసర డైరెక్టరీ</h3>
+                    <p class="mb-4 text-gray-600">ఒకే ఒక్క క్లిక్‌తో అన్ని ముఖ్యమైన నంబర్లు మీ ముందు.</p>
+                    <div class="chart-container mt-auto">
+                        <canvas id="emergencyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2 text-[#bc5090]">2. ఫ్లాష్ న్యూస్ & అప్‌డేట్స్ 📰</h3>
+                    <p class="text-gray-600">కరెంట్ కోతలు, గ్రామ సభల వంటి ముఖ్యమైన వార్తలు వెంటనే మీ ఫోన్‌కు వస్తాయి.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-xl font-bold mb-2 text-[#ff6361]">3. బిజినెస్ హబ్</h3>
+                    <p class="mb-4 text-gray-600">మన ఊరి వ్యాపారాలకు డిజిటల్ గుర్తింపు, కొత్త అవకాశాలు.</p>
+                    <div class="chart-container mt-auto">
+                        <canvas id="businessChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2 text-[#ffa600]">4. పారదర్శక విరాళాలు 🤝</h3>
+                    <p class="text-gray-600">గ్రామాభివృద్ధికి మీ చేయూత. దాతల వివరాలు శాశ్వతంగా నిలిచిపోతాయి.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2 text-[#58508d]">5. ✨ స్థానిక ప్రకటనలు సహాయకం</h3>
+                    <p class="text-gray-600 mb-2">మీ వేడుక వివరాలు ఇవ్వండి, మేము ఒక చక్కని ప్రకటనను సిద్ధం చేస్తాము.</p>
+                    <textarea id="announcementInput" class="w-full border border-gray-300 rounded-md p-2" rows="2" placeholder="ఉదా: మా పాప పుట్టినరోజు, ఆగస్టు 20, సాయంత్రం 6 గంటలకు"></textarea>
+                    <button id="generateAnnouncementBtn" class="mt-2 w-full bg-gradient-to-r from-pink-500 to-orange-400 text-white font-bold py-2 px-4 rounded-md hover:opacity-90 transition-opacity">ప్రకటన సృష్టించు ✨</button>
+                    <div id="announcementLoader" class="loader hidden"></div>
+                    <div id="announcementResponse" class="gemini-response hidden"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2 text-[#bc5090]">6. దేవాలయాల సమాచారం 🏛️</h3>
+                    <p class="text-gray-600">ఉత్సవాల షెడ్యూల్, కమిటీ నిర్ణయాలు ఎప్పటికప్పుడు తెలుసుకోండి.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2 text-[#ff6361]">7. ✨ సమస్యల పరిష్కార సహాయకం</h3>
+                    <p class="text-gray-600 mb-2">మీ సమస్యను వివరించండి, అధికారులకు ఇవ్వాల్సిన లేఖను మేము సిద్ధం చేస్తాము.</p>
+                     <textarea id="complaintInput" class="w-full border border-gray-300 rounded-md p-2" rows="2" placeholder="ఉదా: మా వీధిలో నీళ్లు సరిగా రావట్లేదు"></textarea>
+                    <button id="generateComplaintBtn" class="mt-2 w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold py-2 px-4 rounded-md hover:opacity-90 transition-opacity">లేఖను సిద్ధం చేయి ✨</button>
+                    <div id="complaintLoader" class="loader hidden"></div>
+                    <div id="complaintResponse" class="gemini-response hidden"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2 text-[#ffa600]">8. చెల్లూరు TV 📺</h3>
+                    <p class="text-gray-600">మన ఊరి పండుగలు, కార్యక్రమాలు ప్రపంచానికి పరిచయం చేద్దాం.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2 text-[#003f5c]">9. ఫోటో గ్యాలరీ & స్కూల్ అప్‌డేట్స్ 🖼️🏫</h3>
+                    <p class="text-gray-600">మన జ్ఞాపకాలు భద్రపరచుకుందాం, మన పిల్లల భవిష్యత్తుకు బాటలు వేద్దాం.</p>
+                </div>
+
             </div>
+        </section>
+
+        <section id="vision" class="mb-16 text-center">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#003f5c]">మన కల: ఆదర్శ గ్రామం</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+                <div class="bg-white p-4 rounded-lg shadow-md text-xl font-bold text-[#58508d]">ప్రజలు</div>
+                <div class="flowchart-arrow">→</div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-xl font-bold text-[#bc5090]">డిజిటల్ వేదిక</div>
+                <div class="flowchart-arrow">→</div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-xl font-bold text-[#ff6361]">సమస్యల పరిష్కారం</div>
+                <div class="flowchart-arrow">→</div>
+                <div class="bg-white p-4 rounded-lg shadow-md text-xl font-bold text-[#ffa600]">ఆదర్శ గ్రామం</div>
+            </div>
+        </section>
+
+        <section id="cta" class="bg-white p-8 rounded-lg shadow-lg mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-[#003f5c] mb-4">మీ పాత్ర: మన భవిష్యత్తుకు పెట్టుబడి!</h2>
+                    <p class="text-lg text-gray-600 mb-4">ఇది విరాళం కాదు, మన ఊరి చరిత్రలో మీరు ఒక వ్యవస్థాపక సభ్యుడిగా నిలిచిపోయే అవకాశం. ఈ డిజిటల్ ఉద్యమానికి మార్గదర్శకులుగా నిలవండి.</p>
+                    <p class="text-lg text-gray-600">మీరు ఇచ్చే ప్రతి రూపాయి, మన ఊరి డిజిటల్ భవిష్యత్తుకు మీరు వేసే బలమైన పునాదిరాయి.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="foundationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center border-t-2 border-[#58508d] pt-8">
+            <h2 class="text-4xl font-bold gradient-text mb-4">రండి, మన ఊరిని మనమే మార్చుకుందాం.</h2>
+            <p class="text-xl text-gray-700">మన చెల్లూరు చరిత్రలో ఒక సువర్ణాధ్యాయాన్ని మన చేతులతో లిఖిద్దాం.</p>
         </footer>
+
     </div>
 
     <script>
-        function updateCountdown() {
-            const launchDate = new Date("2024-10-20T00:00:00").getTime();
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("countdown").innerHTML = `
-                <span class="animate-pulse">${days}రోజుల ${hours}గం ${minutes}ని ${seconds}సె</span>
-            `;
-
-            if (distance < 0) {
-                clearInterval(countdownTimer);
-                document.getElementById("countdown").innerHTML = "వెబ్‌సైట్ ప్రారంభించబడింది!";
+        const chartTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
             }
+        };
+
+        const chartColors = ['#003f5c', '#58508d', '#bc5090', '#ff6361', '#ffa600'];
+
+        new Chart(document.getElementById('emergencyChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['డాక్టర్', 'పోలీస్', 'VRO', 'లైన్‌మెన్', 'అంబులెన్స్'],
+                datasets: [{
+                    label: 'అత్యవసర సేవలు',
+                    data: [20, 20, 20, 20, 20],
+                    backgroundColor: chartColors,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...chartTooltipCallback,
+                plugins: {
+                    ...chartTooltipCallback.plugins,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'అన్ని సేవలు ఒకేచోట'
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('businessChart'), {
+            type: 'bar',
+            data: {
+                labels: ['కాంట్రాక్టర్లు', 'షాపులు', 'వ్యాపారులు', 'ఇతరులు'],
+                datasets: [{
+                    label: 'వ్యాపార అవకాశాల పెరుగుదల',
+                    data: [65, 80, 75, 50],
+                    backgroundColor: chartColors.slice(1),
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...chartTooltipCallback,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%'
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                     ...chartTooltipCallback.plugins,
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'స్థానిక వ్యాపారాలకు ప్రోత్సాహం'
+                    }
+                }
+            }
+        });
+        
+        new Chart(document.getElementById('foundationChart'), {
+            type: 'pie',
+            data: {
+                labels: ['వ్యవస్థాపక సభ్యులు'],
+                datasets: [{
+                    label: 'ప్రాజెక్ట్ పునాది',
+                    data: [100],
+                    backgroundColor: ['#58508d'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...chartTooltipCallback,
+                plugins: {
+                    ...chartTooltipCallback.plugins,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'ప్రాజెక్ట్ పునాది'
+                    }
+                }
+            }
+        });
+
+        // Gemini API Integration
+        const complaintInput = document.getElementById('complaintInput');
+        const generateComplaintBtn = document.getElementById('generateComplaintBtn');
+        const complaintLoader = document.getElementById('complaintLoader');
+        const complaintResponse = document.getElementById('complaintResponse');
+
+        const announcementInput = document.getElementById('announcementInput');
+        const generateAnnouncementBtn = document.getElementById('generateAnnouncementBtn');
+        const announcementLoader = document.getElementById('announcementLoader');
+        const announcementResponse = document.getElementById('announcementResponse');
+
+        const apiKey = ""; // API key will be provided by the environment
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        async function callGeminiAPI(prompt, loader, responseDiv, button) {
+            if (!prompt.trim()) {
+                responseDiv.textContent = 'దయచేసి వివరాలను నమోదు చేయండి.';
+                responseDiv.classList.remove('hidden');
+                return;
+            }
+
+            loader.classList.remove('hidden');
+            responseDiv.classList.add('hidden');
+            button.disabled = true;
+
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            
+            let retries = 3;
+            let delay = 1000;
+            let result = null;
+
+            while (retries > 0) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    result = await response.json();
+                    break; 
+                } catch (error) {
+                    console.error('API call failed, retrying...', error);
+                    retries--;
+                    if (retries === 0) {
+                        result = null;
+                        break;
+                    }
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2; 
+                }
+            }
+
+            loader.classList.add('hidden');
+            button.disabled = false;
+            
+            if (result && result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                responseDiv.textContent = text;
+            } else {
+                responseDiv.textContent = 'క్షమించండి, సమాధానం రూపొందించడంలో లోపం జరిగింది. దయచేసి మళ్ళీ ప్రయత్నించండి.';
+            }
+            responseDiv.classList.remove('hidden');
         }
 
-        const countdownTimer = setInterval(updateCountdown, 1000);
-        updateCountdown();
+        generateComplaintBtn.addEventListener('click', () => {
+            const problem = complaintInput.value;
+            const prompt = `You are an expert in official communication in Telugu. A villager from Chelluru has this problem: '${problem}'. Draft a formal, respectful complaint letter in Telugu to be submitted to the village Panchayat office. The letter should be structured properly with a subject, salutation, body, and conclusion. It must clearly state the problem and politely request a swift resolution.`;
+            callGeminiAPI(prompt, complaintLoader, complaintResponse, generateComplaintBtn);
+        });
+
+        generateAnnouncementBtn.addEventListener('click', () => {
+            const details = announcementInput.value;
+            const prompt = `You are a creative writer in Telugu. Based on these details for an event in Chelluru village: '${details}', write a warm and friendly announcement or invitation message in Telugu. It should be suitable for a village community notice board or a local social media group. Make it sound celebratory and welcoming.`;
+            callGeminiAPI(prompt, announcementLoader, announcementResponse, generateAnnouncementBtn);
+        });
+
     </script>
+
 </body>
 </html>
