@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#58508d">
+    <link rel="apple-touch-icon" href="Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="మన చెల్లూరు">
     <style>
         body {
             font-family: 'Noto Sans Telugu', sans-serif;
@@ -756,7 +762,7 @@
                         <!-- Total Donations Summary -->
                         <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-3 rounded-lg border-2 border-purple-200 mb-3">
                             <div class="text-center">
-                                <p class="text-sm font-medium text-purple-800">మొత్తం విరాచారం</p>
+                                <p class="text-sm font-medium text-purple-800">మొత్తం విరాళాలు</p>
                                 <p class="text-2xl font-bold text-purple-600">₹15,750</p>
                                 <div class="flex justify-center gap-4 text-xs text-purple-600 mt-2">
                                     <span>25 మంది దాతలు</span>
@@ -1488,6 +1494,21 @@
 
         });          
 
+    </script>
+
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker Registered');
+                    })
+                    .catch(err => {
+                        console.error('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
     </script>
 
 </body>
