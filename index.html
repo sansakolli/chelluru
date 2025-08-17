@@ -376,7 +376,7 @@
                 <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-4 highlet-text">ప్రాజెక్ట్: మన చెల్లూరు, మన చేతుల్లో!</h1>
                 <p class="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">ఒక డిజిటల్ విప్లవానికి మీరే పునాదిరాయి - మన ఊరి చరిత్రలో మీకంటూ ఒక పేజీ!</p>
                 <div class="mt-8">
-                    <button id="installAppBtn" class="hidden bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:opacity-90 transition-transform transform hover:scale-105">
+                    <button id="installAppBtn" class="bg-gray-400 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all" disabled>
                         <span class="text-xl">📲</span>
                         <span class="ml-2">యాప్‌ను ఇన్‌స్టాల్ చేయండి</span>
                     </button>
@@ -1516,29 +1516,38 @@
                 
             });
 
-            
+
             // PWA Install button logic
             let deferredPrompt;
             const installAppBtn = document.getElementById('installAppBtn');
 
+            // యాప్ ఇప్పటికే ఇన్‌స్టాల్ అయి ఉంటే బటన్‌ను దాచిపెట్టండి
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                installAppBtn.classList.add('hidden');
+            }
+
             window.addEventListener('beforeinstallprompt', (e) => {
-                // Prevent the default mini-infobar from appearing
                 e.preventDefault();
-                // Stash the event so it can be triggered later.
                 deferredPrompt = e;
-                // Show the install button
-                installAppBtn.classList.remove('hidden');
+                // బటన్‌ను ఇప్పుడు ఎనేబుల్ చేయండి
+                installAppBtn.disabled = false;
+                // బటన్ స్టైల్స్‌ను మార్చండి
+                installAppBtn.classList.remove('bg-gray-400');
+                installAppBtn.classList.add('bg-gradient-to-r', 'from-purple-600', 'to-indigo-600', 'hover:opacity-90', 'transition-transform', 'transform', 'hover:scale-105');
             });
 
             installAppBtn.addEventListener('click', async () => {
-                // Hide the install button
-                installAppBtn.classList.add('hidden');
-                // Show the install prompt
+                if (!deferredPrompt) {
+                    return;
+                }
+                // ఇన్‌స్టాల్ ప్రాంప్ట్‌ను చూపించు
                 deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
                 const { outcome } = await deferredPrompt.userChoice;
-                // We've used the prompt, and it can't be used again.
                 deferredPrompt = null;
+                // ఇన్‌స్టాల్ చేసిన తర్వాత బటన్‌ను దాచిపెట్టండి
+                if (outcome === 'accepted') {
+                    installAppBtn.classList.add('hidden');
+                }
             });
 
             window.addEventListener('appinstalled', (evt) => {
