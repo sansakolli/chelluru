@@ -1,1 +1,42 @@
+# .github/workflows/deploy.yml
 
+name: Build and Deploy Website
+
+# main బ్రాంచ్‌కు కోడ్ పంపినప్పుడు ఈ యాక్షన్ రన్ అవుతుంది
+on:
+  push:
+    branches: ["main"]
+
+# GitHub Pages కు రాయడానికి అనుమతులు
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. మీ కోడ్‌ను డౌన్‌లోడ్ చేస్తుంది
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. ప్లేస్‌హోల్డర్‌ను సీక్రెట్‌తో భర్తీ చేస్తుంది
+      - name: Replace API Key
+        run: |
+          # index.html ఫైల్‌లో __GOOGLE_MAPS_API_KEY__ అనే పదాన్ని కనుగొని, 
+          # దాని స్థానంలో GitHub Secret ను పెడుతుంది.
+          sed -i 's|__GOOGLE_MAPS_API_KEY__|${{ secrets.GOOGLE_MAPS_API_KEY }}|g' index.html
+
+      # 3. GitHub Pages కోసం ఆర్టిఫ్యాక్ట్‌ను సిద్ధం చేస్తుంది
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # రూట్ ఫోల్డర్‌ను అప్‌లోడ్ చేస్తుంది
+
+      # 4. మార్పులు చేసిన ఫైల్‌ను GitHub Pages కు డిప్లాయ్ చేస్తుంది
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
