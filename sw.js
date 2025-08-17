@@ -16,8 +16,11 @@ const urlsToCache = [
   'feature09_photo_gallery_audio.wav',
   'feature1_emergency_audio.wav',
   'feature10_school_updates_audio.wav'
+  // మీరు ఆఫ్‌లైన్‌లో అందుబాటులో ఉంచాలనుకునే ఇతర CSS, JS, లేదా ఇమేజ్ ఫైల్స్ ఉంటే ఇక్కడ జోడించండి.
+  // ఉదాహరణ: '/styles.css', '/main.js'
 ];
 
+// ఇన్‌స్టాలేషన్: కాష్‌ను తెరిచి, ఫైల్స్‌ను జోడించడం
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -33,8 +36,10 @@ self.addEventListener('install', event => {
   );
 });
 
+// ఫెచ్: నెట్‌వర్క్ నుండి లేదా కాష్ నుండి రెస్పాన్స్‌ను అందించడం
 self.addEventListener('fetch', event => {
   event.respondWith(
+    // కాష్‌లో రెస్పాన్స్ ఉంటే, దాన్ని అందిస్తుంది. లేకపోతే, నెట్‌వర్క్ నుండి ఫెచ్ చేస్తుంది.
     caches.match(event.request)
       .then(response => {
         if (response) {
