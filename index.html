@@ -1,4 +1,1521 @@
-// PWA Install button logic
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>మన చెల్లూరు, మన చేతుల్లో!</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#58508d">
+    <link rel="apple-touch-icon" href="ChelluruAppIcon512.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="మన చెల్లూరు">
+    <style>
+        body {
+            font-family: 'Noto Sans Telugu', sans-serif;
+            background-color: #f7f8fc;
+            overflow-x: visible;
+            overflow-y: visible;
+        }
+        
+        html {
+            overflow-x: visible;
+            overflow-y: visible;
+        }
+        
+        /* Mobile First Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            
+            .feature-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .text-container {
+                padding: 0.75rem;
+                margin-bottom: 0.75rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .highlet-text {
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.125rem;
+                line-height: 1.4;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card p {
+                font-size: 0.875rem;
+                line-height: 1.5;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding-left: 0.25rem;
+                padding-right: 0.25rem;
+            }
+            
+            .feature-card {
+                padding: 0.75rem;
+                margin-bottom: 0.75rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .text-container {
+                padding: 0.5rem;
+                margin-bottom: 0.5rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .highlet-text {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
+            
+            .feature-card h3 {
+                font-size: 1rem;
+                line-height: 1.3;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card p {
+                font-size: 0.8rem;
+                line-height: 1.4;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #58508d, #bc5090, #ff6361);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+        }
+        
+        .text-container {
+            overflow: visible !important;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            min-height: auto;
+            height: auto;
+            max-height: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .feature-text {
+            line-height: 1.6;
+            overflow: visible !important;
+            word-break: break-word;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            white-space: normal;
+            display: block;
+            height: auto;
+            max-height: none;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+        }
+        
+        .feature-card {
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            width: 100%;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .feature-card .text-container {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        @media (min-width: 640px) {
+            .text-container {
+                padding-bottom: 1.25rem;
+                margin-bottom: 1.25rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-text {
+                line-height: 1.7;
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.75rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card {
+                padding-bottom: 1.5rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card p {
+                margin-bottom: 0.75rem;
+                line-height: 1.6;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card .text-container {
+                margin-bottom: 1.25rem;
+                padding-bottom: 1.25rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .text-container {
+                padding-bottom: 1.5rem;
+                margin-bottom: 1.5rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-text {
+                line-height: 1.8;
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.75rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card {
+                padding-bottom: 2rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card p {
+                margin-bottom: 0.75rem;
+                line-height: 1.7;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .feature-card .text-container {
+                margin-bottom: 1.5rem;
+                padding-bottom: 1.5rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        .problem-card {
+            border: 1px solid #e5e7eb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: white;
+        }
+        .feature-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            min-height: 100%;
+            overflow: visible;
+            position: relative;
+            margin-bottom: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        @media (min-width: 640px) {
+            .feature-card {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .feature-card {
+                padding: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+        
+        .feature-card.group:hover .text-4xl {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #9ca3af;
+        }
+        .gemini-response {
+            white-space: pre-wrap;
+            background-color: #f0f9ff;
+            border-left: 4px solid #58508d;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0 8px 8px 0;
+            max-height: none;
+            overflow: visible;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #58508d;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .highlet-text{
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        /* Play Button Style */
+        .play-pause-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .play-pause-btn:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl overflow-visible">
+
+        <!-- Header -->
+        <header class="text-center mb-12 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 transform -skew-y-2"></div>
+            <div class="relative z-10">
+                <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-6">
+                    <span class="text-4xl">🏘️</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-4 highlet-text">ప్రాజెక్ట్: మన చెల్లూరు, మన చేతుల్లో!</h1>
+                <p class="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">ఒక డిజిటల్ విప్లవానికి మీరే పునాదిరాయి - మన ఊరి చరిత్రలో మీకంటూ ఒక పేజీ!</p>
+                <div class="mt-8">
+                    <button id="installAppBtn" class="bg-gray-400 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all" disabled>
+                        <span class="text-xl">📲</span>
+                        <span class="ml-2">యాప్‌ను ఇన్‌స్టాల్ చేయండి</span>
+                    </button>
+                </div>
+                <div class="mt-6 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4" style="padding-bottom:20px;">
+                    <div class="bg-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-md text-center">
+                        <span class="text-xl sm:text-2xl">🚀</span>
+                        <span class="ml-2 font-semibold text-gray-700 text-sm sm:text-base">డిజిటల్ విప్లవం</span>
+                    </div>
+                    <div class="bg-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-md text-center">
+                        <span class="text-xl sm:text-2xl">🤝</span>
+                        <span class="ml-2 font-semibold text-gray-700 text-sm sm:text-base">మన ఐక్యత</span>
+                    </div>
+                    <div class="bg-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-md text-center">
+                        <span class="text-xl sm:text-2xl">🌟</span>
+                        <span class="ml-2 font-semibold text-gray-700 text-sm sm:text-base">మన భవిష్యత్తు</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Problems Section -->
+        <section class="mb-16 text-center">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-[#003f5c] flex flex-col sm:flex-row items-center justify-center text-center px-4">
+                    <span class="mb-2 sm:mb-0 sm:mr-4">👥</span>
+                    మిత్రులారా, చెల్లూరు గ్రామ పెద్దలారా, సోదరులారా!
+                </h2>
+                <h3 class="text-2xl sm:text-3xl font-semibold text-[#003f5c] mb-4">ఈ సమస్యలు గుర్తున్నాయా?</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12 overflow-visible px-4">
+                    <div class="bg-gradient-to-br from-red-50 to-orange-50 p-4 sm:p-6 rounded-2xl border-l-4 border-red-400 text-container">
+                        <div class="text-3xl sm:text-4xl mb-3 sm:mb-4">😰</div>
+                        <h3 class="text-lg sm:text-xl font-bold text-red-700 mb-2 sm:mb-3">అత్యవసర సమయాల్లో కంగారు</h3>
+                        <p class="text-gray-700 feature-text text-sm sm:text-base">రాత్రిపూట ఆరోగ్య సమస్య వచ్చినప్పుడు ఎవరికి ఫోన్ చేయాలో తెలియక ఎంత ఇబ్బంది పడతాం?</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 sm:p-6 rounded-2xl border-l-4 border-blue-400 text-container">
+                        <div class="text-3xl sm:text-4xl mb-3 sm:mb-4">📞</div>
+                        <h3 class="text-lg sm:text-xl font-bold text-blue-700 mb-2 sm:mb-3">సమాచార లోపం</h3>
+                        <p class="text-gray-700 feature-text text-sm sm:text-base">ప్రభుత్వ ఆఫీసర్ల కొత్త నంబర్లు, కరెంట్ సమస్యలు - సరైన సమాచారం లేక ఎంత ఇబ్బంది?</p>
+                    </div>
+                </div>
+                
+                <!-- New Section: Solution Highlight -->
+                <div class="text-center mb-12">
+                    <div class="max-w-6xl mx-auto bg-white p-8 rounded-2xl shadow-xl border-2 border-teal-200 overflow-visible">
+                        <div class="inline-block p-4 bg-gradient-to-r from-teal-100 to-blue-100 rounded-full mb-6">
+                            <span class="text-4xl">💡</span>
+                        </div>
+                        <h2 class="text-3xl font-bold text-teal-800 mb-4">ఈ సమస్యలకు పరిష్కారం ఒక్కటే!</h2>
+                        <div class="text-4xl md:text-5xl font-bold gradient-text mb-6 highlet-text">"మన చెల్లూరు"</div>
+                        <p class="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
+                            మన ఐక్యతకు, మన గౌరవానికి, మన భవిష్యత్తుకు నిదర్శనం. మనందరినీ ఒకే తాటిపైకి తెచ్చే డిజిటల్ వేదిక.
+                        </p>
+                        <div class="mt-6 flex flex-wrap justify-center gap-4">
+                            <div class="bg-gradient-to-r from-teal-50 to-blue-50 px-6 py-3 rounded-full border border-teal-200">
+                                <span class="text-xl">🤝</span>
+                                <span class="ml-2 font-semibold text-teal-700">మన ఐక్యత</span>
+                            </div>
+                            <div class="bg-gradient-to-r from-blue-50 to-purple-50 px-6 py-3 rounded-full border border-blue-200">
+                                <span class="text-xl">💎</span>
+                                <span class="ml-2 font-semibold text-blue-700">మన గౌరవం</span>
+                            </div>
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 px-6 py-3 rounded-full border border-purple-200">
+                                <span class="text-xl">🚀</span>
+                                <span class="ml-2 font-semibold text-purple-700">మన భవిష్యత్తు</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-xl border-2 border-purple-100 text-container">
+                    <h3 class="text-3xl font-bold text-[#58508d] mb-6 flex items-center justify-center">
+                        <span class="mr-3">💭</span>
+                        ఒక్క నిమిషం ఆలోచించండి...
+                    </h3>
+                    <div class="text-lg leading-relaxed text-gray-700 space-y-4">
+                        <p class="feature-text">మన ఊరిలో ఒక ప్రభుత్వ ఆఫీసర్ (VRO గారో, సెక్రటరీ గారో) మారినప్పుడు, వాళ్ళ కొత్త ఫోన్ నంబర్ కోసం ఎంతమందిని అడుగుతాం?</p>
+                        <p class="feature-text">రాత్రిపూట మన ఇంట్లో వాళ్లకి ఆరోగ్యం బాగోకపోతే ఆ కంగారులో ఎవరికి ఫోన్ చేయాలో తెలియక ఎంత ఇబ్బంది పడతాం?</p>
+                        <p class="feature-text">మన ఊరి గుడికి సహాయం చేయాలనే మనసు ఉన్నా, ఎవరిని కలవాలో, ఎలా ఇవ్వాలో తెలియక ఆగిపోయిన సందర్భాలు లేవా?</p>
+                        <p class="feature-text">కరెంట్ అకస్మాత్తుగా పోతే, ఎందుకు పోయిందో, ఎప్పుడు వస్తుందో తెలియక ఎంత ఇబ్బంది పడతాం?</p>
+                        <p class="feature-text">మన ఊరిలో భూ సర్వే (bhoo survey) లాంటి ముఖ్యమైన పనులు జరుగుతున్నా, ఆ విషయం మనకు తెలియక చివరి నిమిషంలో కంగారు పడిన సందర్భాలు లేవా?</p>
+                        <p class="feature-text">ఉద్యోగం చేస్తూ మనం వేరే ఊరిలో ఉంటున్నప్పుడు, మన ఊరి గుడిలో మన కుటుంబం పేరు మీద ఒక అర్చన చేయించుకోవాలనే చిన్న కోరికను కూడా తీర్చుకోలేకపోతున్నాం కదా?</p>
+                    </div>
+                    <div class="mt-6 p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl">
+                        <p class="text-lg font-semibold text-purple-800 feature-text">ఈ చిన్న చిన్న కష్టాలకు, ఈ సమాచార లోపానికి స్వస్తి పలికే సమయం వచ్చింది. మన ఊరి తలరాతను, మన భవిష్యత్తును మన చేతుల్లోకి తీసుకోవడానికి పుట్టిందే ఈ "మన చెల్లూరు" డిజిటల్ వేదిక.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solution Section -->
+        <section class="text-center bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-12 rounded-3xl shadow-xl mb-16 border-2 border-purple-200">
+            <div class="max-w-4xl mx-auto">
+                <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-6">
+                    <span class="text-4xl">🎯</span>
+                </div>
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4">మన లక్ష్యం కేవలం వెబ్‌సైట్ కాదు - మన ఐక్యతకు, మన గౌరవానికి నిదర్శనం!</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                ఈ ప్రాజెక్ట్ యొక్క ఉద్దేశ్యం మనందరినీ ఒక తాటిపైకి తీసుకురావడం. మన సమస్యలను మనమే చర్చించుకుని, పరిష్కారాలు కనుక్కోవడం. మన ఊరి ప్రతిభను, మన వ్యాపారాలను, మన సంస్కృతిని ప్రపంచానికి గర్వంగా పరిచయం చేయడం.
+            </p>
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <div class="bg-white px-6 py-3 rounded-full shadow-md border border-purple-200">
+                        <span class="text-xl">🤝</span>
+                        <span class="ml-2 font-semibold text-purple-700">మన ఐక్యత</span>
+                    </div>
+                    <div class="bg-white px-6 py-3 rounded-full shadow-md border border-blue-200">
+                        <span class="text-xl">💪</span>
+                        <span class="ml-2 font-semibold text-blue-700">మన గౌరవం</span>
+                    </div>
+                    <div class="bg-white px-6 py-3 rounded-full shadow-md border border-pink-200">
+                        <span class="text-xl">🌍</span>
+                        <span class="ml-2 font-semibold text-pink-700">ప్రపంచానికి పరిచయం</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Local Ad Section -->
+        <div id="ad-section" class="audio-section my-8 md:my-12">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
+                    <div class="md:flex">
+                        <!-- Ad Image -->
+                        <div class="md:w-1/2">
+                            <img class="w-full h-64 object-cover" src="Test_image_ad.png" alt="Local Business Advertisement">
+                        </div>
+                        <!-- Ad Content -->
+                        <div class="md:w-1/2 p-6 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">మీ స్థానిక వ్యాపార ప్రకటన ఇక్కడ!</h3>
+                            <p class="text-gray-600 mb-4">
+                                మన చెల్లూరు డిజిటల్ ప్లాట్‌ఫారమ్‌లో మీ వ్యాపారాన్ని వేలాది మందికి పరిచయం చేయండి. మీ ప్రత్యేకతను ప్రపంచానికి చాటిచెప్పండి.
+                            </p>
+                            <!-- Audio Player -->
+                            <audio id="ad_section_audio" class="section-audio w-full" controls>
+                                <source src="ChelluruAd_audio.wav" type="audio/wav">
+                                Your browser does not support the audio element.
+                            </audio>
+                            <p class="text-xs text-gray-500 mt-2">గమనిక: కొన్ని బ్రౌజర్‌లలో ఆడియో ఆటోమాటిక్‌గా ప్లే కాకపోవచ్చు.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Local Ad Section -->
+
+        <!-- Features Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <div class="inline-block p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full mb-6">
+                    <span class="text-4xl">✨</span>
+                </div>
+                <h2 class="text-4xl font-bold text-[#003f5c] mb-4">ప్రధాన ఫీచర్లు - మీ జీవితాన్ని సులభతరం చేసే నిజమైన ఉదాహరణలు</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">మన ఊరి ప్రతి సమస్యకు ఒక డిజిటల్ పరిష్కారం</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-stretch px-2 sm:px-4">
+                
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature01_emergency_directory">▶️</button>
+                    <audio id="feature01_emergency_directory_audio" class="section-audio" src="feature01_emergency_directory_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">🚨</div>
+                    <h3 class="text-xl font-bold text-[#58508d] mb-3">1. అత్యవసరం & డైరెక్టరీ</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> కంగారుకు చెక్, ధైర్యానికి జై!</p>
+                    <div class="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl border-l-4 border-red-400 text-container mb-6 overflow-visible">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed overflow-visible">అర్ధరాత్రి వేళ ఇంట్లో ఎవరికైనా ఆరోగ్యం బాగోలేదనుకోండి. మీరు కంగారు పడాల్సిన పనిలేదు. మన వెబ్‌సైట్‌లోని "అత్యవసరం" అనే ఒక్క బటన్ నొక్కితే చాలు. మన ఊరిలోని RMP డాక్టర్, దగ్గరలోని హాస్పిటల్, అంబులెన్స్, పోలీస్ స్టేషన్ నంబర్లు క్షణాల్లో మీ కళ్ళముందు ఉంటాయి. అంతేకాదు! ఈ మధ్యే మారిన VRO గారు, కొత్తగా వచ్చిన పంచాయతీ సెక్రటరీ, లైన్‌మెన్... ఇలా ప్రతి ఒక్కరి అప్‌డేట్ చేయబడిన ఫోన్ నంబర్లు ఇక్కడ సిద్ధంగా ఉంటాయి. ఇకపై నంబర్ల కోసం ఎవరినీ అడగాల్సిన అవసరం లేదు.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">🎯 Live Demo - అత్యవసర సంఖ్యలు</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-2 bg-red-50 rounded-lg">
+                                <span class="text-sm font-medium text-red-700">🏥 RMP డాక్టర్</span>
+                                <span class="text-sm text-red-600 font-mono">+91 98765-43210</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-blue-50 rounded-lg">
+                                <span class="text-sm font-medium text-blue-700">🚑 అంబులెన్స్</span>
+                                <span class="text-sm text-blue-600 font-mono">108</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-green-50 rounded-lg">
+                                <span class="text-sm font-medium text-green-700">👮 పోలీస్ స్టేషన్</span>
+                                <span class="text-sm text-green-600 font-mono">100</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-purple-50 rounded-lg">
+                                <span class="text-sm font-medium text-purple-700">⚡ VRO గారు</span>
+                                <span class="text-sm text-purple-600 font-mono">+91 98765-12345</span>
+                            </div>
+                        </div>
+                        <button class="w-full mt-3 bg-red-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors">
+                            📞 అన్ని నంబర్లు చూపించు
+                        </button>
+                    </div>
+                </div>
+
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature02_flash_news">▶️</button>
+                    <audio id="feature02_flash_news_audio" class="section-audio" src="feature02_flash_news_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">📰</div>
+                    <h3 class="text-xl font-bold text-[#bc5090] mb-3">2. ఫ్లాష్ న్యూస్ & అప్‌డేట్స్</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> ముఖ్యమైన వార్తలు మీ ఫోన్‌కు వెంటనే!</p>
+                    <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-xl border-l-4 border-blue-400 text-container mb-6">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed">"రేపు ఉదయం 10 నుండి 12 వరకు కరెంట్ ఉండదు" లేదా "ఈరోజు సాయంత్రం 4 గంటలకు గ్రామ సభ" వంటి ముఖ్యమైన వార్తలు మీ ఫోన్‌కు వెంటనే మెసేజ్ రూపంలో వస్తాయి.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">📱 Live Demo - ఫ్లాష్ న్యూస్</h4>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-yellow-600">⚡</span>
+                                    <span class="text-xs text-yellow-600 font-medium">ఇప్పుడే</span>
+                                </div>
+                                <p class="text-sm text-gray-700">రేపు ఉదయం 10-12 కరెంట్ లేదు</p>
+                            </div>
+                            <div class="p-3 bg-blue-50 border-l-4 border-blue-400 rounded-lg">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-blue-600">📢</span>
+                                    <span class="text-xs text-blue-600 font-medium">ఈరోజు</span>
+                                </div>
+                                <p class="text-sm text-gray-700">సాయంత్రం 4 గంటలకు గ్రామ సభ</p>
+                            </div>
+                            <div class="p-3 bg-green-50 border-l-4 border-green-400 rounded-lg">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-green-600">🎉</span>
+                                    <span class="text-xs text-green-600 font-medium">రేపు</span>
+                                </div>
+                                <p class="text-sm text-gray-700">శ్రీ వేణుగోపాల స్వామి ఆలయంలో ప్రత్యేక పూజ</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-3 bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
+                            🔔 న్యూస్ అలర్ట్ కి సైన్ అప్ చేయండి
+                        </button>
+                    </div>
+                </div>
+
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature03_digital_card">▶️</button>
+                    <audio id="feature03_digital_card_audio" class="section-audio" src="feature03_digital_card_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">💼</div>
+                    <h3 class="text-xl font-bold text-[#ff6361] mb-3">3. డిజిటల్ విజిటింగ్ కార్డ్ & బిజినెస్ హబ్</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ వ్యాపారానికి, మీ పేరుకు డిజిటల్ గౌరవం!</p>
+                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border-l-4 border-green-400 mb-6 text-container">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed">మన ఊరిలోని పెయింటింగ్ కాంట్రాక్టర్లు, చిన్న చిన్న షాపుల యజమానులు, టైలరింగ్ చేసేవాళ్ళు, వ్యాపారులు... వీరందరికీ కాగితం విజిటింగ్ కార్డులు అవసరం లేదు. మన వెబ్‌సైట్ ద్వారా chelluru.com/మీపేరు అనే మీ సొంత డిజిటల్ వెబ్ పేజీని అందిస్తాము. ఇందులో మీరు చేసిన పెయింటింగ్ వర్క్ ఫోటోలు, మీ షాపులో ఉండే కొత్త సరుకుల వివరాలు, మీ గురించి పూర్తి సమాచారం పెట్టుకోవచ్చు. ఎవరైనా మీ వివరాలు అడిగితే, గర్వంగా తెచ్చిపెడుతుంది.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-4">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">💳 Live Demo - డిజిటల్ విజిటింగ్ కార్డ్</h4>
+                        <div class="bg-gradient-to-br from-green-100 to-blue-100 p-4 rounded-lg border-2 border-green-300">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-green-500 rounded-full mx-auto mb-2 flex items-center justify-center">
+                                    <span class="text-2xl text-white">🏪</span>
+                                </div>
+                                <h5 class="font-bold text-green-800 text-lg">రాము కిరాణా షాప్</h5>
+                                <p class="text-sm text-green-700 mb-2">కిరాణా, బియ్యం, నూనె, చక్కర</p>
+                                <div class="flex justify-center gap-2 text-xs">
+                                    <span class="bg-green-200 text-green-800 px-2 py-1 rounded">📞 +91 98765-12345</span>
+                                    <span class="bg-green-200 text-green-800 px-2 py-1 rounded">📍 ముఖ్య వీధి</span>
+                                </div>
+                                <p class="text-xs text-green-600 mt-2">chelluru.com/రాము-కిరాణా</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-3 bg-green-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors">
+                            🆕 మీ వ్యాపారం కి కార్డ్ తయారు చేయండి
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                         <p class="text-base text-gray-600 mb-2"><b>మీ వ్యాపారానికి స్లోగన్ కావాలా?</b></p>
+                         <textarea id="sloganInput" class="w-full border border-gray-300 rounded-md p-2 text-sm" rows="2" placeholder="ఉదా: కిరాణా షాప్ లేదా ఎలక్ట్రికల్ వర్క్స్"></textarea>
+                         <button id="generateSloganBtn" class="mt-2 w-full bg-gradient-to-r from-teal-400 to-blue-500 text-white font-bold py-2 px-4 rounded-md hover:opacity-90 transition-opacity">స్లోగన్ సృష్టించు ✨</button>
+                         <div id="sloganLoader" class="loader hidden"></div>
+                         <div id="sloganResponse" class="gemini-response hidden"></div>
+                    </div>
+                </div>
+
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature04_donations_gallery">▶️</button>
+                    <audio id="feature04_donations_gallery_audio" class="section-audio" src="feature04_donations_gallery_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">🤝</div>
+                    <h3 class="text-xl font-bold text-[#ffa600] mb-3">4. విరాళాల విభాగం & దాతల గ్యాలరీ</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ పెద్ద మనసుకు శాశ్వతమైన గుర్తింపు!</p>
+                    <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-xl border-l-4 border-yellow-400 text-container mb-6">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed">మన శ్రీ వేణుగోపాల స్వామి ఆలయం ప్రహరీ గోడకు చిన్న సహాయం చేయాలని మీకు అనిపించిందా? మీరు ఎక్కడికీ వెళ్ళక్కర్లేదు. మీ ఫోన్‌పే, గూగుల్‌పే నుండే పారదర్శకంగా విరాళం పంపవచ్చు. మీరు పంపిన ప్రతి రూపాయికి ఆన్‌లైన్‌లో లెక్క ఉంటుంది. విరాళం ఇచ్చిన మీ పేరు, ఫోటో "గ్రామ నిర్మాణ దాతలు" అనే విభాగంలో శాశ్వతంగా నిలిచిపోతుంది. రేపు మన పిల్లలు, మనవళ్లు ఆ పేర్లు చూసి, 'మా తాతలు మా ఊరి కోసం నిలబడ్డారు' అని గర్వంగా చెప్పుకుంటారు. మీ పెద్ద మనసును, మీ హోదాను ఈ ఊరు తరతరాలుగా గుర్తుంచుకుంటుంది.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">💰 Live Demo - విరాళం & దాతల గ్యాలరీ</h4>
+                        
+                        <!-- Top Donors Highlight Section -->
+                        <div class="mb-4">
+                            <h5 class="text-sm font-bold text-center text-purple-700 mb-3">🏆 టాప్ దాతలు</h5>
+                            <div class="space-y-2">
+                                <div class="bg-gradient-to-r from-yellow-100 to-orange-100 p-3 rounded-lg border-2 border-yellow-300 shadow-md">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white text-sm font-bold">🥇</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-yellow-800 text-sm">రాజేశ్వర్ గారు</p>
+                                                <p class="text-xs text-yellow-600">₹5,000 - శ్రీ వేణుగోపాల స్వామి ఆలయం నిర్మాణం</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-lg font-bold text-yellow-600">₹5,000</span>
+                                            <p class="text-xs text-yellow-600">1వ స్థానం</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gradient-to-r from-gray-100 to-slate-100 p-3 rounded-lg border-2 border-gray-300 shadow-md">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-gray-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white text-sm font-bold">🥈</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-800 text-sm">సుధా గారు</p>
+                                                <p class="text-xs text-gray-600">₹3,500 - పాఠశాల ఫర్నిచర్ & పుస్తకాలు</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-lg font-bold text-gray-600">₹3,500</span>
+                                            <p class="text-xs text-gray-600">2వ స్థానం</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gradient-to-r from-orange-100 to-amber-100 p-3 rounded-lg border-2 border-orange-300 shadow-md">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white text-sm font-bold">🥉</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-orange-800 text-sm">వెంకటేశ్ గారు</p>
+                                                <p class="text-xs text-orange-600">₹2,000 - ఆరోగ్య కేంద్రం పరికరాలు</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-lg font-bold text-orange-600">₹2,000</span>
+                                            <p class="text-xs text-orange-600">3వ స్థానం</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Donations -->
+                        <div class="mb-4">
+                            <h5 class="text-sm font-bold text-center text-blue-700 mb-3">📅 ఇటీవలి విరాళాలు</h5>
+                            <div class="space-y-2">
+                                <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-2 rounded-lg border border-green-200">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white text-xs">👨</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-green-800 text-xs">రాము గారు</p>
+                                                <p class="text-xs text-green-600">₹500 - శ్రీ వేణుగోపాల స్వామి ఆలయం గోడ</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-green-600">2 రోజుల క్రితం</span>
+                                    </div>
+                                </div>
+                                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-2 rounded-lg border border-blue-200">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white text-xs">👩</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-blue-800 text-xs">లక్ష్మి గారు</p>
+                                                <p class="text-xs text-blue-600">₹800 - పాఠశాల ఫర్నిచర్</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-blue-600">1 వారం క్రితం</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Total Donations Summary -->
+                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-3 rounded-lg border-2 border-purple-200 mb-3">
+                            <div class="text-center">
+                                <p class="text-sm font-medium text-purple-800">మొత్తం విరాళాలు</p>
+                                <p class="text-2xl font-bold text-purple-600">₹15,750</p>
+                                <div class="flex justify-center gap-4 text-xs text-purple-600 mt-2">
+                                    <span>25 మంది దాతలు</span>
+                                    <span>•</span>
+                                    <span>టాప్ 3: ₹10,500</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-yellow-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors">
+                            💝 విరాళం ఇవ్వండి
+                        </button>
+                    </div>
+                </div>
+
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature05_local_ads">▶️</button>
+                    <audio id="feature05_local_ads_audio" class="section-audio" src="feature05_local_ads_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">📢</div>
+                    <h3 class="text-xl font-bold text-[#58508d] mb-3">5. స్థానిక ప్రకటనలు & శుభాకాంక్షల వేదిక</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ ఉనికిని చాటిచెప్పండి! మీ ఆనందాన్ని పంచుకోండి!</p>
+                    <div class="bg-gradient-to-r from-pink-50 to-rose-50 p-6 rounded-xl border-l-4 border-pink-400 mb-6 text-container">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed">మీ పిల్లల పుట్టినరోజు శుభాకాంక్షలను మన ఊరి వెబ్‌సైట్ ముఖచిత్రంపై వేయించుకుని, మీ ఆనందాన్ని ఊరందరితో పంచుకోండి. పండుగలకు మీ షాపులో ఇచ్చే ప్రత్యేక ఆఫర్లను ప్రకటించుకుని, మీ వ్యాపారాన్ని పెంచుకోండి. ఇది మన ఊరి వ్యాపారాలకు, మన ప్రజల బంధాలకు వారధిగా నిలుస్తుంది. పండుగలకు, జయంతులకు, మీ పిల్లల పుట్టినరోజులకు మీ పేరు మీద, మీ ఫోటోతో ఊరందరికీ శుభాకాంక్షలు చెప్పడానికి ఇదే అతిపెద్ద వేదిక. ఇది మీ పేరును, మీ బ్రాండ్‌ను ఊరిలో ప్రతి ఒక్కరి మదిలో నిరంతరం నిలిపి ఉంచుతుంది.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-4">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">📢 Live Demo - ప్రకటనలు & శుభాకాంక్షలు</h4>
+                        <div class="space-y-3 mb-4">
+                            <div class="bg-gradient-to-r from-pink-50 to-rose-50 p-3 rounded-lg border border-pink-200">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-sm">🎂</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-pink-800">రాము పాప పుట్టినరోజు</p>
+                                        <p class="text-xs text-pink-600">ఆగస్టు 20, సాయంత్రం 6 గంటలకు</p>
+                                        <p class="text-xs text-pink-700 mt-1">🎉 శుభాకాంక్షలు చెప్పండి!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-3 rounded-lg border border-blue-200">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-sm">🏛️</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-blue-800">శ్రీ వేణుగోపాల స్వామి ఆలయం</p>
+                                        <p class="text-xs text-blue-600">పురాతన దేవాలయం - ప్రతి ఉదయం 6 గంటలకు</p>
+                                        <p class="text-xs text-blue-700 mt-1">🕉️ దర్శనం చేయండి!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-pink-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-pink-600 transition-colors">
+                            📢 మీ ప్రకటన పెట్టండి
+                        </button>
+                    </div>
+                    
+                    <textarea id="announcementInput" class="w-full border border-gray-300 rounded-md p-2 text-sm" rows="2" placeholder="ఉదా: మా పాప పుట్టినరోజు, ఆగస్టు 20, సాయంత్రం 6 గంటలకు"></textarea>
+                    <button id="generateAnnouncementBtn" class="mt-2 w-full bg-gradient-to-r from-pink-500 to-orange-400 text-white font-bold py-2 px-4 rounded-md hover:opacity-90 transition-opacity">ప్రకటన సృష్టించు ✨</button>
+                    <div id="announcementLoader" class="loader hidden"></div>
+                    <div id="announcementResponse" class="gemini-response hidden"></div>
+                </div>
+
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature06_temple_info">▶️</button>
+                    <audio id="feature06_temple_info_audio" class="section-audio" src="feature06_temple_info_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">🏛️</div>
+                    <h3 class="text-xl font-bold text-[#bc5090] mb-3">6. దేవాలయాల సమాచారం</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> ప్రతినెలా జరిగే ప్రత్యేక పూజలు, ఉత్సవాల పూర్తి షెడ్యూల్, మరియు గుడి కమిటీ నిర్ణయాలు ఇకపై మన వెబ్‌సైట్‌లో ఎప్పటికప్పుడు అందుబాటులో ఉంటాయి.</p>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">🏛️ Live Demo - దేవాలయ సమాచారం</h4>
+                        <div class="space-y-3 mb-4">
+                            <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-blue-600">🕉️</span>
+                                        <div>
+                                            <p class="font-medium text-blue-800">శ్రీ వేణుగోపాల స్వామి ఆలయం</p>
+                                            <p class="text-xs text-blue-600">పురాతన దేవాలయం - ప్రతి ఉదయం 6 గంటలకు</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">🏛️ పురాతనం</span>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-3 rounded-lg border border-purple-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-purple-600">🕉️</span>
+                                        <div>
+                                            <p class="font-medium text-purple-800">శివాలయం</p>
+                                            <p class="text-xs text-purple-600">ఇటీవల నిర్మించబడింది - ప్రతి సాయంత్రం 6 గంటలకు</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">🆕 కొత్తది</span>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-orange-50 to-red-50 p-3 rounded-lg border border-orange-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-orange-600">🌙</span>
+                                        <div>
+                                            <p class="font-medium text-orange-800">పూర్ణిమ పూజలు</p>
+                                            <p class="text-xs text-orange-600">రెండు గుడుల్లోనూ ప్రతి పూర్ణిమ</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded">📅 నిత్యం</span>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-3 rounded-lg border border-green-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-green-600">👥</span>
+                                        <div>
+                                            <p class="font-medium text-green-800">గుడి కమిటీ సమావేశం</p>
+                                            <p class="text-xs text-green-600">ఆదివారం, సాయంత్రం 5 గంటలకు</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-green-200 text-green-700 px-2 py-1 rounded">🏛️ కమిటీ</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-purple-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
+                            🗓️ పూర్తి క్యాలెండర్ చూపించు
+                        </button>
+                    </div>
+                </div>
+
+                 <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature07_problem_solution">▶️</button>
+                    <audio id="feature07_problem_solution_audio" class="section-audio" src="feature07_problem_solution_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">🔧</div>
+                    <h3 class="text-xl font-bold text-[#ff6361] mb-3">7. సమస్యలు - పరిష్కారాలు</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన గొంతుకను వినిపిద్దాం! మీ నాయకత్వానికి నిలువుటద్దం!</p>
+                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border-l-4 border-purple-400 mb-6 text-container">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed">మీ వీధిలో డ్రైనేజీ సమస్య ఉందా? ఫోటో తీసి, ఈ విభాగంలో పెట్టండి. ఈ సమస్య నేరుగా అధికారుల దృష్టికి వెళ్తుంది. కేవలం సమస్య చెప్పడమే కాదు, దానికి పరిష్కారం దొరికేంత వరకు మనమందరం ఫాలో అప్ చేయడానికి ఇది ఒక వేదికగా పనిచేస్తుంది. ప్రజల సమస్యలను నేరుగా తెలుసుకుని, మీరు దాన్ని పరిష్కరించినప్పుడు ఫోటోలతో సహా ఇక్కడ అప్‌డేట్ చేయవచ్చు. మాటలు కాదు, చేతలు మాట్లాడతాయి అని నిరూపించడానికి ఇది మీకొక శక్తివంతమైన వేదిక. ఇది మీ పనితీరుకు తిరుగులేని సాక్ష్యంగా నిలిచి, ప్రజలలో మీపై నమ్మకాన్ని రెట్టింపు చేస్తుంది.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-4">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">🔧 Live Demo - సమస్యలు & పరిష్కారాలు</h4>
+                        <div class="space-y-3 mb-4">
+                            <div class="bg-gradient-to-r from-red-50 to-pink-50 p-3 rounded-lg border border-red-200">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-sm">🚨</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-red-800">డ్రైనేజీ సమస్య</p>
+                                        <p class="text-xs text-red-600">ముఖ్య వీధి, నీళ్లు నిలిచిపోయాయి</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-xs bg-red-200 text-red-700 px-2 py-1 rounded">📸 ఫోటో జోడించబడింది</span>
+                                            <span class="text-xs bg-yellow-200 text-yellow-700 px-2 py-1 rounded">⏳ పరిష్కరణలో</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-3 rounded-lg border border-green-200">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-sm">✅</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-green-800">వీధి దీపాలు</p>
+                                        <p class="text-xs text-green-600">2 రోజుల్లో పరిష్కరించబడింది</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-xs bg-green-200 text-green-700 px-2 py-1 rounded">📸 పరిష్కార ఫోటో</span>
+                                            <span class="text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">🎯 పూర్తయింది</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-purple-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
+                            🚨 మీ సమస్య నివేదించండి
+                        </button>
+                    </div>
+                    
+                     <textarea id="complaintInput" class="w-full border border-gray-300 rounded-md p-2 text-sm" rows="2" placeholder="ఉదా: మా వీధిలో నీళ్లు సరిగా రావట్లేదు"></textarea>
+                    <button id="generateComplaintBtn" class="mt-2 w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold py-2 px-4 rounded-md hover:opacity-90 transition-opacity">లేఖను సిద్ధం చేయి ✨</button>
+                    <div id="complaintLoader" class="loader hidden"></div>
+                    <div id="complaintResponse" class="gemini-response hidden"></div>
+                </div>
+
+                 <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature08_chelluru_tv">▶️</button>
+                    <audio id="feature08_chelluru_tv_audio" class="section-audio" src="feature08_chelluru_tv_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">📺</div>
+                    <h3 class="text-xl font-bold text-[#ffa600] mb-3">8. చెల్లూరు TV (యూట్యూబ్ & ఇన్‌స్టా)</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన ఊరి సొంత మీడియా ఛానెల్!</p>
+                    <div class="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl border-l-4 border-orange-400 text-container mb-6">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed">మన ఊరి పండుగలు, మీ ఆధ్వర్యంలో జరిగే సేవా కార్యక్రమాలను వీడియో తీసి మన "చెల్లూరు TV" లో ప్రసారం చేద్దాం. మీ విజయగాథలను, మీ సందేశాలను నేరుగా జిల్లా అధికారుల దృష్టికి కూడా తీసుకెళ్లే శక్తి దీనికి ఉంటుంది.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">📺 Live Demo - చెల్లూరు TV</h4>
+                        <div class="space-y-3 mb-4">
+                            <div class="bg-gradient-to-r from-red-50 to-orange-50 p-3 rounded-lg border border-red-200">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-8 bg-red-500 rounded flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-xs">▶️</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-red-800">శ్రీ వేణుగోపాల స్వామి ఉత్సవం 2024</p>
+                                        <p class="text-xs text-red-600">2.5K views • 3 రోజుల క్రితం</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-xs bg-red-200 text-red-700 px-2 py-1 rounded">🎥 15:32</span>
+                                            <span class="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded">🔥 Trending</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border border-blue-200">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-8 bg-blue-500 rounded flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-xs">📸</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-blue-800">గ్రామ సభ సమావేశం</p>
+                                        <p class="text-xs text-blue-600">1.2K views • 1 వారం క్రితం</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">📱 Instagram</span>
+                                            <span class="text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">👥 Live</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-3 rounded-lg border border-green-200">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-8 bg-green-500 rounded flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-xs">🎬</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-green-800">మన ఊరి పండుగలు</p>
+                                        <p class="text-xs text-green-600">3.8K views • 2 వారాల క్రితం</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-xs bg-green-200 text-green-700 px-2 py-1 rounded">🎉 Festival</span>
+                                            <span class="text-xs bg-emerald-200 text-emerald-700 px-2 py-1 rounded">⭐ Featured</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="flex-1 bg-red-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors">
+                                📺 YouTube చేరండి
+                            </button>
+                            <button class="flex-1 bg-purple-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
+                                📱 Instagram చేరండి
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature09_photo_gallery">▶️</button>
+                    <audio id="feature09_photo_gallery_audio" class="section-audio" src="feature09_photo_gallery_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">🖼️</div>
+                    <h3 class="text-xl font-bold text-[#003f5c] mb-3">9. ఫోటో గ్యాలరీ ("మన జ్ఞాపకాలు") & పండుగల క్యాలెండర్</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన ఊరి చరిత్ర, పాత పండుగల జ్ఞాపకాలతో పాటు, మీరు ఊరికి చేసిన సేవలు కూడా ఈ డిజిటల్ ఆల్బమ్‌లో భద్రపరచబడతాయి. ప్రతి పండుగకు, కార్యక్రమానికి మీరే ముందుండి నడిపించినట్టుగా ఈ వేదిక చాటిచెప్తుంది.</p>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">🖼️ Live Demo - ఫోటో గ్యాలరీ & క్యాలెండర్</h4>
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="bg-gradient-to-br from-blue-100 to-purple-100 p-3 rounded-lg border border-blue-200 text-center">
+                                <div class="w-16 h-16 bg-blue-500 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <span class="text-white text-2xl">📸</span>
+                                </div>
+                                <p class="text-xs font-medium text-blue-800">శ్రీ వేణుగోపాల స్వామి ఉత్సవం 2023</p>
+                                <p class="text-xs text-blue-600">45 ఫోటోలు</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-100 to-emerald-100 p-3 rounded-lg border border-green-200 text-center">
+                                <div class="w-16 h-16 bg-green-500 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <span class="text-white text-2xl">🎉</span>
+                                </div>
+                                <p class="text-xs font-medium text-green-800">గ్రామ సభ 2024</p>
+                                <p class="text-xs text-green-600">32 ఫోటోలు</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-orange-100 to-red-100 p-3 rounded-lg border border-orange-200 text-center">
+                                <div class="w-16 h-16 bg-orange-500 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <span class="text-white text-2xl">🏫</span>
+                                </div>
+                                <p class="text-xs font-medium text-orange-800">పాఠశాల ఉత్సవం</p>
+                                <p class="text-xs text-orange-600">28 ఫోటోలు</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-pink-100 to-rose-100 p-3 rounded-lg border border-pink-200 text-center">
+                                <div class="w-16 h-16 bg-pink-500 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                    <span class="text-white text-2xl">🌾</span>
+                                </div>
+                                <p class="text-xs font-medium text-pink-800">వ్యవసాయ కార్యక్రమం</p>
+                                <p class="text-xs text-pink-600">19 ఫోటోలు</p>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-3 rounded-lg border border-purple-200 mb-3">
+                            <div class="text-center">
+                                <p class="text-sm font-medium text-purple-800">మొత్తం జ్ఞాపకాలు</p>
+                                <p class="text-2xl font-bold text-purple-600">124 ఫోటోలు</p>
+                                <p class="text-xs text-purple-600">8 వేర్వేరు కార్యక్రమాలు</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
+                                📸 గ్యాలరీ చూపించు
+                            </button>
+                            <button class="flex-1 bg-purple-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors">
+                                🗓️ క్యాలెండర్ చూపించు
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature10_school_updates">▶️</button>
+                    <audio id="feature10_school_updates_audio" class="section-audio" src="feature10_school_updates_audio.wav"></audio>
+                    <div class="text-4xl mb-4 text-center">🏫</div>
+                    <h3 class="text-xl font-bold text-[#58508d] mb-3">10. స్కూల్ అప్‌డేట్స్ & విద్యా సమాచారం</h3>
+                    <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన పిల్లల భవిష్యత్తు కోసం!</p>
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border-l-4 border-blue-400 text-container mb-6">
+                        <p class="text-sm text-gray-700 feature-text leading-relaxed">మన ఊరి గవర్నమెంట్ స్కూల్‌లో అడ్మిషన్లు ఎప్పుడు మొదలవుతాయి? పిల్లలకు యూనిఫాం, పుస్తకాలు ఎప్పుడు ఇస్తారు? సెలవుల వివరాలు, పరీక్షల టైమ్ టేబుల్... ఇలాంటి ప్రతి విషయం ఇకపై మీ ఫోన్‌కే వస్తుంది. మన పిల్లల చదువుకు సంబంధించిన ఏ చిన్న విషయాన్నీ మనం కోల్పోము.</p>
+                    </div>
+                    
+                    <!-- Demo Section -->
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-semibold text-gray-700 mb-3 text-center">🏫 Live Demo - స్కూల్ అప్‌డేట్స్ & విద్యా సమాచారం</h4>
+                        <div class="space-y-3 mb-4">
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-blue-600">📚</span>
+                                        <div>
+                                            <p class="font-medium text-blue-800">అడ్మిషన్లు</p>
+                                            <p class="text-xs text-blue-600">మే 15 నుండి జూన్ 30 వరకు</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">🆕 తెరవబడింది</span>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-3 rounded-lg border border-green-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-green-600">👕</span>
+                                        <div>
+                                            <p class="font-medium text-green-800">యూనిఫాం పంపిణీ</p>
+                                            <p class="text-xs text-green-600">జూలై 15, ఉదయం 10 గంటలకు</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-green-200 text-green-700 px-2 py-1 rounded">📅 షెడ్యూల్</span>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-orange-50 to-red-50 p-3 rounded-lg border border-orange-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-orange-600">📝</span>
+                                        <div>
+                                            <p class="font-medium text-orange-800">మిడ్ టెర్మ్ పరీక్షలు</p>
+                                            <p class="text-xs text-orange-600">ఆగస్టు 20-25, ఉదయం 9 గంటలకు</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded">⏰ టైమ్‌టేబుల్</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-200 mb-3">
+                            <div class="text-center">
+                                <p class="text-sm font-medium text-indigo-800">మొత్తం విద్యార్థులు</p>
+                                <p class="text-2xl font-bold text-indigo-600">156 మంది</p>
+                                <p class="text-xs text-indigo-600">1వ తరగతి నుండి 10వ తరగతి వరకు</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
+                            📚 పూర్తి వివరాలు చూపించు
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <!-- Model Village Section -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <div class="inline-block p-4 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full mb-6">
+                    <span class="text-4xl">🏆</span>
+                </div>
+                <h2 class="text-4xl font-bold text-[#003f5c] mb-4">మోడల్ విలేజ్: ఈ డిజిటల్ వేదికను విజయవంతం చేసి, మన చెల్లూరు గ్రామాన్ని జిల్లాలోనే ఒక ఆదర్శవంతమైన, టెక్నాలజీని అందిపుచ్చుకున్న గ్రామంగా నిలబెడదాం.</h2>
+            </div>
+        </section>
+        
+        <!-- Vision Section -->
+        <section class="mb-16">
+             <h2 class="text-3xl font-bold text-center mb-8 text-[#003f5c]">మన కల: ఆదర్శ గ్రామం</h2>
+             <div class="max-w-4xl mx-auto bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-8 rounded-2xl shadow-xl border-2 border-purple-200">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">👥</div>
+                        <div class="font-bold text-xl text-[#58508d]">ప్రజలు</div>
+                    </div>
+                    <div class="flow-arrow text-2xl">→</div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">💻</div>
+                        <div class="font-bold text-xl text-[#bc5090]">డిజిటల్ వేదిక</div>
+                    </div>
+                    <div class="flow-arrow text-2xl">→</div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🔧</div>
+                        <div class="font-bold text-xl text-[#ff6361]">సమస్యల పరిష్కారం</div>
+                    </div>
+                    <div class="flow-arrow text-2xl">→</div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🌟</div>
+                        <div class="font-bold text-xl text-[#ffa600]">ఆదర్శ గ్రామం</div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 p-4 sm:p-6 md:p-8 lg:p-12 rounded-3xl shadow-2xl text-center border-2 border-purple-200">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="inline-block p-3 sm:p-4 bg-white rounded-full shadow-lg mb-4 sm:mb-6">
+                    <span class="text-2xl sm:text-3xl md:text-4xl">💎</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[#003f5c] mb-4 sm:mb-6 leading-tight">ఇది విరాళం కాదు, మన భవిష్యత్తుకు, మన గౌరవానికి పెట్టుబడి!</h2>
+                <p class="text-base sm:text-lg md:text-xl text-gray-700 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-2">
+                మిత్రులారా, ఈ రోజు మేము మీ వద్దకు వచ్చింది కేవలం దాతలుగా కాదు. మన చెల్లూరు చరిత్రలో ఒక కొత్త అధ్యాయాన్ని నిర్మించడానికి, ఈ డిజిటల్ ఉద్యమానికి **"దిశా నిర్దేశకులుగా, మార్గదర్శకులుగా, వ్యవస్థాపక సభ్యులుగా (Founding Members)"** ఉండమని మనస్ఫూర్తిగా ఆహ్వానించడానికి వచ్చాము.
+                </p>
+                <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-lg border border-purple-200 mb-4 sm:mb-6">
+                     <p class="text-lg sm:text-xl md:text-2xl font-bold text-[#58508d] leading-relaxed px-2">
+                        ఈ మహాయజ్ఞం కేవలం ఒక వెబ్‌సైట్ కాదు, మన ఊరి భవిష్యత్తు కోసం మనం అందరం కలిసి కంటున్న ఒక కల. ఈ మహాయజ్ఞంలో మొదటగా చేయి కలిపిన వారిని, ఈ ఆలోచనకు ప్రాణం పోసిన వారిని ఈ ఊరు ఎప్పటికీ మర్చిపోదు. ఈ డిజిటల్ వేదిక నిరంతరం పనిచేయాలన్నా, మనం అనుకున్న లక్ష్యాలన్నీ సాధించాలన్నా, మీ అందరి చురుకైన భాగస్వామ్యం మాకు అత్యంత అవసరం. మీ స్థానిక వ్యాపార ప్రకటనలను ఈ వేదికపై ఇవ్వడం ద్వారా, మీరు మీ వ్యాపారాన్ని అభివృద్ధి చేసుకోవడమే కాకుండా, మన ఊరి ఈ డిజిటల్ దీపాన్ని వెలిగిస్తూనే ఉంటారు. మీరిచ్చే ప్రతి ఆర్థిక చేయూత, ఈ వేదిక మన ఊరికి రాబోయే తరాల వరకు సేవలు అందించడానికి మీరు వేసే బలమైన పునాది అవుతుంది. ఇది కేవలం విరాళం కాదు; మన ఐక్యతకు, మన గుర్తింపుకు, మన భవిష్యత్తుకు మీరు పెడుతున్న పెట్టుబడి. ఈ రోజు మీరు చూపే ఈ భాగస్వామ్యమే, రేపటి తరానికి మనమందరం కలిసి నిర్మించిన ఈ డిజిటల్ చెల్లూరుకు పునాదిరాయిగా నిలిచిపోతుంది.ఈ రోజు మీరు వేసే ఈ పునాది, రేపటి తరానికి మిమ్మల్ని ఒక హీరోగా, ఒక దార్శనికుడిగా పరిచయం చేస్తుంది.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
+                    <div class="bg-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-md border border-purple-200">
+                        <span class="text-lg sm:text-xl">🎯</span>
+                        <span class="ml-2 font-semibold text-purple-700 text-sm sm:text-base">దిశా నిర్దేశకులు</span>
+                    </div>
+                    <div class="bg-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-md border border-pink-200">
+                        <span class="text-lg sm:text-xl">🧭</span>
+                        <span class="ml-2 font-semibold text-pink-700 text-sm sm:text-base">మార్గదర్శకులు</span>
+                    </div>
+                    <div class="bg-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-md border border-orange-200">
+                        <span class="text-lg sm:text-xl">🏗️</span>
+                        <span class="ml-2 font-semibold text-orange-700 text-sm sm:text-base">వ్యవస్థాపక సభ్యులు</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-20 pt-12 border-t-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 rounded-t-3xl">
+            <div class="max-w-4xl mx-auto">
+                <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-6">
+                    <span class="text-4xl">🚀</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-4 overflow-visible select-all highlet-text px-4">
+                    రండి, మన ఊరిని మనమే మార్చుకుందాం.
+                </h3>
+                <p class="text-lg sm:text-xl text-gray-700 mb-6 px-4">మన చెల్లూరు చరిత్రలో ఒక సువర్ణాధ్యాయాన్ని మన చేతులతో లిఖిద్దాం.</p>
+                <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-purple-200 inline-block mx-4">
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-purple-800">మీ మద్దతుతో, మనం సాధించలేనిది ఏదీ లేదు!</p>
+                </div>
+                
+                <!-- New Footer Content -->
+                <div class="mt-8 px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white p-4 rounded-xl shadow-md border border-purple-200">
+                            <div class="text-2xl mb-2">📞</div>
+                            <h4 class="font-bold text-purple-700 mb-2">సంప్రదించండి</h4>
+                            <p class="text-sm text-gray-600">మీ సూచనలు, ప్రశ్నలు మాకు పంపండి</p>
+                            <p class="text-sm text-purple-600 font-semibold mt-2">contact@chelluru.com</p>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-xl shadow-md border border-purple-200">
+                            <div class="text-2xl mb-2">🌐</div>
+                            <h4 class="font-bold text-purple-700 mb-2">వెబ్‌సైట్</h4>
+                            <p class="text-sm text-gray-600">మన ఊరి అధికారిక వెబ్‌సైట్</p>
+                            <p class="text-sm text-purple-600 font-semibold mt-2">www.chelluru.com</p>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-xl shadow-md border border-purple-200">
+                            <div class="text-2xl mb-2">📍</div>
+                            <h4 class="font-bold text-purple-700 mb-2">చిరునామా</h4>
+                            <p class="text-sm text-gray-600">చెల్లూరు గ్రామం, ఆంధ్రప్రదేశ్</p>
+                            <p class="text-sm text-purple-600 font-semibold mt-2">పిన్: 535005</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center text-sm text-gray-600 mb-4">
+                        <p>© 2025 మన చెల్లూరు. అన్ని హక్కులు రక్షించబడ్డాయి.</p>
+                        <p class="mt-1">ఈ వెబ్‌సైట్ మన ఊరి ప్రజల సేవ కోసం నిర్మించబడింది.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+
+        // === ఈ కింది కోడ్‌ను మీ జావాస్క్రిప్ట్ మొదట్లో జోడించండి START ===
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                    .then(registration => {
+                        console.log('ServiceWorker registered with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+        // === ఈ కింది కోడ్‌ను మీ జావాస్క్రిప్ట్ మొదట్లో జోడించండి END ===
+
+        // Gemini API Integration
+        const complaintInput = document.getElementById('complaintInput');
+        const generateComplaintBtn = document.getElementById('generateComplaintBtn');
+        const complaintLoader = document.getElementById('complaintLoader');
+        const complaintResponse = document.getElementById('complaintResponse');
+
+        const announcementInput = document.getElementById('announcementInput');
+        const generateAnnouncementBtn = document.getElementById('generateAnnouncementBtn');
+        const announcementLoader = document.getElementById('announcementLoader');
+        const announcementResponse = document.getElementById('announcementResponse');
+        
+        const sloganInput = document.getElementById('sloganInput');
+        const generateSloganBtn = document.getElementById('generateSloganBtn');
+        const sloganLoader = document.getElementById('sloganLoader');
+        const sloganResponse = document.getElementById('sloganResponse');
+
+        const apiKey = ""; // API key will be provided by the environment
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        async function callGeminiAPI(prompt, loader, responseDiv, button) {
+            if (!prompt.trim()) {
+                responseDiv.textContent = 'దయచేసి వివరాలను నమోదు చేయండి.';
+                responseDiv.classList.remove('hidden');
+                return;
+            }
+
+            loader.classList.remove('hidden');
+            responseDiv.classList.add('hidden');
+            button.disabled = true;
+
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            
+            let retries = 3;
+            let delay = 1000;
+            let result = null;
+
+            while (retries > 0) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    result = await response.json();
+                    break; 
+                } catch (error) {
+                    console.error('API call failed, retrying...', error);
+                    retries--;
+                    if (retries === 0) {
+                        result = null;
+                        break;
+                    }
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2; 
+                }
+            }
+
+            loader.classList.add('hidden');
+            button.disabled = false;
+            
+            if (result && result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                responseDiv.textContent = text;
+            } else {
+                responseDiv.textContent = 'క్షమించండి, సమాధానం రూపొందించడంలో లోపం జరిగింది. దయచేసి మళ్ళీ ప్రయత్నించండి.';
+            }
+            responseDiv.classList.remove('hidden');
+        }
+
+        generateComplaintBtn.addEventListener('click', () => {
+            const problem = complaintInput.value;
+            const prompt = `You are an expert in official communication in Telugu. A villager from Chelluru has this problem: '${problem}'. Draft a formal, respectful complaint letter in Telugu to be submitted to the village Panchayat office. The letter should be structured properly with a subject, salutation, body, and conclusion. It must clearly state the problem and politely request a swift resolution.`;
+            callGeminiAPI(prompt, complaintLoader, complaintResponse, generateComplaintBtn);
+        });
+
+        generateAnnouncementBtn.addEventListener('click', () => {
+            const details = announcementInput.value;
+            const prompt = `You are a creative writer in Telugu. Based on these details for an event in Chelluru village: '${details}', write a warm and friendly announcement or invitation message in Telugu. It should be suitable for a village community notice board or a local social media group. Make it sound celebratory and welcoming.`;
+            callGeminiAPI(prompt, announcementLoader, announcementResponse, generateAnnouncementBtn);
+        });
+        
+        generateSloganBtn.addEventListener('click', () => {
+            const businessType = sloganInput.value;
+            const prompt = `You are a creative marketing expert who writes catchy slogans in Telugu. A business owner from Chelluru village has this type of business: '${businessType}'. Generate 3 short, memorable, and attractive slogans in Telugu for their business.`;
+            callGeminiAPI(prompt, sloganLoader, sloganResponse, generateSloganBtn);
+        });
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // వినియోగదారు ఏ ఆడియోను మాన్యువల్‌గా పాజ్ చేసారో ట్రాక్ చేయడానికి
+            const userPaused = new Set();
+            let currentlyPlayingAudio = null;
+            let isProgrammaticAction = false; // ఇది ప్రోగ్రామ్ ద్వారా జరిగిన యాక్షనా అని చెప్పడానికి
+            let debounceTimer = null; // వేగంగా మారకుండా ఉండటానికి
+
+            // అన్ని ఆడియోలను ఒక్కసారిగా ఆపడానికి ఒక సహాయక ఫంక్షన్
+            const pauseAllAudios = (exceptThisOne = null) => {
+                document.querySelectorAll('.section-audio').forEach(audio => {
+                    if (audio !== exceptThisOne && !audio.paused) {
+                        isProgrammaticAction = true;
+                        audio.pause();
+                    }
+                });
+            };
+
+            // Intersection Observer కాల్‌బ్యాక్
+            const observerCallback = (entries, observer) => {
+                let mostVisibleEntry = null;
+                let maxRatio = 0;
+
+                // కనిపించే సెక్షన్లలో ఏది ఎక్కువగా కనిపిస్తుందో కనుగొనండి
+                 entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        mostVisibleEntry = entry;
+                    }
+                });
+
+                clearTimeout(debounceTimer);
+
+                debounceTimer = setTimeout(() => {
+                    if (mostVisibleEntry) {
+                        const targetAudio = mostVisibleEntry.target.querySelector('.section-audio');
+
+                        // కొత్తగా కనిపించే సెక్షన్ ఆడియో, ప్రస్తుతం ప్లే అవుతున్న ఆడియో ఒకటి కాకపోతేనే మార్చాలి
+                        if (targetAudio && (!currentlyPlayingAudio || currentlyPlayingAudio.id !== targetAudio.id)) {
+                            pauseAllAudios();
+                            currentlyPlayingAudio = targetAudio;
+
+                            if (!userPaused.has(targetAudio.id)) {
+                                targetAudio.currentTime = 0;
+                                isProgrammaticAction = true;
+                                const playPromise = targetAudio.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.catch(e => {
+                                        console.error("Audio playback failed:", e);
+                                        isProgrammaticAction = false;
+                                    });
+                                }
+                            }
+                        }
+                    } else if (currentlyPlayingAudio) {
+                        // ఏ సెక్షన్ కనిపించకపోతే, అన్నీ ఆపండి
+                        pauseAllAudios();
+                        currentlyPlayingAudio = null;
+                    }
+                }, 390); // 390 మిల్లీసెకన్ల చిన్న ఆలస్యం
+
+            };
+
+            // Observer ను సృష్టించడం
+            const observer = new IntersectionObserver(observerCallback, {
+                root: null,
+                rootMargin: '-50px 0px -50px 0px', // పై, కింది మార్జిన్‌ను సర్దుబాటు చేయడం
+                threshold: Array.from({ length: 51 }, (_, i) => (i * 2) / 100) // 0 నుండి 1 వరకు 2% దశల్లో
+            });
+
+            // గమనించవలసిన అన్ని సెక్షన్లను Observer కు జోడించండి
+            document.querySelectorAll('.audio-section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- అన్ని ఆడియోలకు - మాన్యువల్ ప్లే/పాజ్ బటన్ల కోసం లాజిక్ ---
+            document.querySelectorAll('.section-audio').forEach(audio => {
+                // ఐకాన్ ఉన్న బటన్ల కోసం
+                const button = document.querySelector(`[data-audio-id="${audio.id.replace('_audio', '')}"]`);
+
+                const handleManualPlay = () => {
+                    userPaused.delete(audio.id); // వినియోగదారు ప్లే నొక్కారు, కాబట్టి ఆటో-ప్లేను మళ్ళీ ఎనేబుల్ చేయండి
+                    pauseAllAudios(audio);
+                    currentlyPlayingAudio = audio;
+                    audio.play();
+                };
+
+                const handleManualPause = () => {
+                    userPaused.add(audio.id); // వినియోగదారు పాజ్ నొక్కారు, కాబట్టి ఆటో-ప్లేను డిసేబుల్ చేయండి
+                    audio.pause();
+                };
+
+                audio.addEventListener('play', () => {
+                    if (isProgrammaticAction) {
+                        isProgrammaticAction = false;
+                        return;
+                    }
+                    userPaused.delete(audio.id);
+                    pauseAllAudios(audio);
+                    currentlyPlayingAudio = audio;
+                });
+                
+                audio.addEventListener('pause', () => {
+                    if (isProgrammaticAction) {
+                        isProgrammaticAction = false;
+                        return;
+                    }
+                     if (audio.currentTime < audio.duration) {
+                        userPaused.add(audio.id);
+                    }
+                });
+
+                if (button) { // కార్నర్ బటన్లు
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (audio.paused) {
+                            handleManualPlay();
+                        } else {
+                            handleManualPause();
+                        }
+                    });
+                    audio.addEventListener('play', () => { button.textContent = '⏸️'; });
+                    audio.addEventListener('pause', () => { button.textContent = '▶️'; });
+                    audio.addEventListener('ended', () => {
+                        button.textContent = '▶️';
+                        currentlyPlayingAudio = null;
+                    });
+                }
+                
+            });
+
+
+            // PWA Install button logic
             let deferredPrompt;
             const installAppBtn = document.getElementById('installAppBtn');
 
@@ -42,3 +1559,10 @@
                 installAppBtn.classList.add('hidden');
                 deferredPrompt = null;
             });
+
+        });          
+
+    </script>
+
+</body>
+</html>
