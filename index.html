@@ -330,6 +330,28 @@
             padding-top: 12px;
             padding-bottom: 12px;
         }
+        /* Play Button Style */
+        .play-pause-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .play-pause-btn:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -364,6 +386,8 @@
 
         <!-- Problems Section -->
         <section class="mb-16 text-center">
+            <button class="play-pause-btn" data-audio-id="problems_audio">▶️</button>
+             <audio id="problems_audio" class="section-audio" src="problems_audio.mp3"></audio>
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-[#003f5c] flex flex-col sm:flex-row items-center justify-center text-center px-4">
                     <span class="mb-2 sm:mb-0 sm:mr-4">👥</span>
@@ -460,8 +484,8 @@
             </div>
         </section>
 
-         <!-- Local Ad Section -->
-        <div class="my-8 md:my-12">
+        <!-- Local Ad Section -->
+        <div id="ad-section" class="audio-section my-8 md:my-12">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
                     <div class="md:flex">
@@ -476,7 +500,7 @@
                                 మన చెల్లూరు డిజిటల్ ప్లాట్‌ఫారమ్‌లో మీ వ్యాపారాన్ని వేలాది మందికి పరిచయం చేయండి. మీ ప్రత్యేకతను ప్రపంచానికి చాటిచెప్పండి.
                             </p>
                             <!-- Audio Player -->
-                            <audio controls autoplay class="w-full">
+                            <audio id="ad_section_audio" class="section-audio w-full" controls>
                                 <source src="ChelluruAd_audio.wav" type="audio/wav">
                                 Your browser does not support the audio element.
                             </audio>
@@ -500,7 +524,9 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-stretch px-2 sm:px-4">
                 
-                <div class="feature-card group">
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature01_emergency_directory">▶️</button>
+                    <audio id="feature01_emergency_directory_audio" class="section-audio" src="feature01_emergency_directory_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🚨</div>
                     <h3 class="text-xl font-bold text-[#58508d] mb-3">1. అత్యవసరం & డైరెక్టరీ</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> కంగారుకు చెక్, ధైర్యానికి జై!</p>
@@ -535,7 +561,9 @@
                     </div>
                 </div>
 
-                <div class="feature-card group">
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature02_flash_news">▶️</button>
+                    <audio id="feature02_flash_news_audio" class="section-audio" src="feature02_flash_news_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">📰</div>
                     <h3 class="text-xl font-bold text-[#bc5090] mb-3">2. ఫ్లాష్ న్యూస్ & అప్‌డేట్స్</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> ముఖ్యమైన వార్తలు మీ ఫోన్‌కు వెంటనే!</p>
@@ -575,7 +603,9 @@
                     </div>
                 </div>
 
-                <div class="feature-card group">
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature03_digital_card">▶️</button>
+                    <audio id="feature03_digital_card_audio" class="section-audio" src="feature03_digital_card_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">💼</div>
                     <h3 class="text-xl font-bold text-[#ff6361] mb-3">3. డిజిటల్ విజిటింగ్ కార్డ్ & బిజినెస్ హబ్</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ వ్యాపారానికి, మీ పేరుకు డిజిటల్ గౌరవం!</p>
@@ -614,7 +644,9 @@
                     </div>
                 </div>
 
-                <div class="feature-card group">
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature04_donations_gallery">▶️</button>
+                    <audio id="feature04_donations_gallery_audio" class="section-audio" src="feature04_donations_gallery_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🤝</div>
                     <h3 class="text-xl font-bold text-[#ffa600] mb-3">4. విరాళాల విభాగం & దాతల గ్యాలరీ</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ పెద్ద మనసుకు శాశ్వతమైన గుర్తింపు!</p>
@@ -740,7 +772,9 @@
                     </div>
                 </div>
 
-                <div class="feature-card group">
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature05_local_ads">▶️</button>
+                    <audio id="feature05_local_ads_audio" class="section-audio" src="feature05_local_ads_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">📢</div>
                     <h3 class="text-xl font-bold text-[#58508d] mb-3">5. స్థానిక ప్రకటనలు & శుభాకాంక్షల వేదిక</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ ఉనికిని చాటిచెప్పండి! మీ ఆనందాన్ని పంచుకోండి!</p>
@@ -788,7 +822,9 @@
                     <div id="announcementResponse" class="gemini-response hidden"></div>
                 </div>
 
-                <div class="feature-card group">
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature06_temple_info">▶️</button>
+                    <audio id="feature06_temple_info_audio" class="section-audio" src="feature06_temple_info_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🏛️</div>
                     <h3 class="text-xl font-bold text-[#bc5090] mb-3">6. దేవాలయాల సమాచారం</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> ప్రతినెలా జరిగే ప్రత్యేక పూజలు, ఉత్సవాల పూర్తి షెడ్యూల్, మరియు గుడి కమిటీ నిర్ణయాలు ఇకపై మన వెబ్‌సైట్‌లో ఎప్పటికప్పుడు అందుబాటులో ఉంటాయి.</p>
@@ -851,7 +887,10 @@
                         </button>
                     </div>
                 </div>
-                 <div class="feature-card group">
+
+                 <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature07_problem_solution">▶️</button>
+                    <audio id="feature07_problem_solution_audio" class="section-audio" src="feature07_problem_solution_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🔧</div>
                     <h3 class="text-xl font-bold text-[#ff6361] mb-3">7. సమస్యలు - పరిష్కారాలు</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన గొంతుకను వినిపిద్దాం! మీ నాయకత్వానికి నిలువుటద్దం!</p>
@@ -904,7 +943,10 @@
                     <div id="complaintLoader" class="loader hidden"></div>
                     <div id="complaintResponse" class="gemini-response hidden"></div>
                 </div>
-                 <div class="feature-card group">
+
+                 <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature08_chelluru_tv">▶️</button>
+                    <audio id="feature08_chelluru_tv_audio" class="section-audio" src="feature08_chelluru_tv_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">📺</div>
                     <h3 class="text-xl font-bold text-[#ffa600] mb-3">8. చెల్లూరు TV (యూట్యూబ్ & ఇన్‌స్టా)</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన ఊరి సొంత మీడియా ఛానెల్!</p>
@@ -972,7 +1014,10 @@
                         </div>
                     </div>
                 </div>
-                 <div class="feature-card group">
+
+                 <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature09_photo_gallery">▶️</button>
+                    <audio id="feature09_photo_gallery_audio" class="section-audio" src="feature09_photo_gallery_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🖼️</div>
                     <h3 class="text-xl font-bold text-[#003f5c] mb-3">9. ఫోటో గ్యాలరీ ("మన జ్ఞాపకాలు") & పండుగల క్యాలెండర్</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన ఊరి చరిత్ర, పాత పండుగల జ్ఞాపకాలతో పాటు, మీరు ఊరికి చేసిన సేవలు కూడా ఈ డిజిటల్ ఆల్బమ్‌లో భద్రపరచబడతాయి. ప్రతి పండుగకు, కార్యక్రమానికి మీరే ముందుండి నడిపించినట్టుగా ఈ వేదిక చాటిచెప్తుంది.</p>
@@ -1027,7 +1072,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="feature-card group">
+
+                <div class="audio-section feature-card group">
+                    <button class="play-pause-btn" data-audio-id="feature10_school_updates">▶️</button>
+                    <audio id="feature10_school_updates_audio" class="section-audio" src="feature10_school_updates_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🏫</div>
                     <h3 class="text-xl font-bold text-[#58508d] mb-3">10. స్కూల్ అప్‌డేట్స్ & విద్యా సమాచారం</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన పిల్లల భవిష్యత్తు కోసం!</p>
@@ -1088,6 +1136,7 @@
                         </button>
                     </div>
                 </div>
+
             </div>
         </section>
         
@@ -1304,6 +1353,141 @@
             const prompt = `You are a creative marketing expert who writes catchy slogans in Telugu. A business owner from Chelluru village has this type of business: '${businessType}'. Generate 3 short, memorable, and attractive slogans in Telugu for their business.`;
             callGeminiAPI(prompt, sloganLoader, sloganResponse, generateSloganBtn);
         });
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // వినియోగదారు ఏ ఆడియోను మాన్యువల్‌గా పాజ్ చేసారో ట్రాక్ చేయడానికి
+            const userPaused = new Set();
+            let currentlyPlayingAudio = null;
+            let isProgrammaticAction = false; // ఇది ప్రోగ్రామ్ ద్వారా జరిగిన యాక్షనా అని చెప్పడానికి
+
+            // అన్ని ఆడియోలను ఒక్కసారిగా ఆపడానికి ఒక సహాయక ఫంక్షన్
+            const pauseAllAudios = (exceptThisOne = null) => {
+                document.querySelectorAll('.section-audio').forEach(audio => {
+                    if (audio !== exceptThisOne && !audio.paused) {
+                        isProgrammaticAction = true;
+                        audio.pause();
+                    }
+                });
+            };
+
+            // Intersection Observer కాల్‌బ్యాక్
+            const observerCallback = (entries, observer) => {
+                let mostVisibleEntry = null;
+                let maxRatio = 0;
+
+                // కనిపించే సెక్షన్లలో ఏది ఎక్కువగా కనిపిస్తుందో కనుగొనండి
+                 entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        mostVisibleEntry = entry;
+                    }
+                });
+
+                if (mostVisibleEntry) {
+                    const targetAudio = mostVisibleEntry.target.querySelector('.section-audio');
+
+                    if (targetAudio && (!currentlyPlayingAudio || currentlyPlayingAudio.id !== targetAudio.id)) {
+                        // కొత్త సెక్షన్ ఎక్కువగా కనిపిస్తే, పాతదాన్ని ఆపి, కొత్తదాన్ని ప్లే చేయండి
+                        pauseAllAudios();
+                        currentlyPlayingAudio = targetAudio;
+
+                        if (!userPaused.has(targetAudio.id)) {
+                            targetAudio.currentTime = 0;
+                            isProgrammaticAction = true;
+                            const playPromise = targetAudio.play();
+                            if (playPromise !== undefined) {
+                                playPromise.catch(e => {
+                                    console.error("ఆడియో ప్లే అవ్వలేదు:", e);
+                                    isProgrammaticAction = false;
+                                });
+                            }
+                        }
+                    }
+                } else if (currentlyPlayingAudio) {
+                    // ఏ సెక్షన్ ఎక్కువగా కనిపించకపోతే, ప్లే అవుతున్నదాన్ని ఆపండి
+                    const isAudioVisible = entries.some(entry => 
+                        entry.target.querySelector('.section-audio')?.id === currentlyPlayingAudio.id && entry.isIntersecting
+                    );
+                    if (!isAudioVisible) {
+                        pauseAllAudios();
+                        currentlyPlayingAudio = null;
+                    }
+                }              
+
+            };
+
+            // Observer ను సృష్టించడం
+            const observer = new IntersectionObserver(observerCallback, {
+                root: null,
+                rootMargin: '-50px 0px -50px 0px', // పై, కింది మార్జిన్‌ను సర్దుబాటు చేయడం
+                threshold: Array.from({ length: 51 }, (_, i) => (i * 2) / 100) // 0 నుండి 1 వరకు 2% దశల్లో
+            });
+
+            // గమనించవలసిన అన్ని సెక్షన్లను Observer కు జోడించండి
+            document.querySelectorAll('.audio-section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- అన్ని ఆడియోలకు - మాన్యువల్ ప్లే/పాజ్ బటన్ల కోసం లాజిక్ ---
+            document.querySelectorAll('.section-audio').forEach(audio => {
+                // ఐకాన్ ఉన్న బటన్ల కోసం
+                const button = document.querySelector(`[data-audio-id="${audio.id.replace('_audio', '')}"]`);
+
+                const handleManualPlay = () => {
+                    userPaused.delete(audio.id); // వినియోగదారు ప్లే నొక్కారు, కాబట్టి ఆటో-ప్లేను మళ్ళీ ఎనేబుల్ చేయండి
+                    pauseAllAudios(audio);
+                    currentlyPlayingAudio = audio;
+                    audio.play();
+                };
+
+                const handleManualPause = () => {
+                    userPaused.add(audio.id); // వినియోగదారు పాజ్ నొక్కారు, కాబట్టి ఆటో-ప్లేను డిసేబుల్ చేయండి
+                    audio.pause();
+                };
+
+                audio.addEventListener('play', () => {
+                    if (isProgrammaticAction) {
+                        isProgrammaticAction = false;
+                        return;
+                    }
+                    userPaused.delete(audio.id);
+                    pauseAllAudios(audio);
+                    currentlyPlayingAudio = audio;
+                });
+                
+                audio.addEventListener('pause', () => {
+                    if (isProgrammaticAction) {
+                        isProgrammaticAction = false;
+                        return;
+                    }
+                     if (audio.currentTime < audio.duration) {
+                        userPaused.add(audio.id);
+                    }
+                });
+
+                if (button) { // కార్నర్ బటన్లు
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (audio.paused) {
+                            handleManualPlay();
+                        } else {
+                            handleManualPause();
+                        }
+                    });
+                    audio.addEventListener('play', () => { button.textContent = '⏸️'; });
+                    audio.addEventListener('pause', () => { button.textContent = '▶️'; });
+                    audio.addEventListener('ended', () => {
+                        button.textContent = '▶️';
+                        currentlyPlayingAudio = null;
+                    });
+                }
+                
+            });
+
+        });          
+
     </script>
 
 </body>
