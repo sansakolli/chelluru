@@ -3,7 +3,7 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png'
+  '/ChelluruAppIcon512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -44,3 +44,4 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+
