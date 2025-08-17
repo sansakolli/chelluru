@@ -1,13 +1,11 @@
-const CACHE_NAME = 'mana-chelluru-cache-v2'; // వెర్షన్‌ను అప్‌డేట్ చేశాము
-// కేవలం అవసరమైన ఫైల్స్‌ను మాత్రమే కాష్ చేద్దాం
+const CACHE_NAME = 'mana-chelluru-cache-v3'; // వెర్షన్‌ను అప్‌డేట్ చేశాము
 const urlsToCache = [
   '/',
-  'index.html',
-  'manifest.json',
-  'Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png'
+  '/index.html',
+  '/manifest.json',
+  '/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png'
 ];
 
-// పాత కాష్‌లను తొలగించడానికి
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -24,6 +22,7 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -37,12 +36,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // కాష్‌లో దొరికితే, దాన్ని పంపండి
-        if (response) {
-          return response;
-        }
-        // లేకపోతే, నెట్‌వర్క్ నుండి తీసుకురండి
-        return fetch(event.request);
+        return response || fetch(event.request);
       })
   );
 });
