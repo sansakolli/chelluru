@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>మన చెల్లూరు, మన చేతుల్లో!</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#58508d">
     <link rel="apple-touch-icon" href="Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png">
@@ -1265,6 +1267,22 @@
     </div>
     
     <script>
+
+        // === ఈ కింది కోడ్‌ను మీ జావాస్క్రిప్ట్ మొదట్లో జోడించండి START ===
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+        // === ఈ కింది కోడ్‌ను మీ జావాస్క్రిప్ట్ మొదట్లో జోడించండి END ===
+
         // Gemini API Integration
         const complaintInput = document.getElementById('complaintInput');
         const generateComplaintBtn = document.getElementById('generateComplaintBtn');
@@ -1494,21 +1512,6 @@
 
         });          
 
-    </script>
-
-    <script>
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker Registered');
-                    })
-                    .catch(err => {
-                        console.error('ServiceWorker registration failed: ', err);
-                    });
-            });
-        }
     </script>
 
 </body>
