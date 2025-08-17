@@ -2,6 +2,7 @@
   "name": "మన చెల్లూరు, మన చేతుల్లో!",
   "short_name": "మన చెల్లూరు",
   "description": "మన చెల్లూరు గ్రామ అధికారిక వెబ్‌సైట్",
+  "scope": "/",
   "icons": [
     {
       "src": "/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png",
