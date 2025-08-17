@@ -1516,38 +1516,38 @@
                 
             });
 
+            
+            // PWA Install button logic
+            let deferredPrompt;
+            const installAppBtn = document.getElementById('installAppBtn');
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Prevent the default mini-infobar from appearing
+                e.preventDefault();
+                // Stash the event so it can be triggered later.
+                deferredPrompt = e;
+                // Show the install button
+                installAppBtn.classList.remove('hidden');
+            });
+
+            installAppBtn.addEventListener('click', async () => {
+                // Hide the install button
+                installAppBtn.classList.add('hidden');
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                // We've used the prompt, and it can't be used again.
+                deferredPrompt = null;
+            });
+
+            window.addEventListener('appinstalled', (evt) => {
+                console.log('App was installed.');
+                installAppBtn.classList.add('hidden');
+                deferredPrompt = null;
+            });
+
         });          
-
-        // PWA Install button logic
-        let deferredPrompt;
-        const installAppBtn = document.getElementById('installAppBtn');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent the default mini-infobar from appearing
-            e.preventDefault();
-            // Stash the event so it can be triggered later.
-            deferredPrompt = e;
-            // Show the install button
-            installAppBtn.classList.remove('hidden');
-        });
-
-        installAppBtn.addEventListener('click', async () => {
-            // Hide the install button
-            installAppBtn.classList.add('hidden');
-            // Show the install prompt
-            deferredPrompt.prompt();
-            // Wait for the user to respond to the prompt
-            const { outcome } = await deferredPrompt.userChoice;
-            // We've used the prompt, and it can't be used again.
-            deferredPrompt = null;
-        });
-
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('App was installed.');
-            installAppBtn.classList.add('hidden');
-            deferredPrompt = null;
-        });
-
 
     </script>
 
