@@ -5,13 +5,13 @@
   "scope": "/",
   "icons": [
     {
-      "src": "/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png",
+      "src": "/ChelluruAppIcon512.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png",
+      "src": "/ChelluruAppIcon512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
@@ -23,3 +23,4 @@
   "background_color": "#f7f8fc",
   "theme_color": "#58508d"
 }
+
