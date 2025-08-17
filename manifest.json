@@ -1,0 +1,21 @@
+{
+    "name": "మన చెల్లూరు, మన చేతుల్లో!",
+    "short_name": "మన చెల్లూరు",
+    "description": "మన చెల్లూరు గ్రామ అధికారిక వెబ్‌సైట్",
+    "icons": [
+      {
+        "src": "Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#f7f8fc",
+    "theme_color": "#58508d"
+  }
