@@ -1,24 +1,29 @@
-// sw.js
+const CACHE_NAME = 'mana-chelluru-cache-v5'; // వెర్షన్‌ను అప్‌డేట్ చేశాము
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png'
+];
 
-const CACHE_NAME = 'mana-chelluru-cache-v4'; // వెర్షన్‌ను అప్‌డేట్ చేశాము
-
-// ఇన్‌స్టాలేషన్ ఈవెంట్
 self.addEventListener('install', event => {
-  console.log('Service Worker: Installing...');
-  // కొత్త సర్వీస్ వర్కర్‌ను వెంటనే యాక్టివేట్ చేయడానికి
-  event.waitUntil(self.skipWaiting());
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache and caching app shell');
+        return cache.addAll(urlsToCache);
+      })
+  );
 });
 
-// యాక్టివేషన్ ఈవెంట్
 self.addEventListener('activate', event => {
-  console.log('Service Worker: Activating...');
-  // పాత కాష్‌లను తొలగించడం
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Service Worker: Clearing old cache');
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
             return caches.delete(cacheName);
           }
         })
@@ -27,9 +32,15 @@ self.addEventListener('activate', event => {
   );
 });
 
-// ఫెచ్ ఈవెంట్
 self.addEventListener('fetch', event => {
-  // ఆఫ్‌లైన్ కార్యాచరణ కోసం మనం దీన్ని తరువాత మెరుగుపరచవచ్చు,
-  // ప్రస్తుతానికి, కేవలం నెట్‌వర్క్ రిక్వెస్ట్‌లను పంపుదాం.
-  event.respondWith(fetch(event.request));
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+  );
 });
