@@ -24,9 +24,9 @@ jobs:
       # 2. ప్లేస్‌హోల్డర్‌ను సీక్రెట్‌తో భర్తీ చేస్తుంది
       - name: Replace API Key
         run: |
-          # index.html ఫైల్‌లో __GOOGLE_MAPS_API_KEY__ అనే పదాన్ని కనుగొని, 
+          # index.html ఫైల్‌లో __GEMINI_API_KEY__ అనే పదాన్ని కనుగొని, 
           # దాని స్థానంలో GitHub Secret ను పెడుతుంది.
-          sed -i 's|__GOOGLE_MAPS_API_KEY__|${{ secrets.GOOGLE_MAPS_API_KEY }}|g' index.html
+          sed -i 's|__GEMINI_API_KEY__|${{ secrets.GEMINI_API_KEY }}|g' index.html
 
       # 3. GitHub Pages కోసం ఆర్టిఫ్యాక్ట్‌ను సిద్ధం చేస్తుంది
       - name: Setup Pages
