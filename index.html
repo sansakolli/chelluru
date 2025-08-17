@@ -1361,6 +1361,7 @@
             const userPaused = new Set();
             let currentlyPlayingAudio = null;
             let isProgrammaticAction = false; // ఇది ప్రోగ్రామ్ ద్వారా జరిగిన యాక్షనా అని చెప్పడానికి
+            let debounceTimer = null; // వేగంగా మారకుండా ఉండటానికి
 
             // అన్ని ఆడియోలను ఒక్కసారిగా ఆపడానికి ఒక సహాయక ఫంక్షన్
             const pauseAllAudios = (exceptThisOne = null) => {
@@ -1385,36 +1386,35 @@
                     }
                 });
 
-                if (mostVisibleEntry) {
-                    const targetAudio = mostVisibleEntry.target.querySelector('.section-audio');
+                clearTimeout(debounceTimer);
 
-                    if (targetAudio && (!currentlyPlayingAudio || currentlyPlayingAudio.id !== targetAudio.id)) {
-                        // కొత్త సెక్షన్ ఎక్కువగా కనిపిస్తే, పాతదాన్ని ఆపి, కొత్తదాన్ని ప్లే చేయండి
-                        pauseAllAudios();
-                        currentlyPlayingAudio = targetAudio;
+                debounceTimer = setTimeout(() => {
+                    if (mostVisibleEntry) {
+                        const targetAudio = mostVisibleEntry.target.querySelector('.section-audio');
 
-                        if (!userPaused.has(targetAudio.id)) {
-                            targetAudio.currentTime = 0;
-                            isProgrammaticAction = true;
-                            const playPromise = targetAudio.play();
-                            if (playPromise !== undefined) {
-                                playPromise.catch(e => {
-                                    console.error("ఆడియో ప్లే అవ్వలేదు:", e);
-                                    isProgrammaticAction = false;
-                                });
+                        // కొత్తగా కనిపించే సెక్షన్ ఆడియో, ప్రస్తుతం ప్లే అవుతున్న ఆడియో ఒకటి కాకపోతేనే మార్చాలి
+                        if (targetAudio && (!currentlyPlayingAudio || currentlyPlayingAudio.id !== targetAudio.id)) {
+                            pauseAllAudios();
+                            currentlyPlayingAudio = targetAudio;
+
+                            if (!userPaused.has(targetAudio.id)) {
+                                targetAudio.currentTime = 0;
+                                isProgrammaticAction = true;
+                                const playPromise = targetAudio.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.catch(e => {
+                                        console.error("Audio playback failed:", e);
+                                        isProgrammaticAction = false;
+                                    });
+                                }
                             }
                         }
-                    }
-                } else if (currentlyPlayingAudio) {
-                    // ఏ సెక్షన్ ఎక్కువగా కనిపించకపోతే, ప్లే అవుతున్నదాన్ని ఆపండి
-                    const isAudioVisible = entries.some(entry => 
-                        entry.target.querySelector('.section-audio')?.id === currentlyPlayingAudio.id && entry.isIntersecting
-                    );
-                    if (!isAudioVisible) {
+                    } else if (currentlyPlayingAudio) {
+                        // ఏ సెక్షన్ కనిపించకపోతే, అన్నీ ఆపండి
                         pauseAllAudios();
                         currentlyPlayingAudio = null;
                     }
-                }              
+                }, 390); // 390 మిల్లీసెకన్ల చిన్న ఆలస్యం
 
             };
 
