@@ -1335,7 +1335,7 @@
         const sloganLoader = document.getElementById('sloganLoader');
         const sloganResponse = document.getElementById('sloganResponse');
 
-        const apiKey = ""; // API key will be provided by the environment
+        const apiKey = "__GEMINIAPIKEY__"; // API key will be provided by the environment
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
         async function callGeminiAPI(prompt, loader, responseDiv, button) {
