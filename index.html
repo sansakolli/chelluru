@@ -338,6 +338,7 @@
             padding-top: 12px;
             padding-bottom: 12px;
         }
+
         /* YouTube Video Responsive Wrapper */
         .video-container {
             position: relative;
@@ -356,6 +357,7 @@
             width: 100%;
             height: 100%;
         }
+
         /* Play Button Style */
         .play-pause-btn {
             position: absolute;
@@ -378,6 +380,7 @@
             transform: scale(1.1);
             background-color: rgba(255, 255, 255, 0.9);
         }
+
         /* Flash News Animation */
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
@@ -390,6 +393,7 @@
         .animate-slideIn {
             animation: slideIn 0.5s forwards;
         }
+
         /* News Ticker Animation */
         .news-ticker-content {
             display: inline-block;
@@ -409,13 +413,155 @@
             color: #bc5090;
             font-weight: bold;
         }
+
+        /* Welcome Modal Styles */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateY(-20px) scale(0.95);
+            opacity: 0;
+        }
+        .modal-overlay:not(.hidden) .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="text-gray-800">
 
+    <!-- Welcome Modal -->
+    <div id="welcomeModalOverlay" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 modal-overlay hidden">
+        <div id="welcomeModalContent" class="bg-gradient-to-br from-purple-50 via-white to-blue-50 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-lg w-full relative border-2 border-purple-200 modal-content">
+            <button id="closeWelcomeModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            
+            <div id="modalFormContent">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-white rounded-full shadow-md mb-4">
+                        <span class="text-4xl">👋</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold gradient-text mb-2">"మన చెల్లూరు"కు స్వాగతం!</h2>
+                    <p class="text-gray-600">ఈ డిజిటల్ విప్లవంలో భాగమైనందుకు ధన్యవాదాలు.</p>
+                </div>
+                
+                <p class="text-center text-gray-700 mb-6">
+                    ప్రస్తుతం మీరు చూస్తున్నది ఈ ప్రాజెక్ట్ యొక్క డెమో మాత్రమే. మీ అందరి సహాయ సహకారాలతో, మన ఊరి సమస్యలకు డిజిటల్ పరిష్కారాలను చూపే పూర్తిస్థాయి వెబ్‌సైట్‌ను త్వరలోనే మీ ముందుకు తీసుకువస్తాము.
+                </p>
+
+                <form id="welcomeForm" class="space-y-4">
+                    <input type="hidden" name="Source" value="Welcome Popup">
+                    <p class="font-semibold text-center text-gray-800">ఈ ప్రాజెక్ట్‌ను మరింత మెరుగుపరచడానికి మీ అమూల్యమైన సలహాను అందించండి.</p>
+                    <div>
+                        <label for="userName" class="sr-only">మీ పేరు</label>
+                        <input type="text" id="userName" name="Name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 transition" placeholder="మీ పేరు">
+                    </div>
+                    <div>
+                        <label for="userPhone" class="sr-only">మీ ఫోన్ నంబర్</label>
+                        <input type="tel" id="userPhone" name="Phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 transition" placeholder="మీ ఫోన్ నంబర్">
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:opacity-90 transition-all text-lg">
+                        సమాచారం పంపండి
+                    </button>
+                </form>
+            </div>
+
+            <div id="thankYouMessage" class="text-center hidden">
+                 <div class="inline-block p-3 bg-white rounded-full shadow-md mb-4">
+                    <span class="text-4xl">🎉</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-green-600 mb-2">ధన్యవాదాలు!</h2>
+                <p class="text-gray-700 text-lg">మీ వివరాలు స్వీకరించబడ్డాయి. త్వరలో మిమ్మల్ని సంప్రదిస్తాము.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Feature Gate Modal -->
+    <div id="aiFeatureModalOverlay" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 modal-overlay hidden">
+        <div class="bg-gradient-to-br from-blue-50 via-white to-green-50 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-full relative border-2 border-blue-200 modal-content">
+            <button id="closeAiModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            
+            <div class="text-center mb-6">
+                <div class="inline-block p-3 bg-white rounded-full shadow-md mb-4">
+                    <span class="text-4xl">🤖</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold gradient-text mb-2">AI ఫీచర్‌ను యాక్సెస్ చేయండి</h2>
+                <p class="text-gray-600">ఈ అధునాతన ఫీచర్‌ను ఉపయోగించడానికి, దయచేసి మీ వివరాలను నమోదు చేయండి.</p>
+            </div>
+            
+            <p class="text-center text-sm text-gray-700 mb-6">
+                మీరు అందించే సమాచారం ఈ సేవను మెరుగుపరచడానికి మరియు మీకు ఉత్తమ ఫలితాలను అందించడానికి మాకు సహాయపడుతుంది.
+            </p>
+
+            <form id="aiFeatureForm" class="space-y-4">
+                <input type="hidden" name="Source" value="AI Feature Gate">
+                <div>
+                    <label for="aiUserName" class="sr-only">మీ పేరు</label>
+                    <input type="text" id="aiUserName" name="Name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 transition" placeholder="మీ పేరు">
+                </div>
+                <div>
+                    <label for="aiUserPhone" class="sr-only">మీ ఫోన్ నంబర్</label>
+                    <input type="tel" id="aiUserPhone" name="Phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 transition" placeholder="మీ ఫోన్ నంబర్">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-teal-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:opacity-90 transition-all text-lg">
+                    వివరాలు సమర్పించి, కొనసాగండి
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModalOverlay" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 modal-overlay hidden">
+        <div class="bg-gradient-to-br from-purple-50 via-white to-blue-50 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-lg w-full relative border-2 border-purple-200 modal-content">
+            <button id="closeContactModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            
+            <div id="contactFormContent">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-white rounded-full shadow-md mb-4">
+                        <span class="text-4xl">💌</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold gradient-text mb-2">మమ్మల్ని సంప్రదించండి</h2>
+                    <p class="text-gray-600">మీ సలహాలు, సూచనలు మాకు అత్యంత విలువైనవి.</p>
+                </div>
+                
+                <p class="text-center text-sm text-gray-700 mb-6">
+                    ఈ ప్రాజెక్ట్‌ను మనందరం కలిసి విజయవంతం చేద్దాం. దయచేసి మీ వివరాలను క్రింద అందించి, మీ సందేశాన్ని మాకు పంపండి.
+                </p>
+
+                <form id="contactForm" class="space-y-4">
+                    <input type="hidden" name="Source" value="Contact Form">
+                    <div>
+                        <label for="contactName" class="sr-only">మీ పేరు</label>
+                        <input type="text" id="contactName" name="Name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 transition" placeholder="మీ పేరు">
+                    </div>
+                    <div>
+                        <label for="contactPhone" class="sr-only">మీ ఫోన్ నంబర్</label>
+                        <input type="tel" id="contactPhone" name="Phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 transition" placeholder="మీ ఫోన్ నంబర్">
+                    </div>
+                    <div>
+                        <label for="contactMessage" class="sr-only">మీ సందేశం</label>
+                        <textarea id="contactMessage" name="Message" required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 transition" placeholder="మీ సలహాలు / ప్రశ్నలు..."></textarea>
+                    </div>
+                    <button type="submit" id="contactSubmitBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:opacity-90 transition-all text-lg">
+                        సందేశం పంపండి
+                    </button>
+                </form>
+            </div>
+
+            <div id="contactThankYouMessage" class="text-center hidden">
+                 <div class="inline-block p-3 bg-white rounded-full shadow-md mb-4">
+                    <span class="text-4xl">✅</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-green-600 mb-2">ధన్యవాదాలు!</h2>
+                <p class="text-gray-700 text-lg">మీ సందేశం మాకు చేరింది. త్వరలో మిమ్మల్ని సంప్రదిస్తాము.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Flash News Alert Container -->
     <div id="flashNewsContainer" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-2"></div>
 
+    <!-- Web Page -->
     <div class="container mx-auto p-4 md:p-8 max-w-6xl overflow-visible">
 
         <!-- Header -->
@@ -1373,7 +1519,7 @@
                 <!-- New Footer Content -->
                 <div class="mt-8 px-4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white p-4 rounded-xl shadow-md border border-purple-200">
+                        <div id="contactSection" class="bg-white p-4 rounded-xl shadow-md border border-purple-200 cursor-pointer hover:shadow-lg transition-shadow">
                             <div class="text-2xl mb-2">📞</div>
                             <h4 class="font-bold text-purple-700 mb-2">సంప్రదించండి</h4>
                             <p class="text-sm text-gray-600">మీ సూచనలు, ప్రశ్నలు మాకు పంపండి</p>
@@ -1498,27 +1644,91 @@
             responseDiv.classList.remove('hidden');
         }
 
+        // === AI Feature Gate Logic START ===
+        const aiModalOverlay = document.getElementById('aiFeatureModalOverlay');
+        const closeAiModalBtn = document.getElementById('closeAiModalBtn');
+        const aiFeatureForm = document.getElementById('aiFeatureForm');
+        const AI_USER_KEY = 'aiUserDetails';
+        let pendingAiFunction = null;
+
+        const hideAiModal = () => {
+            aiModalOverlay.classList.add('opacity-0');
+            aiModalOverlay.querySelector('.modal-content').classList.add('opacity-0', 'transform');
+            setTimeout(() => aiModalOverlay.classList.add('hidden'), 300);
+        };
+
+        const showAiModal = () => {
+            aiModalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                aiModalOverlay.classList.remove('opacity-0');
+                aiModalOverlay.querySelector('.modal-content').classList.remove('opacity-0', 'transform');
+            }, 10);
+        };
+        
+        closeAiModalBtn.addEventListener('click', () => {
+            pendingAiFunction = null; // వినియోగదారు మూసివేస్తే, పెండింగ్ చర్యను రద్దు చేయండి
+            hideAiModal();
+        });
+
+        aiFeatureForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('aiUserName').value;
+            const phone = document.getElementById('aiUserPhone').value;
+            localStorage.setItem(AI_USER_KEY, JSON.stringify({ name, phone }));
+
+            // Google Sheet కు డేటాను పంపండి
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz4x4rtVEOY0coVwBgjX6uIiGMpRTu1X-iI5opoyM8XkRmKv66Xwx4OVUlpLh6SspWGtQ/exec';
+            const formData = new FormData(aiFeatureForm);
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(data => console.log('AI form submitted successfully:', data))
+                .catch(error => console.error('Error submitting AI form:', error.message));
+
+            hideAiModal();
+            if (typeof pendingAiFunction === 'function') {
+                pendingAiFunction();
+                pendingAiFunction = null;
+            }
+        });
+
+        function executeAiFeature(aiLogicFunction) {
+            if (localStorage.getItem(AI_USER_KEY)) {
+                aiLogicFunction();
+            } else {
+                pendingAiFunction = aiLogicFunction;
+                showAiModal();
+            }
+        }
+        // === AI Feature Gate Logic END ===
+
         generateComplaintBtn.addEventListener('click', () => {
+            executeAiFeature(() => {
             const problem = complaintInput.value;
             const prompt = `You are an expert in official communication in Telugu. A villager from Chelluru has this problem: '${problem}'. Draft a formal, respectful complaint letter in Telugu to be submitted to the village Panchayat office. The letter should be structured properly with a subject, salutation, body, and conclusion. It must clearly state the problem and politely request a swift resolution.`;
             callGeminiAPI(prompt, complaintLoader, complaintResponse, generateComplaintBtn);
+            });
         });
 
         generateAnnouncementBtn.addEventListener('click', () => {
+            executeAiFeature(() => {
             const details = announcementInput.value;
             const prompt = `You are a creative writer in Telugu. Based on these details for an event in Chelluru village: '${details}', write a warm and friendly announcement or invitation message in Telugu. It should be suitable for a village community notice board or a local social media group. Make it sound celebratory and welcoming.`;
             callGeminiAPI(prompt, announcementLoader, announcementResponse, generateAnnouncementBtn);
+            });
         });
         
         generateSloganBtn.addEventListener('click', () => {
+            executeAiFeature(() => {
             const businessType = sloganInput.value;
             const prompt = `You are a creative marketing expert who writes catchy slogans in Telugu. A business owner from Chelluru village has this type of business: '${businessType}'. Generate 3 short, memorable, and attractive slogans in Telugu for their business.`;
             callGeminiAPI(prompt, sloganLoader, sloganResponse, generateSloganBtn);
+            });
         });
 
 
 
         document.addEventListener('DOMContentLoaded', () => {
+
             // వినియోగదారు ఏ ఆడియోను మాన్యువల్‌గా పాజ్ చేసారో ట్రాక్ చేయడానికి
             const userPaused = new Set();
             let currentlyPlayingAudio = null;
@@ -1537,6 +1747,16 @@
 
             // Intersection Observer కాల్‌బ్యాక్
             const observerCallback = (entries, observer) => {
+                // వెల్‌కమ్ మోడల్ యాక్టివ్‌గా ఉంటే, ఆడియో ప్లేబ్యాక్‌ను ఆపండి
+                const modalOverlay = document.getElementById('welcomeModalOverlay');
+                if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
+                    if (currentlyPlayingAudio) {
+                        pauseAllAudios();
+                        currentlyPlayingAudio = null;
+                    }
+                    return;
+                }
+
                 let mostVisibleEntry = null;
                 let maxRatio = 0;
 
@@ -1649,6 +1869,146 @@
             });
 
 
+            // === Welcome Modal Logic START ===
+            const modalOverlay = document.getElementById('welcomeModalOverlay');
+            const closeModalBtn = document.getElementById('closeWelcomeModalBtn');
+            const welcomeForm = document.getElementById('welcomeForm');
+            const modalFormContent = document.getElementById('modalFormContent');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+
+            const hideModal = () => {
+                modalOverlay.classList.add('opacity-0');
+                modalOverlay.querySelector('.modal-content').classList.add('opacity-0', 'transform');
+                setTimeout(() => {
+                    modalOverlay.classList.add('hidden');
+                }, 300); // Animation సమయం తర్వాత దాచిపెట్టండి
+                sessionStorage.setItem('welcomeModalShown', 'true');
+            };
+
+            // సెషన్లో ఇంతకు ముందు చూపించకపోతేనే మోడల్‌ను చూపించు
+            if (!sessionStorage.getItem('welcomeModalShown')) {
+                modalOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    modalOverlay.classList.remove('opacity-0');
+                    modalOverlay.querySelector('.modal-content').classList.remove('opacity-0', 'transform');
+                }, 10); // చిన్న ఆలస్యం తర్వాత animation మొదలుపెట్టండి
+
+                // మోడల్ తెరిచినప్పుడు అన్ని ఆడియోలను ఆపండి
+                pauseAllAudios();
+                currentlyPlayingAudio = null;
+            }
+
+            closeModalBtn.addEventListener('click', hideModal);
+
+            welcomeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const submitBtn = welcomeForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'పంపుతోంది...';
+
+                // Google Sheet కు డేటాను పంపండి
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbz4x4rtVEOY0coVwBgjX6uIiGMpRTu1X-iI5opoyM8XkRmKv66Xwx4OVUlpLh6SspWGtQ/exec';
+                const formData = new FormData(welcomeForm);
+                 fetch(scriptURL, { method: 'POST', body: formData })
+                    .then(response => response.json())
+                    .then(data => console.log('Welcome form submitted:', data))
+                    .catch(error => console.error('Error submitting welcome form:', error));
+
+                //const name = document.getElementById('userName').value;
+                //const phone = document.getElementById('userPhone').value;
+                //console.log('Feedback Received:', { name, phone });
+
+                // ఫారమ్‌ను దాచి, ధన్యవాదాల సందేశాన్ని చూపించు
+                modalFormContent.classList.add('hidden');
+                thankYouMessage.classList.remove('hidden');
+
+                // 3 సెకన్ల తర్వాత మోడల్‌ను ఆటోమాటిక్‌గా మూసివేయండి
+                setTimeout(hideModal, 3000);
+            });
+            // === Welcome Modal Logic END ===
+
+
+            // === Contact Modal Logic START ===
+            const contactModalOverlay = document.getElementById('contactModalOverlay');
+            const closeContactModalBtn = document.getElementById('closeContactModalBtn');
+            const contactForm = document.getElementById('contactForm');
+            const contactFormContent = document.getElementById('contactFormContent');
+            const contactThankYouMessage = document.getElementById('contactThankYouMessage');
+            const contactSection = document.getElementById('contactSection');
+            const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+
+            const hideContactModal = () => {
+                contactModalOverlay.classList.add('opacity-0');
+                contactModalOverlay.querySelector('.modal-content').classList.add('opacity-0', 'transform');
+                setTimeout(() => {
+                    contactModalOverlay.classList.add('hidden');
+                    // Reset form for next time
+                    contactFormContent.classList.remove('hidden');
+                    contactThankYouMessage.classList.add('hidden');
+                    contactForm.reset();
+                    contactSubmitBtn.disabled = false;
+                    contactSubmitBtn.textContent = 'సందేశం పంపండి';
+                }, 300);
+            };
+
+            const showContactModal = () => {
+                contactModalOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    contactModalOverlay.classList.remove('opacity-0');
+                    contactModalOverlay.querySelector('.modal-content').classList.remove('opacity-0', 'transform');
+                }, 10);
+            };
+
+            contactSection.addEventListener('click', showContactModal);
+            closeContactModalBtn.addEventListener('click', hideContactModal);
+
+            contactForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                contactSubmitBtn.disabled = true;
+                contactSubmitBtn.textContent = 'పంపుతోంది...';
+                
+                const formData = new FormData(contactForm);
+                 // **గమనిక: కింద ఉన్న URLను, మీరు 4వ దశలో కాపీ చేసుకున్న మీ సొంత Web App URL తో మార్చండి**
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbz4x4rtVEOY0coVwBgjX6uIiGMpRTu1X-iI5opoyM8XkRmKv66Xwx4OVUlpLh6SspWGtQ/exec'; // మీ URL ఇక్కడ పేస్ట్ చేయండి
+                
+                //formObject._subject = `మన చెల్లూరు వెబ్‌సైట్ నుండి కొత్త సందేశం!`;
+                //const json = JSON.stringify(formObject);
+
+                fetch(scriptURL, { method: 'POST', body: formData})
+                    .then(response => {
+                        const contentType = response.headers.get("content-type");
+                        // Google నుండి సరైన JSON వస్తుందో లేదో తనిఖీ చేయండి
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                            return response.json();
+                        } else {
+                            // JSON రాకపోతే, అది బహుశా ఎర్రర్ పేజీ కావచ్చు. దాన్ని టెక్స్ట్‌గా చదవండి.
+                            return response.text().then(text => {
+                                throw new Error(`Expected JSON, but got something else. Response: ${text}`);
+                            });
+                        }
+                    })
+                    .then(data => {
+                        console.log('Script Response:', data); // డీబగ్గింగ్ కోసం
+                        if (data.result === 'success') {
+                            contactFormContent.classList.add('hidden');
+                            contactThankYouMessage.classList.remove('hidden');
+                            setTimeout(hideContactModal, 4000);
+                        } else {
+                            // స్క్రిప్ట్ ఒక ఎర్రర్‌ను నివేదించింది.
+                            throw new Error(data.error ? `Script Error: ${JSON.stringify(data.error)}` : 'Unknown script error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error submitting form:', error.message); // పూర్తి ఎర్రర్‌ను కన్సోల్‌లో చూడండి
+                        alert('క్షమించండి, సందేశం పంపడంలో లోపం జరిగింది. దయచేసి వివరాలు సరిచూసుకుని మళ్ళీ ప్రయత్నించండి.');
+                        contactSubmitBtn.disabled = false;
+                        contactSubmitBtn.textContent = 'సందేశం పంపండి';
+                    });
+                
+            });
+            // === Contact Modal Logic END ===
+
+
             // PWA Install button logic
             let deferredPrompt;
             const installAppBtn = document.getElementById('installAppBtn');
@@ -1694,6 +2054,7 @@
                 deferredPrompt = null;
             });
 
+
             
             // === Flash News Logic START ===
             const NEWS_FILE_URL = 'news.json';
@@ -1731,6 +2092,8 @@
                 }, 15000); // 15 సెకన్ల తర్వాత ఆటోమాటిక్‌గా మూసివేయబడుతుంది
             }
 
+
+
             // న్యూస్ టిక్కర్‌ను నింపడానికి ఫంక్షన్
             function populateNewsTicker(newsItems) {
                 const tickerContent = document.getElementById('newsTickerContent');
@@ -1749,7 +2112,7 @@
                 tickerContent.innerHTML = newsHtml;
             }
 
-            async function checkFlashNews() {
+            async function checkFlashNews(isInitialLoad = false) {
                 try {
                     const response = await fetch(`${NEWS_FILE_URL}?t=${new Date().getTime()}`); // కాషింగ్‌ను నివారించడానికి
                     if (!response.ok) return;
@@ -1769,9 +2132,12 @@
                         .sort((a, b) => a.id - b.id); // పాతవి ముందుగా చూపించడానికి
 
                     if (newItems.length > 0) {
-                        newItems.forEach(item => displayFlashNews(item));
+                        if (!isInitialLoad) {
+                            // మొదటిసారి లోడ్ అవుతున్నప్పుడు కాకుండా, ఆ తర్వాత వచ్చిన అప్‌డేట్‌లను మాత్రమే చూపించు
+                            newItems.forEach(item => displayFlashNews(item));
+                        }
             
-                        // చూపించిన కొత్త వార్తలలోని గరిష్ట IDని మాత్రమే సేవ్ చేయండి
+                        // చూపించిన లేదా కొత్తగా వచ్చిన వార్తలలోని గరిష్ట IDని సేవ్ చేయండి
                         const maxNewId = Math.max(...newItems.map(item => item.id));
                         localStorage.setItem(LATEST_SEEN_NEWS_KEY, maxNewId.toString());
                     }
@@ -1780,11 +2146,13 @@
                 }
             }
 
+
+
             // అమలు చేయడానికి ముందు, పాత తప్పు డేటాను క్లియర్ చేద్దాం
             localStorage.removeItem('seenNewsArchive'); // పాత సంక్లిష్టమైన ఆర్కైవ్‌ను తొలగించండి
 
-            checkFlashNews(); // పేజీ లోడ్ అయినప్పుడు ఒకసారి తనిఖీ చేయండి
-            setInterval(checkFlashNews, 2000); // ప్రతి నిమిషానికి ఒకసారి కొత్త వార్తల కోసం తనిఖీ చేయండి
+            checkFlashNews(true); // పేజీ లోడ్ అయినప్పుడు, అలర్ట్‌లు చూపించకుండా కేవలం IDని సెట్ చేయండి
+            setInterval(() => checkFlashNews(false), 60000); // ప్రతి నిమిషానికి ఒకసారి కొత్త వార్తల కోసం తనిఖీ చేయండి
             // === Flash News Logic END ===
 
         });          
