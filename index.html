@@ -390,6 +390,25 @@
         .animate-slideIn {
             animation: slideIn 0.5s forwards;
         }
+        /* News Ticker Animation */
+        .news-ticker-content {
+            display: inline-block;
+            padding-left: 100%; /* కుడివైపు స్క్రీన్ బయట నుండి మొదలవడానికి */
+            animation: scroll-left 40s linear infinite;
+            white-space: nowrap; /* వార్తలు ఒకే లైన్‌లో ఉండటానికి */
+        }
+        .news-ticker-content:hover {
+            animation-play-state: paused; /* మౌస్ పెట్టినప్పుడు ఆగడానికి */
+        }
+        @keyframes scroll-left {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .news-separator {
+            margin: 0 1.5rem;
+            color: #bc5090;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -430,6 +449,20 @@
                 </div>
             </div>
         </header>
+
+        <!-- News Ticker Section -->
+        <section class="mb-8 md:mb-12">
+            <div class="bg-white rounded-lg shadow-md p-3 overflow-hidden border-l-4 border-amber-500">
+                <div class="flex items-center">
+                    <span class="bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-md mr-4 flex-shrink-0">తాజా వార్తలు</span>
+                    <div class="flex-grow overflow-hidden">
+                        <div id="newsTickerContent" class="news-ticker-content">
+                            <!-- వార్తలు ఇక్కడ జావాస్క్రిప్ట్ ద్వారా వస్తాయి -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Problems Section -->
         <section class="mb-16 text-center">
@@ -1648,6 +1681,24 @@
                 }, 15000); // 15 సెకన్ల తర్వాత ఆటోమాటిక్‌గా మూసివేయబడుతుంది
             }
 
+            // న్యూస్ టిక్కర్‌ను నింపడానికి ఫంక్షన్
+            function populateNewsTicker(newsItems) {
+                const tickerContent = document.getElementById('newsTickerContent');
+                if (!tickerContent) return;
+
+                if (newsItems.length === 0) {
+                    tickerContent.innerHTML = '<span>ప్రస్తుతానికి తాజా వార్తలు ఏమీ లేవు.</span>';
+                    tickerContent.style.animation = 'none'; // వార్తలు లేకపోతే యానిమేషన్‌ను ఆపండి
+                    return;
+                }
+
+                const newsHtml = newsItems.map(item => 
+                    `<span><strong class="text-gray-800">${item.title}:</strong> <span class="text-gray-600">${item.message}</span></span>`
+                ).join('<span class="news-separator">◆</span>');
+
+                tickerContent.innerHTML = newsHtml;
+            }
+
             async function checkFlashNews() {
                 try {
                     const response = await fetch(`${NEWS_FILE_URL}?t=${new Date().getTime()}`); // కాషింగ్‌ను నివారించడానికి
@@ -1655,6 +1706,10 @@
 
                     const data = await response.json();
                     const allNews = data.newsItems || [];
+
+                    // న్యూస్ టిక్కర్‌ను అన్ని వార్తలతో నింపండి
+                    populateNewsTicker(allNews.sort((a, b) => b.id - a.id)); // కొత్తవి ముందుగా చూపించడానికి
+                    
                     if (allNews.length === 0) return;
 
                     let latestSeenId = parseInt(localStorage.getItem(LATEST_SEEN_NEWS_KEY) || '0');
