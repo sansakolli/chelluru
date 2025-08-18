@@ -378,9 +378,24 @@
             transform: scale(1.1);
             background-color: rgba(255, 255, 255, 0.9);
         }
+        /* Flash News Animation */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        .animate-slideIn {
+            animation: slideIn 0.5s forwards;
+        }
     </style>
 </head>
 <body class="text-gray-800">
+
+    <!-- Flash News Alert Container -->
+    <div id="flashNewsContainer" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-2"></div>
 
     <div class="container mx-auto p-4 md:p-8 max-w-6xl overflow-visible">
 
@@ -1595,6 +1610,73 @@
                 installAppBtn.classList.add('hidden');
                 deferredPrompt = null;
             });
+
+            
+            // === Flash News Logic START ===
+            const NEWS_FILE_URL = 'news.json';
+            const LATEST_SEEN_NEWS_KEY = 'latestSeenNewsId';
+
+            function displayFlashNews(newsItem) {
+                const container = document.getElementById('flashNewsContainer');
+                if (!container) return;
+
+                const alertBox = document.createElement('div');
+                alertBox.className = 'flash-news-alert bg-white p-4 rounded-lg shadow-2xl border-l-4 border-purple-500 w-full animate-slideIn mb-3';
+
+                alertBox.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-purple-800">${newsItem.title}</h4>
+                            <p class="text-sm text-gray-700 mt-1">${newsItem.message}</p>
+                        </div>
+                        <button class="ml-4 text-gray-400 hover:text-gray-700 font-bold text-2xl leading-none">&times;</button>
+                    </div>
+                `;
+
+                container.appendChild(alertBox);
+
+                const closeButton = alertBox.querySelector('button');
+                closeButton.onclick = () => {
+                    alertBox.style.animation = 'slideOut 0.5s forwards';
+                    setTimeout(() => alertBox.remove(), 2000);
+                };
+
+                setTimeout(() => {
+                    if (alertBox) {
+                        closeButton.click();
+                    }
+                }, 15000); // 15 సెకన్ల తర్వాత ఆటోమాటిక్‌గా మూసివేయబడుతుంది
+            }
+
+            async function checkFlashNews() {
+                try {
+                    const response = await fetch(`${NEWS_FILE_URL}?t=${new Date().getTime()}`); // కాషింగ్‌ను నివారించడానికి
+                    if (!response.ok) return;
+
+                    const data = await response.json();
+                    const allNews = data.newsItems || [];
+                    if (allNews.length === 0) return;
+
+                    let latestSeenId = parseInt(localStorage.getItem(LATEST_SEEN_NEWS_KEY) || '0');
+
+                    const newItems = allNews
+                        .filter(item => item.id > latestSeenId)
+                        .sort((a, b) => a.id - b.id); // పాతవి ముందుగా చూపించడానికి
+
+                    if (newItems.length > 0) {
+                        newItems.forEach(item => displayFlashNews(item));
+            
+                        const maxId = Math.max(...allNews.map(item => item.id));
+                        localStorage.setItem(LATEST_SEEN_NEWS_KEY, maxId);
+                    }
+                } catch (error) {
+                    console.error('Error fetching flash news:', error);
+                }
+            }
+
+            checkFlashNews(); // పేజీ లోడ్ అయినప్పుడు ఒకసారి తనిఖీ చేయండి
+            setInterval(checkFlashNews, 60000); // ప్రతి నిమిషానికి ఒకసారి కొత్త వార్తల కోసం తనిఖీ చేయండి
+            // === Flash News Logic END ===
 
         });          
 
