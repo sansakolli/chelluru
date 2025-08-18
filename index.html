@@ -1638,7 +1638,7 @@
                 const closeButton = alertBox.querySelector('button');
                 closeButton.onclick = () => {
                     alertBox.style.animation = 'slideOut 0.5s forwards';
-                    setTimeout(() => alertBox.remove(), 2000);
+                    setTimeout(() => alertBox.remove(), 500);
                 };
 
                 setTimeout(() => {
@@ -1666,13 +1666,17 @@
                     if (newItems.length > 0) {
                         newItems.forEach(item => displayFlashNews(item));
             
-                        const maxId = Math.max(...allNews.map(item => item.id));
-                        localStorage.setItem(LATEST_SEEN_NEWS_KEY, maxId);
+                        // చూపించిన కొత్త వార్తలలోని గరిష్ట IDని మాత్రమే సేవ్ చేయండి
+                        const maxNewId = Math.max(...newItems.map(item => item.id));
+                        localStorage.setItem(LATEST_SEEN_NEWS_KEY, maxNewId.toString());
                     }
                 } catch (error) {
                     console.error('Error fetching flash news:', error);
                 }
             }
+
+            // అమలు చేయడానికి ముందు, పాత తప్పు డేటాను క్లియర్ చేద్దాం
+            localStorage.removeItem('seenNewsArchive'); // పాత సంక్లిష్టమైన ఆర్కైవ్‌ను తొలగించండి
 
             checkFlashNews(); // పేజీ లోడ్ అయినప్పుడు ఒకసారి తనిఖీ చేయండి
             setInterval(checkFlashNews, 2000); // ప్రతి నిమిషానికి ఒకసారి కొత్త వార్తల కోసం తనిఖీ చేయండి
