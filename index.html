@@ -517,7 +517,7 @@
                 
                 <div class="audio-section relative bg-white p-8 rounded-2xl shadow-xl border-2 border-purple-100 text-container">
                     <button class="play-pause-btn" data-audio-id="okka_nimisham_alochinchandi">▶️</button>
-                    <audio id="okka_nimisham_alochinchandi_audio" class="section-audio" src="okka_nimisham_alochinchandi_audio.wav"></audio>
+                    <audio id="okka_nimisham_alochinchandi_audio" class="section-audio" src="audios/okka_nimisham_alochinchandi_audio.wav"></audio>
                     <h3 class="text-3xl font-bold text-[#58508d] mb-6 flex items-center justify-center">
                         <span class="mr-3">💭</span>
                         ఒక్క నిమిషం ఆలోచించండి...
@@ -536,6 +536,34 @@
                 </div>
             </div>
         </section>
+
+         <!-- Local Ad Section -->
+         <div id="ad-section" class="audio-section my-8 md:my-12">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
+                    <div class="md:flex">
+                        <!-- Ad Image -->
+                        <div class="md:w-1/2">
+                            <img class="w-full h-64 object-cover" src="images/Test_image_ad.png" alt="Local Business Advertisement">
+                        </div>
+                        <!-- Ad Content -->
+                        <div class="md:w-1/2 p-6 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">మీ స్థానిక వ్యాపార ప్రకటన ఇక్కడ!</h3>
+                            <p class="text-gray-600 mb-4">
+                                మన చెల్లూరు డిజిటల్ ప్లాట్‌ఫారమ్‌లో మీ వ్యాపారాన్ని వేలాది మందికి పరిచయం చేయండి. మీ ప్రత్యేకతను ప్రపంచానికి చాటిచెప్పండి.
+                            </p>
+                            <!-- Audio Player -->
+                            <audio id="ad_section_audio" class="section-audio w-full" controls>
+                                <source src="audios/ChelluruAd_audio.wav" type="audio/wav">
+                                Your browser does not support the audio element.
+                            </audio>
+                            <p class="text-xs text-gray-500 mt-2">గమనిక: కొన్ని బ్రౌజర్‌లలో ఆడియో ఆటోమాటిక్‌గా ప్లే కాకపోవచ్చు.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Local Ad Section -->
 
         <!-- Solution Section -->
         <section class="text-center bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-12 rounded-3xl shadow-xl mb-16 border-2 border-purple-200">
@@ -564,33 +592,31 @@
             </div>
         </section>
 
-        <!-- Local Ad Section -->
-        <div id="ad-section" class="audio-section my-8 md:my-12">
+        <!-- Birthday Ad Section -->
+        <section class="audio-section my-8 md:my-12 relative">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
+                <div class="bg-gradient-to-br from-yellow-50 via-red-50 to-pink-100 rounded-2xl shadow-xl overflow-hidden border-2 border-pink-200">
                     <div class="md:flex">
-                        <!-- Ad Image -->
+                        <!-- Video Part -->
                         <div class="md:w-1/2">
-                            <img class="w-full h-64 object-cover" src="Test_image_ad.png" alt="Local Business Advertisement">
+                            <video class="w-full h-full object-cover" src="videos/birthday_ad_video.mp4" autoplay loop muted playsinline aria-label="Birthday celebration video"></video>
                         </div>
-                        <!-- Ad Content -->
-                        <div class="md:w-1/2 p-6 flex flex-col justify-center items-center md:items-start text-center md:text-left">
-                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">మీ స్థానిక వ్యాపార ప్రకటన ఇక్కడ!</h3>
-                            <p class="text-gray-600 mb-4">
-                                మన చెల్లూరు డిజిటల్ ప్లాట్‌ఫారమ్‌లో మీ వ్యాపారాన్ని వేలాది మందికి పరిచయం చేయండి. మీ ప్రత్యేకతను ప్రపంచానికి చాటిచెప్పండి.
-                            </p>
-                            <!-- Audio Player -->
-                            <audio id="ad_section_audio" class="section-audio w-full" controls>
-                                <source src="ChelluruAd_audio.wav" type="audio/wav">
-                                Your browser does not support the audio element.
-                            </audio>
-                            <p class="text-xs text-gray-500 mt-2">గమనిక: కొన్ని బ్రౌజర్‌లలో ఆడియో ఆటోమాటిక్‌గా ప్లే కాకపోవచ్చు.</p>
+                        <!-- Content Part -->
+                        <div class="md:w-1/2 p-6 flex flex-col justify-center text-center relative">
+                            <button class="play-pause-btn" data-audio-id="birthday_ad">▶️</button>
+                            <audio id="birthday_ad_audio" class="section-audio" src="audios/birthday_ad_audio.wav"></audio>
+
+                            <h3 class="text-xl sm:text-2xl font-bold text-pink-700 mb-4">మా ముద్దుల కొడుకు అర్జున్‌కు<br>పుట్టినరోజు శుభాకాంక్షలు!</h3>
+                            <blockquote class="text-gray-700 italic border-l-4 border-pink-300 pl-4 mb-4 text-left">
+                                <p>"ఈ పుట్టినరోజు నీ జీవితంలో మరెన్నో విజయాలను, సంతోషాలను తీసుకురావాలని మనస్ఫూర్తిగా కోరుకుంటున్నాము. నువ్వు ఎల్లప్పుడూ ఆయురారోగ్యాలతో వర్ధిల్లాలి."</p>
+                            </blockquote>
+                            <p class="text-right text-gray-800 font-semibold mt-4">ఇట్లు,<br>ప్రేమతో,<br>మీ అమ్మానాన్న.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- End Local Ad Section -->
+        </section>
+        <!-- End Birthday Ad Section -->
 
         <!-- Features Section -->
         <section class="mb-16">
@@ -606,7 +632,7 @@
                 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature01_emergency_directory">▶️</button>
-                    <audio id="feature01_emergency_directory_audio" class="section-audio" src="feature01_emergency_directory_audio.wav"></audio>
+                    <audio id="feature01_emergency_directory_audio" class="section-audio" src="audios/feature01_emergency_directory_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🚨</div>
                     <h3 class="text-xl font-bold text-[#58508d] mb-3">1. అత్యవసరం & డైరెక్టరీ</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> కంగారుకు చెక్, ధైర్యానికి జై!</p>
@@ -643,7 +669,7 @@
 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature02_flash_news">▶️</button>
-                    <audio id="feature02_flash_news_audio" class="section-audio" src="feature02_flash_news_audio.wav"></audio>
+                    <audio id="feature02_flash_news_audio" class="section-audio" src="audios/feature02_flash_news_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">📰</div>
                     <h3 class="text-xl font-bold text-[#bc5090] mb-3">2. ఫ్లాష్ న్యూస్ & అప్‌డేట్స్</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> ముఖ్యమైన వార్తలు మీ ఫోన్‌కు వెంటనే!</p>
@@ -685,7 +711,7 @@
 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature03_digital_card">▶️</button>
-                    <audio id="feature03_digital_card_audio" class="section-audio" src="feature03_digital_card_audio.wav"></audio>
+                    <audio id="feature03_digital_card_audio" class="section-audio" src="audios/feature03_digital_card_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">💼</div>
                     <h3 class="text-xl font-bold text-[#ff6361] mb-3">3. డిజిటల్ విజిటింగ్ కార్డ్ & బిజినెస్ హబ్</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ వ్యాపారానికి, మీ పేరుకు డిజిటల్ గౌరవం!</p>
@@ -726,7 +752,7 @@
 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature04_donations_gallery">▶️</button>
-                    <audio id="feature04_donations_gallery_audio" class="section-audio" src="feature04_donations_gallery_audio.wav"></audio>
+                    <audio id="feature04_donations_gallery_audio" class="section-audio" src="audios/feature04_donations_gallery_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🤝</div>
                     <h3 class="text-xl font-bold text-[#ffa600] mb-3">4. విరాళాల విభాగం & దాతల గ్యాలరీ</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ పెద్ద మనసుకు శాశ్వతమైన గుర్తింపు!</p>
@@ -854,7 +880,7 @@
 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature05_local_ads">▶️</button>
-                    <audio id="feature05_local_ads_audio" class="section-audio" src="feature05_local_ads_audio.wav"></audio>
+                    <audio id="feature05_local_ads_audio" class="section-audio" src="audios/feature05_local_ads_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">📢</div>
                     <h3 class="text-xl font-bold text-[#58508d] mb-3">5. స్థానిక ప్రకటనలు & శుభాకాంక్షల వేదిక</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మీ ఉనికిని చాటిచెప్పండి! మీ ఆనందాన్ని పంచుకోండి!</p>
@@ -904,7 +930,7 @@
 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature06_temple_info">▶️</button>
-                    <audio id="feature06_temple_info_audio" class="section-audio" src="feature06_temple_info_audio.wav"></audio>
+                    <audio id="feature06_temple_info_audio" class="section-audio" src="audios/feature06_temple_info_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🏛️</div>
                     <h3 class="text-xl font-bold text-[#bc5090] mb-3">6. దేవాలయాల సమాచారం</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> ప్రతినెలా జరిగే ప్రత్యేక పూజలు, ఉత్సవాల పూర్తి షెడ్యూల్, మరియు గుడి కమిటీ నిర్ణయాలు ఇకపై మన వెబ్‌సైట్‌లో ఎప్పటికప్పుడు అందుబాటులో ఉంటాయి.</p>
@@ -968,9 +994,33 @@
                     </div>
                 </div>
 
+                <!-- Politician Ad Section -->
+                <div class="audio-section relative md:col-span-2 lg:col-span-3 my-4">
+                    <div class="bg-gradient-to-br from-green-50 via-orange-100 to-amber-100 rounded-2xl shadow-xl overflow-hidden border-2 border-orange-300">
+                        <div class="md:flex">
+                            <!-- Video Part -->
+                            <div class="md:w-1/2">
+                                <video class="w-full h-full object-cover" src="videos/politician_ad_video.mp4" autoplay loop muted playsinline aria-label="Festival wishes video"></video>
+                            </div>
+                            <!-- Content Part -->
+                            <div class="md:w-1/2 p-6 flex flex-col justify-center text-center relative">
+                                <button class="play-pause-btn" data-audio-id="politician_ad">▶️</button>
+                                <audio id="politician_ad_audio" class="section-audio" src="audios/politician_ad_audio.wav"></audio>
+
+                                <h3 class="text-xl sm:text-2xl font-bold text-orange-800 mb-4">చెల్లూరు గ్రామ ప్రజలకు<br>వినాయక చవితి శుభాకాంక్షలు!</h3>
+                                <blockquote class="text-gray-700 italic border-l-4 border-orange-400 pl-4 mb-4 text-left">
+                                    <p>"ఈ వినాయక చవితి మీ అందరి జీవితాల్లో కొత్త వెలుగులు నింపాలని, ఆ విఘ్నేశ్వరుని ఆశీస్సులతో మీరందరూ సుఖసంతోషాలతో, ఆయురారోగ్యాలతో వర్ధిల్లాలని మనస్ఫూర్తిగా కోరుకుంటున్నాను."</p>
+                                </blockquote>
+                                <p class="text-right text-orange-900 font-semibold mt-4">ఇట్లు,<br>మీ శ్రేయోభిలాషి,<br>శ్రీ సంజయ్ కుమార్.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Politician Ad Section -->
+
                  <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature07_problem_solution">▶️</button>
-                    <audio id="feature07_problem_solution_audio" class="section-audio" src="feature07_problem_solution_audio.wav"></audio>
+                    <audio id="feature07_problem_solution_audio" class="section-audio" src="audios/feature07_problem_solution_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🔧</div>
                     <h3 class="text-xl font-bold text-[#ff6361] mb-3">7. సమస్యలు - పరిష్కారాలు</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన గొంతుకను వినిపిద్దాం! మీ నాయకత్వానికి నిలువుటద్దం!</p>
@@ -1026,7 +1076,7 @@
 
                  <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature08_chelluru_tv">▶️</button>
-                    <audio id="feature08_chelluru_tv_audio" class="section-audio" src="feature08_chelluru_tv_audio.wav"></audio>
+                    <audio id="feature08_chelluru_tv_audio" class="section-audio" src="audios/feature08_chelluru_tv_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">📺</div>
                     <h3 class="text-xl font-bold text-[#ffa600] mb-3">8. చెల్లూరు TV (యూట్యూబ్ & ఇన్‌స్టా)</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన ఊరి సొంత మీడియా ఛానెల్!</p>
@@ -1111,7 +1161,7 @@
 
                  <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature09_photo_gallery">▶️</button>
-                    <audio id="feature09_photo_gallery_audio" class="section-audio" src="feature09_photo_gallery_audio.wav"></audio>
+                    <audio id="feature09_photo_gallery_audio" class="section-audio" src="audios/feature09_photo_gallery_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🖼️</div>
                     <h3 class="text-xl font-bold text-[#003f5c] mb-3">9. ఫోటో గ్యాలరీ ("మన జ్ఞాపకాలు") & పండుగల క్యాలెండర్</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన ఊరి చరిత్ర, పాత పండుగల జ్ఞాపకాలతో పాటు, మీరు ఊరికి చేసిన సేవలు కూడా ఈ డిజిటల్ ఆల్బమ్‌లో భద్రపరచబడతాయి. ప్రతి పండుగకు, కార్యక్రమానికి మీరే ముందుండి నడిపించినట్టుగా ఈ వేదిక చాటిచెప్తుంది.</p>
@@ -1169,7 +1219,7 @@
 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature10_school_updates">▶️</button>
-                    <audio id="feature10_school_updates_audio" class="section-audio" src="feature10_school_updates_audio.wav"></audio>
+                    <audio id="feature10_school_updates_audio" class="section-audio" src="audios/feature10_school_updates_audio.wav"></audio>
                     <div class="text-4xl mb-4 text-center">🏫</div>
                     <h3 class="text-xl font-bold text-[#58508d] mb-3">10. స్కూల్ అప్‌డేట్స్ & విద్యా సమాచారం</h3>
                     <p class="text-base text-gray-600 mb-4"><b>ఉదాహరణ:</b> మన పిల్లల భవిష్యత్తు కోసం!</p>
@@ -1275,7 +1325,7 @@
         <!-- Call to Action -->
         <section class="audio-section relative bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 p-4 sm:p-6 md:p-8 lg:p-12 rounded-3xl shadow-2xl text-center border-2 border-purple-200">
             <button class="play-pause-btn" data-audio-id="conclusion">▶️</button>
-            <audio id="conclusion_audio" class="section-audio" src="conclusion_audio.wav"></audio>
+            <audio id="conclusion_audio" class="section-audio" src="audios/conclusion_audio.wav"></audio>
             <div class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="inline-block p-3 sm:p-4 bg-white rounded-full shadow-lg mb-4 sm:mb-6">
                     <span class="text-2xl sm:text-3xl md:text-4xl">💎</span>
@@ -1491,7 +1541,7 @@
                 let maxRatio = 0;
 
                 // కనిపించే సెక్షన్లలో ఏది ఎక్కువగా కనిపిస్తుందో కనుగొనండి
-                 entries.forEach(entry => {
+                entries.forEach(entry => {
                     if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
                         maxRatio = entry.intersectionRatio;
                         mostVisibleEntry = entry;
@@ -1506,7 +1556,7 @@
 
                         // కొత్తగా కనిపించే సెక్షన్ ఆడియో, ప్రస్తుతం ప్లే అవుతున్న ఆడియో ఒకటి కాకపోతేనే మార్చాలి
                         if (targetAudio && (!currentlyPlayingAudio || currentlyPlayingAudio.id !== targetAudio.id)) {
-                            pauseAllAudios();
+                                pauseAllAudios();
                             currentlyPlayingAudio = targetAudio;
 
                             if (!userPaused.has(targetAudio.id)) {
@@ -1523,9 +1573,9 @@
                         }
                     } else if (currentlyPlayingAudio) {
                         // ఏ సెక్షన్ కనిపించకపోతే, అన్నీ ఆపండి
-                        pauseAllAudios();
+                    pauseAllAudios();
                         currentlyPlayingAudio = null;
-                    }
+                }
                 }, 390); // 390 మిల్లీసెకన్ల చిన్న ఆలస్యం
 
             };
@@ -1709,7 +1759,7 @@
 
                     // న్యూస్ టిక్కర్‌ను అన్ని వార్తలతో నింపండి
                     populateNewsTicker(allNews.sort((a, b) => b.id - a.id)); // కొత్తవి ముందుగా చూపించడానికి
-                    
+
                     if (allNews.length === 0) return;
 
                     let latestSeenId = parseInt(localStorage.getItem(LATEST_SEEN_NEWS_KEY) || '0');
