@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>శ్రీనివాస్ పెయింటర్ - డిజిటల్ విజిటింగ్ కార్డ్</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Telugu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Apply the Telugu font to the body */
+        body {
+            font-family: 'Noto Sans Telugu', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom gradient for header */
+        .paint-gradient {
+            background-image: linear-gradient(135deg, #FF9A8B 0%, #FF6A88 25%, #FF99AC 50%, #fbc2eb 75%, #a6c1ee 100%);
+        }
+        
+        /* Simple animation for sections */
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header / Hero Section -->
+    <header class="paint-gradient text-white text-center p-8 md:p-12 shadow-lg relative overflow-hidden">
+        <div class="max-w-4xl mx-auto z-10">
+            <img src="https://placehold.co/120x120/ffffff/333333?text=SP" alt="శ్రీనివాస్ పెయింటర్" class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full border-4 border-white/80 shadow-xl mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">శ్రీనివాస్ పెయింటర్</h1>
+            <p class="mt-2 text-lg md:text-xl text-white/90">మీ ఇంటి పెయింటింగ్ నిపుణుడు</p>
+            <p class="mt-4 max-w-2xl mx-auto text-base md:text-lg">మీ ఇంటికి కొత్త అందాన్ని ఇస్తాము, నాణ్యమైన రంగులతో మీ కలను నిజం చేస్తాము.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- Services Section -->
+        <section id="services" class="my-8 md:my-12 section-fade-in delay-1">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">మా ప్రత్యేక సేవలు</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">మేము అందించే ప్రతి సేవలో నాణ్యత మరియు మీ సంతృప్తే మాకు ముఖ్యం.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Card 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-pink-500">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-paint-roller text-3xl text-pink-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold">ఇంటి లోపల పెయింటింగ్</h3>
+                    </div>
+                    <p class="text-gray-600">మీ గదులకు సరికొత్త జీవకళను ఇస్తూ, నాణ్యమైన రంగులతో ఆహ్లాదకరమైన వాతావరణాన్ని సృష్టిస్తాము.</p>
+                </div>
+                <!-- Service Card 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-500">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-home text-3xl text-blue-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold">ఇంటి బయట పెయింటింగ్</h3>
+                    </div>
+                     <p class="text-gray-600">ఎండ, వాన నుండి మీ ఇంటికి పూర్తి రక్షణ కల్పిస్తూ, చూడటానికి ఆకర్షణీయంగా ఉండేలా పెయింటింగ్ చేస్తాము.</p>
+                </div>
+                <!-- Service Card 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-yellow-500">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-brush text-3xl text-yellow-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold">వుడ్ పాలిషింగ్</h3>
+                    </div>
+                    <p class="text-gray-600">మీ తలుపులు, ఫర్నిచర్ మెరిసేలా చేసి, వాటికి పాతకాలపు అందాన్ని తిరిగి తీసుకువస్తాము.</p>
+                </div>
+                <!-- Service Card 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-purple-500">
+                    <div class="flex items-center mb-3">
+                       <i class="fas fa-palette text-3xl text-purple-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold">వాల్ డిజైనింగ్ & టెక్స్చర్స్</h3>
+                    </div>
+                    <p class="text-gray-600">మీ అభిరుచికి తగ్గట్టుగా అద్భుతమైన డిజైన్లు మరియు టెక్స్చర్లతో గోడలకు ప్రత్యేకతను జోడిస్తాము.</p>
+                </div>
+                <!-- Service Card 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-green-500">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-door-open text-3xl text-green-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold">డోర్ & విండో పెయింటింగ్</h3>
+                    </div>
+                    <p class="text-gray-600">తలుపులు మరియు కిటికీలకు జాగ్రత్తగా పెయింట్ చేసి, మీ ఇంటి అందాన్ని రెట్టింపు చేస్తాము.</p>
+                </div>
+                <!-- Service Card 6 -->
+                 <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-red-500">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-building text-3xl text-red-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold">కొత్త మరియు పాత భవనాలకు</h3>
+                    </div>
+                    <p class="text-gray-600">కొత్త ఇంటికైనా లేదా పాత ఇంటిని పునరుద్ధరించడానికైనా, మా అనుభవంతో ఉత్తమ సేవలు అందిస్తాము.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="my-8 md:my-12 section-fade-in delay-2">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">మా కళాఖండాలు</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <img src="https://placehold.co/600x400/FF6A88/FFFFFF?text=రంగుల+ఇల్లు" alt="Interior Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
+                <img src="https://placehold.co/600x400/1E90FF/FFFFFF?text=ఆధునిక+శైలి" alt="Exterior Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
+                <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=అందమైన+డిజైన్" alt="Design Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
+                <img src="https://placehold.co/600x400/8A2BE2/FFFFFF?text=వాల్+టెక్స్చర్" alt="Texture Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
+                <img src="https://placehold.co/600x400/32CD32/FFFFFF?text=వుడ్+పాలిష్" alt="Polishing Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
+                <img src="https://placehold.co/600x400/DC143C/FFFFFF?text=బయటి+అందం" alt="Modern House" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="my-8 md:my-12 bg-white p-8 rounded-xl shadow-lg section-fade-in delay-3">
+            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">మమ్మల్ని సంప్రదించండి</h2>
+            <div class="text-center max-w-lg mx-auto">
+                <p class="text-lg mb-6">
+                    మీ ఇంటికి పెయింటింగ్ వేయించాలనుకుంటున్నారా? ఉత్తమ ధర మరియు నాణ్యమైన పని కోసం ఇప్పుడే మమ్మల్ని సంప్రదించండి.
+                </p>
+                <div class="space-y-4">
+                    <!-- Phone Number -->
+                    <div class="flex items-center justify-center text-xl">
+                        <i class="fas fa-phone-alt text-blue-600 mr-3"></i>
+                        <a href="tel:+919876543210" class="hover:text-blue-600 transition-colors">+91 98765 43210</a>
+                    </div>
+                    <!-- Address -->
+                    <div class="flex items-center justify-center text-xl">
+                        <i class="fas fa-map-marker-alt text-blue-600 mr-3"></i>
+                        <span>మీ ఊరు పేరు, మండలం, జిల్లా</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Action Buttons -->
+    <footer class="sticky bottom-0 bg-white p-4 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] section-fade-in delay-4">
+        <div class="flex justify-around items-center max-w-xl mx-auto">
+            <!-- Call Button -->
+            <a href="tel:+919876543210" class="flex-1 flex flex-col items-center justify-center bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 mx-2">
+                <i class="fas fa-phone-alt mb-1"></i>
+                <span>ఇప్పుడే కాల్ చేయండి</span>
+            </a>
+            <!-- WhatsApp Button -->
+            <a href="https://wa.me/919876543210?text=నమస్కారం,%20నేను%20పెయింటింగ్%20గురించి%20మాట్లాడాలనుకుంటున్నాను." target="_blank" class="flex-1 flex flex-col items-center justify-center bg-green-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105 mx-2">
+                 <i class="fab fa-whatsapp mb-1"></i>
+                <span>వాట్సాప్‌లో మెసేజ్</span>
+            </a>
+        </div>
+        <p class="text-center text-gray-500 text-sm mt-4">© 2024 శ్రీనివాస్ పెయింటర్. సర్వ హక్కులు ప్రత్యేకించబడినవి.</p>
+    </footer>
+
+</body>
+</html>
