@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Swiper.js Carousel Library -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         /* Apply the Telugu font to the body */
         body {
@@ -39,17 +41,78 @@
         .delay-2 { animation-delay: 0.4s; }
         .delay-3 { animation-delay: 0.6s; }
         .delay-4 { animation-delay: 0.8s; }
+
+        /* Custom gradient for Hero Text */
+        .hero-gradient-text {
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Play Button Style for Service Cards */
+        .play-pause-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .play-pause-btn:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        /* Custom styles for portfolio swiper pagination */
+        .portfolio-swiper {
+            position: relative;
+            padding-bottom: 30px; /* Space for pagination dots */
+        }
+        .portfolio-swiper .swiper-pagination-bullet {
+            background-color: #cbd5e1; /* gray-300 */
+            width: 10px;
+            height: 10px;
+            opacity: 1;
+            transition: background-color 0.3s;
+        }
+        .portfolio-swiper .swiper-pagination-bullet-active {
+            background-color: #f97316; /* orange-500 */
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Header / Hero Section -->
-    <header class="paint-gradient text-white text-center p-8 md:p-12 shadow-lg relative overflow-hidden">
-        <div class="max-w-4xl mx-auto z-10">
-            <img src="https://placehold.co/120x120/ffffff/333333?text=SP" alt="శ్రీనివాస్ పెయింటర్" class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full border-4 border-white/80 shadow-xl mb-4">
-            <h1 class="text-4xl md:text-5xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">శ్రీనివాస్ పెయింటర్</h1>
-            <p class="mt-2 text-lg md:text-xl text-white/90">మీ ఇంటి పెయింటింగ్ నిపుణుడు</p>
-            <p class="mt-4 max-w-2xl mx-auto text-base md:text-lg">మీ ఇంటికి కొత్త అందాన్ని ఇస్తాము, నాణ్యమైన రంగులతో మీ కలను నిజం చేస్తాము.</p>
+    <header class="text-white text-center shadow-lg relative overflow-hidden bg-gray-800">
+        <!-- గమనిక: ఈ బ్యానర్ చిత్రాన్ని మీ సొంత పనికి సంబంధించిన చిత్రంతో మార్చండి -->
+        <img src="images/house_painting_banner.jpeg" alt="పెయింటింగ్ బ్యాన‌ర్" class="absolute inset-0 w-full h-full object-cover z-0">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/60 z-10"></div>
+        
+        <!-- Content -->
+        <div class="relative z-20 max-w-4xl mx-auto p-6 sm:p-10 md:p-12">
+            <!-- గమనిక: ఈ ప్రొఫైల్ చిత్రాన్ని మీ సొంత చిత్రంతో 'images' ఫోల్డర్‌లో ఉంచి మార్చండి -->
+            <img src="images/indian_house_painter_profile.jpeg" alt="శ్రీనివాస్ పెయింటర్" class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full border-4 border-white/80 shadow-xl mb-6 transform hover:scale-110 transition-transform duration-300">
+            
+            <h1 class="text-4xl md:text-5xl font-bold hero-gradient-text drop-shadow-lg py-2">శ్రీనివాస్ పెయింటర్</h1>
+            
+            <p class="mt-4 text-lg md:text-xl text-white/95 font-semibold tracking-wide" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.7); margin-top: -8px;">మీ ఇంటికి రంగుల కళ!</p>
+            
+            <p class="mt-6 max-w-2xl mx-auto text-base md:text-lg leading-relaxed text-white/80" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.7); margin-top: 2ex;">
+                నాణ్యమైన పెయింటింగ్ సేవలతో మీ ఇంటి రూపురేఖలను మార్చేద్దాం. <br class="hidden sm:block">
+                ప్రతి గోడకు ఒక కొత్త కథ చెబుదాం.
+            </p>
         </div>
     </header>
 
@@ -59,111 +122,344 @@
         <section id="services" class="my-8 md:my-12 section-fade-in delay-1">
             <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">మా ప్రత్యేక సేవలు</h2>
             <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">మేము అందించే ప్రతి సేవలో నాణ్యత మరియు మీ సంతృప్తే మాకు ముఖ్యం.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <!-- Service Card 1 -->
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-pink-500">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-paint-roller text-3xl text-pink-500 mr-4"></i>
-                        <h3 class="text-xl font-semibold">ఇంటి లోపల పెయింటింగ్</h3>
+                <div class="audio-section bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x400/FF6A88/FFFFFF?text=లోపలి+రంగులు" alt="ఇంటి లోపల పెయింటింగ్" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button class="play-pause-btn" data-audio-id="service1">▶️</button>
+                        <audio id="service1_audio" class="section-audio" src="audios/sathishpaint_dummy_audio.wav" loop></audio>
                     </div>
-                    <p class="text-gray-600">మీ గదులకు సరికొత్త జీవకళను ఇస్తూ, నాణ్యమైన రంగులతో ఆహ్లాదకరమైన వాతావరణాన్ని సృష్టిస్తాము.</p>
+                    <div class="p-4">
+                        <div class="flex items-start mb-2">
+                            <i class="fas fa-paint-roller text-xl text-pink-500 mr-3 mt-1"></i>
+                            <h3 class="text-lg font-semibold">ఇంటి లోపల పెయింటింగ్</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">మీ గదులకు సరికొత్త జీవకళను ఇస్తూ, ఆహ్లాదకరమైన వాతావరణాన్ని సృష్టిస్తాము.</p>
+                    </div>
                 </div>
                 <!-- Service Card 2 -->
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-500">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-home text-3xl text-blue-500 mr-4"></i>
-                        <h3 class="text-xl font-semibold">ఇంటి బయట పెయింటింగ్</h3>
+                <div class="audio-section bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x400/1E90FF/FFFFFF?text=బయటి+అందం" alt="ఇంటి బయట పెయింటింగ్" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button class="play-pause-btn" data-audio-id="service2">▶️</button>
+                        <audio id="service2_audio" class="section-audio" src="audios/sathishpaint_dummy02_audio.wav" loop></audio>
                     </div>
-                     <p class="text-gray-600">ఎండ, వాన నుండి మీ ఇంటికి పూర్తి రక్షణ కల్పిస్తూ, చూడటానికి ఆకర్షణీయంగా ఉండేలా పెయింటింగ్ చేస్తాము.</p>
+                    <div class="p-4">
+                         <div class="flex items-start mb-2">
+                            <i class="fas fa-home text-xl text-blue-500 mr-3 mt-1"></i>
+                            <h3 class="text-lg font-semibold">ఇంటి బయట పెయింటింగ్</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">ఎండ, వాన నుండి మీ ఇంటికి పూర్తి రక్షణ కల్పిస్తూ, ఆకర్షణీయంగా మారుస్తాము.</p>
+                    </div>
                 </div>
                 <!-- Service Card 3 -->
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-yellow-500">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-brush text-3xl text-yellow-500 mr-4"></i>
-                        <h3 class="text-xl font-semibold">వుడ్ పాలిషింగ్</h3>
+                <div class="audio-section bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden group">
+                     <div class="relative">
+                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=వుడ్+పాలిష్" alt="వుడ్ పాలిషింగ్" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button class="play-pause-btn" data-audio-id="service3">▶️</button>
+                        <audio id="service3_audio" class="section-audio" src="audios/service3_audio.mp3" loop></audio>
                     </div>
-                    <p class="text-gray-600">మీ తలుపులు, ఫర్నిచర్ మెరిసేలా చేసి, వాటికి పాతకాలపు అందాన్ని తిరిగి తీసుకువస్తాము.</p>
+                    <div class="p-4">
+                         <div class="flex items-start mb-2">
+                            <i class="fas fa-brush text-xl text-yellow-500 mr-3 mt-1"></i>
+                            <h3 class="text-lg font-semibold">వుడ్ పాలిషింగ్</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">మీ ఫర్నిచర్ మెరిసేలా చేసి, వాటికి పాతకాలపు అందాన్ని తిరిగి తీసుకువస్తాము.</p>
+                    </div>
                 </div>
                 <!-- Service Card 4 -->
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-purple-500">
-                    <div class="flex items-center mb-3">
-                       <i class="fas fa-palette text-3xl text-purple-500 mr-4"></i>
-                        <h3 class="text-xl font-semibold">వాల్ డిజైనింగ్ & టెక్స్చర్స్</h3>
+                <div class="audio-section bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x400/8A2BE2/FFFFFF?text=వాల్+డిజైన్" alt="వాల్ డిజైనింగ్" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button class="play-pause-btn" data-audio-id="service4">▶️</button>
+                        <audio id="service4_audio" class="section-audio" src="audios/service4_audio.mp3" loop></audio>
                     </div>
-                    <p class="text-gray-600">మీ అభిరుచికి తగ్గట్టుగా అద్భుతమైన డిజైన్లు మరియు టెక్స్చర్లతో గోడలకు ప్రత్యేకతను జోడిస్తాము.</p>
+                    <div class="p-4">
+                         <div class="flex items-start mb-2">
+                           <i class="fas fa-palette text-xl text-purple-500 mr-3 mt-1"></i>
+                            <h3 class="text-lg font-semibold">వాల్ డిజైనింగ్</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">మీ అభిరుచికి తగ్గట్టుగా అద్భుతమైన డిజైన్లు, టెక్స్చర్లతో గోడలకు ప్రత్యేకతను జోడిస్తాము.</p>
+                    </div>
                 </div>
                 <!-- Service Card 5 -->
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-green-500">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-door-open text-3xl text-green-500 mr-4"></i>
-                        <h3 class="text-xl font-semibold">డోర్ & విండో పెయింటింగ్</h3>
+                <div class="audio-section bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x400/32CD32/FFFFFF?text=డోర్+పెయింట్" alt="డోర్ పెయింటింగ్" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button class="play-pause-btn" data-audio-id="service5">▶️</button>
+                        <audio id="service5_audio" class="section-audio" src="audios/service5_audio.mp3" loop></audio>
                     </div>
-                    <p class="text-gray-600">తలుపులు మరియు కిటికీలకు జాగ్రత్తగా పెయింట్ చేసి, మీ ఇంటి అందాన్ని రెట్టింపు చేస్తాము.</p>
+                    <div class="p-4">
+                         <div class="flex items-start mb-2">
+                            <i class="fas fa-door-open text-xl text-green-500 mr-3 mt-1"></i>
+                            <h3 class="text-lg font-semibold">డోర్ & విండో పెయింటింగ్</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">తలుపులు, కిటికీలకు జాగ్రత్తగా పెయింట్ చేసి, మీ ఇంటి అందాన్ని రెట్టింపు చేస్తాము.</p>
+                    </div>
                 </div>
                 <!-- Service Card 6 -->
-                 <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-red-500">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-building text-3xl text-red-500 mr-4"></i>
-                        <h3 class="text-xl font-semibold">కొత్త మరియు పాత భవనాలకు</h3>
+                 <div class="audio-section bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden group">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x400/DC143C/FFFFFF?text=భవనాలు" alt="భవనాలు" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button class="play-pause-btn" data-audio-id="service6">▶️</button>
+                        <audio id="service6_audio" class="section-audio" src="audios/service6_audio.mp3" loop></audio>
                     </div>
-                    <p class="text-gray-600">కొత్త ఇంటికైనా లేదా పాత ఇంటిని పునరుద్ధరించడానికైనా, మా అనుభవంతో ఉత్తమ సేవలు అందిస్తాము.</p>
+                    <div class="p-4">
+                         <div class="flex items-start mb-2">
+                            <i class="fas fa-building text-xl text-red-500 mr-3 mt-1"></i>
+                            <h3 class="text-lg font-semibold">కొత్త మరియు పాత భవనాలకు</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">కొత్త ఇంటికైనా, పాత ఇంటిని పునరుద్ధరించడానికైనా, ఉత్తమ సేవలు అందిస్తాము.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Portfolio Section -->
         <section id="portfolio" class="my-8 md:my-12 section-fade-in delay-2">
-            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">మా కళాఖండాలు</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <img src="https://placehold.co/600x400/FF6A88/FFFFFF?text=రంగుల+ఇల్లు" alt="Interior Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
-                <img src="https://placehold.co/600x400/1E90FF/FFFFFF?text=ఆధునిక+శైలి" alt="Exterior Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
-                <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=అందమైన+డిజైన్" alt="Design Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
-                <img src="https://placehold.co/600x400/8A2BE2/FFFFFF?text=వాల్+టెక్స్చర్" alt="Texture Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
-                <img src="https://placehold.co/600x400/32CD32/FFFFFF?text=వుడ్+పాలిష్" alt="Polishing Work" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
-                <img src="https://placehold.co/600x400/DC143C/FFFFFF?text=బయటి+అందం" alt="Modern House" class="rounded-lg shadow-md w-full h-full object-cover hover:opacity-80 transition-opacity transform hover:scale-105 duration-300">
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="my-8 md:my-12 bg-white p-8 rounded-xl shadow-lg section-fade-in delay-3">
-            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">మమ్మల్ని సంప్రదించండి</h2>
-            <div class="text-center max-w-lg mx-auto">
-                <p class="text-lg mb-6">
-                    మీ ఇంటికి పెయింటింగ్ వేయించాలనుకుంటున్నారా? ఉత్తమ ధర మరియు నాణ్యమైన పని కోసం ఇప్పుడే మమ్మల్ని సంప్రదించండి.
-                </p>
-                <div class="space-y-4">
-                    <!-- Phone Number -->
-                    <div class="flex items-center justify-center text-xl">
-                        <i class="fas fa-phone-alt text-blue-600 mr-3"></i>
-                        <a href="tel:+919876543210" class="hover:text-blue-600 transition-colors">+91 98765 43210</a>
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">రంగులతో మేము చేసిన అద్భుతాలు</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">మేము పూర్తి చేసిన కొన్ని ప్రాజెక్టుల చిత్రాలు. మా పనితనానికి ఇవి కొన్ని ఉదాహరణలు మాత్రమే.</p>
+            
+            <div class="space-y-4">
+                <!-- Top Row: Two static images -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="aspect-video overflow-hidden rounded-lg shadow-md group cursor-pointer">
+                        <img src="https://placehold.co/600x400/FF6A88/FFFFFF?text=రంగుల+ఇల్లు" alt="Interior Work" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 portfolio-image">
                     </div>
-                    <!-- Address -->
-                    <div class="flex items-center justify-center text-xl">
-                        <i class="fas fa-map-marker-alt text-blue-600 mr-3"></i>
-                        <span>మీ ఊరు పేరు, మండలం, జిల్లా</span>
+                    <div class="aspect-video overflow-hidden rounded-lg shadow-md group cursor-pointer">
+                        <img src="https://placehold.co/600x400/1E90FF/FFFFFF?text=ఆధునిక+శైలి" alt="Exterior Work" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 portfolio-image">
+                    </div>
+                </div>
+
+                <!-- Middle Row: Automatic Slider -->
+                <div class="swiper portfolio-swiper aspect-video rounded-lg shadow-md overflow-hidden">
+                    <div class="swiper-wrapper">
+                        <!-- Slider Image 1 -->
+                        <div class="swiper-slide">
+                            <div class="w-full h-full cursor-pointer group">
+                                <img src="https://placehold.co/800x450/F59E0B/FFFFFF?text=అందమైన+డిజైన్" alt="Design Work" class="w-full h-full object-cover portfolio-image">
+                            </div>
+                        </div>
+                        <!-- Slider Image 2 -->
+                        <div class="swiper-slide">
+                             <div class="w-full h-full cursor-pointer group">
+                                <img src="https://placehold.co/800x450/8A2BE2/FFFFFF?text=వాల్+టెక్స్చర్" alt="Texture Work" class="w-full h-full object-cover portfolio-image">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <!-- Bottom Row: Two static images -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="aspect-video overflow-hidden rounded-lg shadow-md group cursor-pointer">
+                        <img src="https://placehold.co/600x400/32CD32/FFFFFF?text=వుడ్+పాలిష్" alt="Polishing Work" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 portfolio-image">
+                    </div>
+                    <div class="aspect-video overflow-hidden rounded-lg shadow-md group cursor-pointer">
+                        <img src="https://placehold.co/600x400/DC143C/FFFFFF?text=బయటి+అందం" alt="Modern House" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 portfolio-image">
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Contact Section -->
+        <section id="contact" class="my-8 md:my-12 py-12 md:py-16 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-2xl shadow-xl section-fade-in delay-3 overflow-hidden relative">
+            <!-- Background pattern -->
+            <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+            
+            <div class="relative text-center max-w-2xl mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-4 drop-shadow-lg">
+                    మీ కలల ఇంటికి రంగులు వేద్దామా?
+                </h2>
+                <p class="text-lg mb-8 text-white/90 leading-relaxed">
+                    ఉత్తమ నాణ్యత, సరసమైన ధర. మీ ప్రాజెక్ట్ గురించి చర్చించడానికి మరియు ఉచితంగా సలహాలు పొందడానికి ఇప్పుడే మాతో మాట్లాడండి.
+                </p>
+        
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
+                    <!-- Call Button -->
+                    <a href="tel:+919876543210" class="flex items-center justify-center w-full sm:w-auto bg-white text-orange-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 text-lg">
+                        <i class="fas fa-phone-alt mr-3"></i>
+                        <span>+91 98765 43210</span>
+                    </a>
+                    
+                    <!-- Address -->
+                    <div class="flex items-center justify-center bg-white/20 backdrop-blur-sm text-white font-semibold py-3 px-6 rounded-full shadow-lg text-base">
+                        <i class="fas fa-map-marker-alt mr-3"></i>
+                        <span>చెల్లూరు, విజయనగరం.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
     </main>
 
     <!-- Floating Action Buttons -->
-    <footer class="sticky bottom-0 bg-white p-4 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] section-fade-in delay-4">
-        <div class="flex justify-around items-center max-w-xl mx-auto">
+    <footer class="sticky bottom-0 bg-white/95 backdrop-blur-sm p-3 border-t border-gray-200 section-fade-in delay-4">
+        <div class="flex justify-center items-center gap-3 max-w-xl mx-auto">
             <!-- Call Button -->
-            <a href="tel:+919876543210" class="flex-1 flex flex-col items-center justify-center bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 mx-2">
-                <i class="fas fa-phone-alt mb-1"></i>
-                <span>ఇప్పుడే కాల్ చేయండి</span>
+            <a href="tel:+919876543210" class="flex items-center justify-center w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-phone-alt mr-2"></i>
+                <span class="text-sm">ఇప్పుడే కాల్ చేయండి</span>
             </a>
             <!-- WhatsApp Button -->
-            <a href="https://wa.me/919876543210?text=నమస్కారం,%20నేను%20పెయింటింగ్%20గురించి%20మాట్లాడాలనుకుంటున్నాను." target="_blank" class="flex-1 flex flex-col items-center justify-center bg-green-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105 mx-2">
-                 <i class="fab fa-whatsapp mb-1"></i>
-                <span>వాట్సాప్‌లో మెసేజ్</span>
+            <a href="https://wa.me/919876543210?text=నమస్కారం,%20నేను%20పెయింటింగ్%20గురించి%20మాట్లాడాలనుకుంటున్నాను." target="_blank" class="flex items-center justify-center w-full sm:w-auto bg-green-500 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105">
+                 <i class="fab fa-whatsapp mr-2"></i>
+                <span class="text-sm">వాట్సాప్‌లో మెసేజ్</span>
             </a>
         </div>
-        <p class="text-center text-gray-500 text-sm mt-4">© 2024 శ్రీనివాస్ పెయింటర్. సర్వ హక్కులు ప్రత్యేకించబడినవి.</p>
+        <p class="text-center text-gray-500 text-xs mt-3">© 2024 శ్రీనివాస్ పెయింటర్. సర్వ హక్కులు ప్రత్యేకించబడినవి.</p>
     </footer>
+
+    <!-- Lightbox Modal for Portfolio Images -->
+    <div id="lightbox-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="lightbox-content" class="relative max-w-4xl max-h-full transform scale-95 transition-transform duration-300">
+            <img id="lightbox-image" src="" alt="Portfolio Work" class="rounded-lg shadow-2xl object-contain max-h-[90vh]">
+            <button id="lightbox-close" class="absolute -top-3 -right-3 text-white bg-rose-600 rounded-full h-10 w-10 flex items-center justify-center text-2xl hover:bg-rose-700 transition-all duration-300 transform hover:rotate-90">&times;</button>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentlyPlayingAudio = null;
+
+            // అన్ని ఆడియోలను ఒక్కసారిగా ఆపడానికి ఒక సహాయక ఫంక్షన్
+            const pauseAllAudios = (exceptThisOne = null) => {
+                document.querySelectorAll('.section-audio').forEach(audio => {
+                    if (audio !== exceptThisOne && !audio.paused) {
+                        audio.pause();
+                    }
+                });
+            };
+
+            // --- అన్ని ఆడియోలకు - మాన్యువల్ ప్లే/పాజ్ బటన్ల కోసం లాజిక్ ---
+            document.querySelectorAll('.play-pause-btn').forEach(button => {
+                const audioId = button.getAttribute('data-audio-id') + '_audio';
+                const audio = document.getElementById(audioId);
+
+                if (audio) {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (audio.paused) {
+                            pauseAllAudios(audio);
+                            audio.play();
+                        } else {
+                            audio.pause();
+                        }
+                    });
+
+                    audio.addEventListener('play', () => { 
+                        button.textContent = '⏸️'; 
+                        currentlyPlayingAudio = audio;
+                    });
+                    audio.addEventListener('pause', () => { 
+                        button.textContent = '▶️'; 
+                        if (currentlyPlayingAudio === audio) {
+                            currentlyPlayingAudio = null;
+                        }
+                    });
+                    audio.addEventListener('ended', () => { 
+                        button.textContent = '▶️';
+                        if (currentlyPlayingAudio === audio) {
+                            currentlyPlayingAudio = null;
+                        }
+                    });
+                }
+            });
+
+            // --- విభాగం కనిపించనప్పుడు ఆడియోను ఆటో-పాజ్ చేయడానికి Intersection Observer ---
+            const observerCallback = (entries) => {
+                entries.forEach(entry => {
+                    const audio = entry.target.querySelector('.section-audio');
+                    if (audio) {
+                        // విభాగం కనిపించనప్పుడు మరియు ఆడియో ప్లే అవుతున్నప్పుడు, దానిని పాజ్ చేయండి
+                        if (!entry.isIntersecting && !audio.paused) {
+                            audio.pause();
+                        }
+                    }
+                });
+            };
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // 10% కంటే తక్కువ కనిపిస్తే పాజ్ అవుతుంది
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            // ఆడియో ఉన్న అన్ని విభాగాలను గమనించండి
+            document.querySelectorAll('.audio-section').forEach(section => {
+                observer.observe(section);
+            });
+
+
+            // --- పోర్ట్‌ఫోలియో లైట్‌బాక్స్ కోసం లాజిక్ ---
+            const portfolioImages = document.querySelectorAll('.portfolio-image');
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxContent = document.getElementById('lightbox-content');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.getElementById('lightbox-close');
+
+            portfolioImages.forEach(image => {
+                image.closest('.cursor-pointer').addEventListener('click', () => {
+                    lightboxImage.src = image.src;
+                    lightboxModal.classList.remove('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        lightboxContent.classList.remove('scale-95');
+                    }, 50); 
+                });
+            });
+
+            const closeModal = () => {
+                lightboxContent.classList.add('scale-95');
+                lightboxModal.classList.add('opacity-0');
+                setTimeout(() => {
+                    lightboxModal.classList.add('pointer-events-none');
+                }, 300);
+            };
+
+            lightboxClose.addEventListener('click', closeModal);
+
+            lightboxModal.addEventListener('click', (e) => {
+                if (e.target === lightboxModal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !lightboxModal.classList.contains('pointer-events-none')) {
+                    closeModal();
+                }
+            });
+            
+            // --- పోర్ట్‌ఫోలియో స్లైడర్ కోసం Swiper JS ---
+            new Swiper('.portfolio-swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        });
+    </script>    
 
 </body>
 </html>
