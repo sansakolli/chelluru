@@ -493,69 +493,74 @@
         }
 
         /* Demo Songs Carousel Styles */
+        /* ... other styles ... */
         .demo-swiper {
             width: 100%;
             max-width: 900px;
-            aspect-ratio: 16 / 9; /* స్లైడర్‌కు సరైన ఎత్తును ఇవ్వడానికి */
-            border-radius: 1.5rem; /* మరింత గుండ్రని అంచులు */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-left: auto;
-            margin-right: auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         .demo-swiper .swiper-slide {
             position: relative;
-            background-color: #1a202c; /* ముదురు నేపథ్య రంగు */
-            border-radius: 1.5rem;
-            overflow: hidden; /* చిత్రం అంచులు కూడా గుండ్రంగా ఉండటానికి */
+            overflow: hidden;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .demo-swiper .swiper-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.4; /* వచనం స్పష్టంగా కనిపించడానికి చిత్రాన్ని కొద్దిగా మసకబారేలా చేయడం */
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
         }
         .demo-swiper .swiper-slide:hover img {
-            transform: scale(1.05); /* హోవర్ చేసినప్పుడు కొద్దిగా జూమ్ ఎఫెక్ట్ */
+            transform: scale(1.05);
         }
         .demo-swiper .slide-content {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 2rem;
-            box-sizing: border-box;
-            color: white;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
-            text-align: left;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px; /* Adjust as needed */
+            padding: 1.5rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 1rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .demo-swiper .slide-content h3 {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
             margin-bottom: 0.5rem;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
-         .demo-swiper .slide-content p {
+       .demo-swiper .slide-content p {
             font-size: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
         }
+        /* Navigation Buttons Styling */
         .demo-swiper .swiper-button-next,
         .demo-swiper .swiper-button-prev {
-            color: #ffffff;
-            background-color: rgba(0,0,0,0.2);
-            width: 44px; /* కొద్దిగా చిన్నవి */
-            height: 44px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 50%;
-            transition: background-color 0.3s ease;
+            width: 44px;
+            height: 44px;
+            transition: background-color 0.3s;
         }
         .demo-swiper .swiper-button-next:hover,
         .demo-swiper .swiper-button-prev:hover {
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.6);
         }
-        .demo-swiper .swiper-button-next:after,
-        .demo-swiper .swiper-button-prev:after {
-            font-size: 1.25rem; /* చిన్న బాణం గుర్తులు */
-            font-weight: bold;
+        .demo-swiper .swiper-button-next::after,
+        .demo-swiper .swiper-button-prev::after {
+            font-size: 20px;
         }
     </style>
 </head>
@@ -874,13 +879,13 @@
                 <div class="bg-gradient-to-br from-yellow-50 via-red-50 to-pink-100 rounded-2xl shadow-xl overflow-hidden border-2 border-pink-200">
                     <div class="md:flex">
                         <!-- Video Part -->
-                        <div class="md:w-1/2">
+                        <div class="md:w-1/2 relative">
                             <video class="w-full h-full object-cover" src="videos/birthday_ad_video.mp4" autoplay loop muted playsinline aria-label="Birthday celebration video"></video>
+                            <button class="play-pause-btn !top-auto !bottom-2 !right-2 z-20" data-audio-id="birthday_ad">▶️</button>
                         </div>
                         <!-- Content Part -->
                         <div class="md:w-1/2 p-6 flex flex-col justify-center text-center relative">
-                            <button class="play-pause-btn" data-audio-id="birthday_ad">▶️</button>
-                            <audio id="birthday_ad_audio" class="section-audio" src="audios/birthday_ad_audio.wav"></audio>
+                            <audio id="birthday_ad_audio" class="section-audio" src="audios/birthday_ad_audio.wav" loop></audio>
 
                             <h3 class="text-xl sm:text-2xl font-bold text-pink-700 mb-4">మా ముద్దుల కొడుకు అర్జున్‌కు<br>పుట్టినరోజు శుభాకాంక్షలు!</h3>
                             <blockquote class="text-gray-700 italic border-l-4 border-pink-300 pl-4 mb-4 text-left">
@@ -1026,29 +1031,46 @@
                     </div>
                 </div>
 
-                <!-- Politician Ad Section -->
-                <div class="audio-section relative md:col-span-2 lg:col-span-3 my-4">
-                    <div class="bg-gradient-to-br from-green-50 via-orange-100 to-amber-100 rounded-2xl shadow-xl overflow-hidden border-2 border-orange-300">
-                        <div class="md:flex">
-                            <!-- Video Part -->
-                            <div class="md:w-1/2">
-                                <video class="w-full h-full object-cover" src="videos/politician_ad_video.mp4" autoplay loop muted playsinline aria-label="Festival wishes video"></video>
+                <!-- Demo Webpages Carousel Section -->
+                <div class="audio-section md:col-span-2 lg:col-span-3 my-4 feature-card">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl font-bold text-[#58508d]">డెమో వెబ్ పేజీలు</h3>
+                        <p class="text-sm text-gray-500">మా నమూనా పేజీలను చూడటానికి స్లైడ్ చేయండి లేదా క్లిక్ చేయండి.</p>
+                    </div>
+                    <button class="play-pause-btn !top-1 !right-1 z-20" data-audio-id="demo_pages">▶️</button>
+                    <!-- Swiper -->
+                    <div class="swiper demo-pages-swiper">
+                        <div class="swiper-wrapper">
+                            <!-- Slide 1: Painter -->
+                            <div class="swiper-slide">
+                                <a href="webpages/PainterDigitalVisitingCard/index.html" target="_blank">
+                                    <img src="images/painter_image_ad.jpeg" alt="డిజిటల్ విజిటింగ్ కార్డ్ డెమో">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                                        <h4 class="font-bold">పెయింటర్ డిజిటల్ కార్డ్</h4>
+                                        <p class="text-xs">నమూనా చూడటానికి క్లిక్ చేయండి</p>
+                                    </div>
+                                </a>
                             </div>
-                            <!-- Content Part -->
-                            <div class="md:w-1/2 p-6 flex flex-col justify-center text-center relative">
-                                <button class="play-pause-btn" data-audio-id="politician_ad">▶️</button>
-                                <audio id="politician_ad_audio" class="section-audio" src="audios/politician_ad_audio.wav"></audio>
-
-                                <h3 class="text-xl sm:text-2xl font-bold text-orange-800 mb-4">చెల్లూరు గ్రామ ప్రజలకు<br>వినాయక చవితి శుభాకాంక్షలు!</h3>
-                                <blockquote class="text-gray-700 italic border-l-4 border-orange-400 pl-4 mb-4 text-left">
-                                    <p>"ఈ వినాయక చవితి మీ అందరి జీవితాల్లో కొత్త వెలుగులు నింపాలని, ఆ విఘ్నేశ్వరుని ఆశీస్సులతో మీరందరూ సుఖసంతోషాలతో, ఆయురారోగ్యాలతో వర్ధిల్లాలని మనస్ఫూర్తిగా కోరుకుంటున్నాను."</p>
-                                </blockquote>
-                                <p class="text-right text-orange-900 font-semibold mt-4">ఇట్లు,<br>మీ శ్రేయోభిలాషి,<br>శ్రీ సంజయ్ కుమార్.</p>
+                            <!-- Slide 2: Politician -->
+                            <div class="swiper-slide">
+                                <a href="webpages/Politician/index.html" target="_blank">
+                                    <img src="images/politician_image_ad.png" alt="రాజకీయ నాయకుల ప్రొఫైల్ డెమో">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                                        <h4 class="font-bold">రాజకీయ నాయకుల ప్రొఫైల్</h4>
+                                        <p class="text-xs">నమూనా చూడటానికి క్లిక్ చేయండి</p>
+                                    </div>
+                                </a>
                             </div>
                         </div>
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- Audio Player -->
+                        <audio id="demo_pages_audio" class="section-audio" src="audios/feature03_digital_card_audio.wav" loop></audio>
                     </div>
                 </div>
-                <!-- End Politician Ad Section -->
 
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature04_donations_gallery">▶️</button>
@@ -1294,6 +1316,30 @@
                     </div>
                 </div>
 
+                <!-- Politician Ad Section -->
+                <div class="audio-section relative md:col-span-2 lg:col-span-3 my-4">
+                    <div class="bg-gradient-to-br from-green-50 via-orange-100 to-amber-100 rounded-2xl shadow-xl overflow-hidden border-2 border-orange-300">
+                        <div class="md:flex">
+                            <!-- Video Part -->
+                            <div class="md:w-1/2 relative">
+                                <video class="w-full h-full object-cover" src="videos/politician_ad_video.mp4" autoplay loop muted playsinline aria-label="Festival wishes video"></video>
+                                <button class="play-pause-btn !top-auto !bottom-2 !right-2 z-20" data-audio-id="politician_ad">▶️</button>
+                            </div>
+                            <!-- Content Part -->
+                            <div class="md:w-1/2 p-6 flex flex-col justify-center text-center relative">
+                                <audio id="politician_ad_audio" class="section-audio" src="audios/politician_ad_audio.wav" loop></audio>
+
+                                <h3 class="text-xl sm:text-2xl font-bold text-orange-800 mb-4">చెల్లూరు గ్రామ ప్రజలకు<br>వినాయక చవితి శుభాకాంక్షలు!</h3>
+                                <blockquote class="text-gray-700 italic border-l-4 border-orange-400 pl-4 mb-4 text-left">
+                                    <p>"ఈ వినాయక చవితి మీ అందరి జీవితాల్లో కొత్త వెలుగులు నింపాలని, ఆ విఘ్నేశ్వరుని ఆశీస్సులతో మీరందరూ సుఖసంతోషాలతో, ఆయురారోగ్యాలతో వర్ధిల్లాలని మనస్ఫూర్తిగా కోరుకుంటున్నాను."</p>
+                                </blockquote>
+                                <p class="text-right text-orange-900 font-semibold mt-4">ఇట్లు,<br>మీ శ్రేయోభిలాషి,<br> బంగారయ్య</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Politician Ad Section -->
+
                  <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature07_problem_solution">▶️</button>
                     <audio id="feature07_problem_solution_audio" class="section-audio" src="audios/feature07_problem_solution_audio.wav"></audio>
@@ -1493,47 +1539,6 @@
                     </div>
                 </div>
 
-                <!-- Demo Webpages Carousel Section -->
-                <div class="audio-section md:col-span-2 lg:col-span-3 my-4 feature-card">
-                    <div class="text-center mb-4">
-                        <h3 class="text-xl font-bold text-[#58508d]">డెమో వెబ్ పేజీలు</h3>
-                        <p class="text-sm text-gray-500">మా నమూనా పేజీలను చూడటానికి స్లైడ్ చేయండి లేదా క్లిక్ చేయండి.</p>
-                    </div>
-                    <!-- Swiper -->
-                    <div class="swiper demo-pages-swiper">
-                        <div class="swiper-wrapper">
-                            <!-- Slide 1: Painter -->
-                            <div class="swiper-slide">
-                                <a href="webpages/PainterDigitalVisitingCard/index.html" target="_blank">
-                                    <img src="images/Test_image_ad.png" alt="డిజిటల్ విజిటింగ్ కార్డ్ డెమో">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                                    <div class="absolute bottom-0 left-0 p-4 text-white">
-                                        <h4 class="font-bold">పెయింటర్ డిజిటల్ కార్డ్</h4>
-                                        <p class="text-xs">నమూనా చూడటానికి క్లిక్ చేయండి</p>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- Slide 2: Politician -->
-                            <div class="swiper-slide">
-                                <a href="webpages/Politician/index.html" target="_blank">
-                                    <img src="images/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png" alt="రాజకీయ నాయకుల ప్రొఫైల్ డెమో">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                                    <div class="absolute bottom-0 left-0 p-4 text-white">
-                                        <h4 class="font-bold">రాజకీయ నాయకుల ప్రొఫైల్</h4>
-                                        <p class="text-xs">నమూనా చూడటానికి క్లిక్ చేయండి</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Navigation Buttons -->
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                        <!-- Audio Player -->
-                        <audio id="demo_pages_audio" class="section-audio" src="audios/feature03_digital_card_audio.wav" loop></audio>
-                        <button class="play-pause-btn !top-4 !right-4 z-20" data-audio-id="demo_pages">▶️</button>
-                    </div>
-                </div>
-
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature10_school_updates">▶️</button>
                     <audio id="feature10_school_updates_audio" class="section-audio" src="audios/feature10_school_updates_audio.wav"></audio>
@@ -1700,7 +1705,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>          
 
         <!-- Demo Songs Carousel Section -->
         <section id="demo-songs-section" class="audio-section my-16">
@@ -1708,50 +1713,58 @@
                 <div class="inline-block p-4 bg-gradient-to-r from-teal-100 to-blue-100 rounded-full mb-6">
                     <span class="text-4xl">🎵</span>
                 </div>
-                <h2 class="text-3xl md:text-4xl font-bold text-[#003f5c] mb-4">మన ఊరి పాటలు - ఒక ప్రదర్శన</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-[#003f5c] mb-4">ప్రత్యేక సందర్భాల కోసం మా పాటలు</h2>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-                    ఈ డెమో పాటలను వినడానికి స్లైడ్ చేయండి లేదా ప్రక్కన ఉన్న బాణం గుర్తులను ఉపయోగించండి.
+                    మేము వేడుకల కోసం ప్రత్యేకంగా స్వరపరిచిన కొన్ని నమూనా పాటలివి. ఇలాంటి పాటలు మీకోసం కూడా కావాలంటే, మమ్మల్ని సంప్రదించండి.
                 </p>
             </div>
 
             <!-- Swiper -->
             <div class="swiper demo-swiper mx-auto relative">
                 <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
+                    <!-- Slide 1: Personalized Song -->
                     <div class="swiper-slide">
-                        <img src="images/Test_image_ad.png" alt="డెమో పాట 1 చిత్రం" />
+                        <img src="images/bangarayya_song_image.png" alt="వ్యక్తిగత పాట డెమో" />
                         <div class="slide-content">
-                            <h3>మన చెల్లూరు గీతం</h3>
-                            <p>మన ఊరి ఐక్యతను, అందాన్ని వర్ణించే ప్రత్యేక గీతం.</p>
+                            <h3>వ్యక్తిగత గీతం</h3>
+                            <p>శ్రీ బంగారయ్య గారి కోసం స్వరపరిచిన వ్యక్తిగత గీతం.</p>
                         </div>
-                        <!-- గమనిక: మీ సొంత ఆడియో ఫైల్‌తో మార్చండి -->
                         <audio class="demo-song-audio" id="demo_song_1_audio" src="audios/Bangarayya_01_audio.mp3"></audio>
                     </div>
-                    <!-- Slide 2 -->
+                    <!-- Slide 2: Wedding Song -->
                     <div class="swiper-slide">
-                        <img src="images/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png" alt="డెమో పాట 2 చిత్రం" />
+                        <img src="images/wedding_song_image.png" alt="వివాహ గీతం డెమో" />
                         <div class="slide-content">
-                            <h3>సంక్రాంతి సందడి</h3>
-                            <p>పండుగ వాతావరణాన్ని ప్రతిబింబించే ఉత్సాహభరితమైన పాట.</p>
+                            <h3>వివాహ మహోత్సవ గీతం</h3>
+                            <p>నూతన వధూవరుల కోసం స్వరపరిచిన పెళ్లి పాట.</p>
                         </div>
                         <audio class="demo-song-audio" id="demo_song_2_audio" src="audios/Wedding_01_audio.mp3"></audio>
                     </div>
-                    <!-- Slide 3 -->
+                    <!-- Slide 3: Birthday Song -->
                     <div class="swiper-slide">
-                        <img src="images/Test_image_ad.png" alt="డెమో పాట 3 చిత్రం" />
+                        <img src="images/birthday_song_image.png" alt="పుట్టినరోజు పాట డెమో" />
                         <div class="slide-content">
-                            <h3>రైతన్న பெருமை</h3>
-                            <p>మన రైతుల కష్టాన్ని, గొప్పతనాన్ని తెలిపే జానపద గీతం.</p>
+                            <h3>పుట్టినరోజు ప్రత్యేక పాట</h3>
+                            <p>మీ ఆత్మీయుల పుట్టినరోజు వేడుకను మరింత మధురంగా మార్చే పాట.</p>
                         </div>
-                        <audio class="demo-song-audio" id="demo_song_3_audio" src="audios/School_01_audio.mp3"></audio>
+                        <audio class="demo-song-audio" id="demo_song_3_audio" src="audios/Birthday_01_audio.mp3"></audio>
+                    </div>
+                    <!-- Slide 4: Political Song -->
+                    <div class="swiper-slide">
+                        <img src="images/political_song_image.jpeg" alt="రాజకీయ ప్రచార గీతం డెమో" />
+                        <div class="slide-content">
+                            <h3>రాజకీయ ప్రచార గీతం</h3>
+                            <p>నాయకుల ప్రచారానికి ఉత్తేజాన్నిచ్చేలా స్వరపరిచిన పాట.</p>
+                        </div>
+                        <audio class="demo-song-audio" id="demo_song_4_audio" src="audios/Political_01_audio.mp3"></audio>
                     </div>
                 </div>
                 <!-- Navigation Buttons -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
                 <!-- Main Play/Pause Button -->
-                <button class="play-pause-btn !top-auto !right-auto left-1/2 bottom-4 transform -translate-x-1/2 z-20" id="main-demo-play-pause-btn" data-audio-id="main_demo">▶️</button>
-             </div>
+                <button class="play-pause-btn !top-1/2 !left-1/2 !bottom-auto !right-auto transform -translate-x-1/2 -translate-y-1/2 z-20 opacity-75 hover:opacity-100 transition-opacity" id="main-demo-play-pause-btn" data-audio-id="main_demo">▶️</button>
+            </div>
         </section>
 
         <!-- Footer -->
@@ -2141,10 +2154,10 @@
                         }
                     } else if (currentlyPlayingAudio) {
                         // ఏ సెక్షన్ కనిపించకపోతే, అన్నీ ఆపండి
-                        pauseAllAudios();
+                    pauseAllAudios();
                         demoSwiperEl && demoSwiperEl.querySelectorAll('.demo-song-audio').forEach(a => a.pause());
                         currentlyPlayingAudio = null;
-                    }
+                }
                 }, 390); // 390 మిల్లీసెకన్ల చిన్న ఆలస్యం
 
             };
