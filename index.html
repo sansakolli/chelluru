@@ -11,6 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
 
+    <!-- Swiper.js Carousel Library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#58508d">
     <link rel="apple-touch-icon" href="ChelluruAppIcon512.png">
@@ -426,6 +430,132 @@
         .modal-overlay:not(.hidden) .modal-content {
             transform: translateY(0) scale(1);
             opacity: 1;
+        }
+
+        /* Image Carousel Styles - Updated for Fade Effect */
+        .carousel-fade-container {
+            position: relative;
+            width: 100%;
+            padding-top: 62.5%; /* 8:5 aspect ratio for a pleasant look */
+            background-color: #e2e8f0; /* Placeholder background */
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; /* Smooth fade transition */
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* Demo Webpages Carousel Styles */
+        .demo-pages-swiper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 1rem; /* rounded-xl */
+            overflow: hidden;
+            position: relative;
+        }
+        .demo-pages-swiper .swiper-slide a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .demo-pages-swiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .demo-pages-swiper .swiper-button-next,
+        .demo-pages-swiper .swiper-button-prev {
+            color: #ffffff;
+            background-color: rgba(0,0,0,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        .demo-pages-swiper .swiper-button-next:hover,
+        .demo-pages-swiper .swiper-button-prev:hover {
+            background-color: rgba(0,0,0,0.5);
+        }
+        .demo-pages-swiper .swiper-button-next:after,
+        .demo-pages-swiper .swiper-button-prev:after {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Demo Songs Carousel Styles */
+        .demo-swiper {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9; /* స్లైడర్‌కు సరైన ఎత్తును ఇవ్వడానికి */
+            border-radius: 1.5rem; /* మరింత గుండ్రని అంచులు */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .demo-swiper .swiper-slide {
+            position: relative;
+            background-color: #1a202c; /* ముదురు నేపథ్య రంగు */
+            border-radius: 1.5rem;
+            overflow: hidden; /* చిత్రం అంచులు కూడా గుండ్రంగా ఉండటానికి */
+        }
+        .demo-swiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4; /* వచనం స్పష్టంగా కనిపించడానికి చిత్రాన్ని కొద్దిగా మసకబారేలా చేయడం */
+            transition: transform 0.4s ease;
+        }
+        .demo-swiper .swiper-slide:hover img {
+            transform: scale(1.05); /* హోవర్ చేసినప్పుడు కొద్దిగా జూమ్ ఎఫెక్ట్ */
+        }
+        .demo-swiper .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            box-sizing: border-box;
+            color: white;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+            text-align: left;
+        }
+        .demo-swiper .slide-content h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+         .demo-swiper .slide-content p {
+            font-size: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .demo-swiper .swiper-button-next,
+        .demo-swiper .swiper-button-prev {
+            color: #ffffff;
+            background-color: rgba(0,0,0,0.2);
+            width: 44px; /* కొద్దిగా చిన్నవి */
+            height: 44px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        .demo-swiper .swiper-button-next:hover,
+        .demo-swiper .swiper-button-prev:hover {
+            background-color: rgba(0,0,0,0.5);
+        }
+        .demo-swiper .swiper-button-next:after,
+        .demo-swiper .swiper-button-prev:after {
+            font-size: 1.25rem; /* చిన్న బాణం గుర్తులు */
+            font-weight: bold;
         }
     </style>
 </head>
@@ -896,6 +1026,30 @@
                     </div>
                 </div>
 
+                <!-- Politician Ad Section -->
+                <div class="audio-section relative md:col-span-2 lg:col-span-3 my-4">
+                    <div class="bg-gradient-to-br from-green-50 via-orange-100 to-amber-100 rounded-2xl shadow-xl overflow-hidden border-2 border-orange-300">
+                        <div class="md:flex">
+                            <!-- Video Part -->
+                            <div class="md:w-1/2">
+                                <video class="w-full h-full object-cover" src="videos/politician_ad_video.mp4" autoplay loop muted playsinline aria-label="Festival wishes video"></video>
+                            </div>
+                            <!-- Content Part -->
+                            <div class="md:w-1/2 p-6 flex flex-col justify-center text-center relative">
+                                <button class="play-pause-btn" data-audio-id="politician_ad">▶️</button>
+                                <audio id="politician_ad_audio" class="section-audio" src="audios/politician_ad_audio.wav"></audio>
+
+                                <h3 class="text-xl sm:text-2xl font-bold text-orange-800 mb-4">చెల్లూరు గ్రామ ప్రజలకు<br>వినాయక చవితి శుభాకాంక్షలు!</h3>
+                                <blockquote class="text-gray-700 italic border-l-4 border-orange-400 pl-4 mb-4 text-left">
+                                    <p>"ఈ వినాయక చవితి మీ అందరి జీవితాల్లో కొత్త వెలుగులు నింపాలని, ఆ విఘ్నేశ్వరుని ఆశీస్సులతో మీరందరూ సుఖసంతోషాలతో, ఆయురారోగ్యాలతో వర్ధిల్లాలని మనస్ఫూర్తిగా కోరుకుంటున్నాను."</p>
+                                </blockquote>
+                                <p class="text-right text-orange-900 font-semibold mt-4">ఇట్లు,<br>మీ శ్రేయోభిలాషి,<br>శ్రీ సంజయ్ కుమార్.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Politician Ad Section -->
+
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature04_donations_gallery">▶️</button>
                     <audio id="feature04_donations_gallery_audio" class="section-audio" src="audios/feature04_donations_gallery_audio.wav"></audio>
@@ -1140,30 +1294,6 @@
                     </div>
                 </div>
 
-                <!-- Politician Ad Section -->
-                <div class="audio-section relative md:col-span-2 lg:col-span-3 my-4">
-                    <div class="bg-gradient-to-br from-green-50 via-orange-100 to-amber-100 rounded-2xl shadow-xl overflow-hidden border-2 border-orange-300">
-                        <div class="md:flex">
-                            <!-- Video Part -->
-                            <div class="md:w-1/2">
-                                <video class="w-full h-full object-cover" src="videos/politician_ad_video.mp4" autoplay loop muted playsinline aria-label="Festival wishes video"></video>
-                            </div>
-                            <!-- Content Part -->
-                            <div class="md:w-1/2 p-6 flex flex-col justify-center text-center relative">
-                                <button class="play-pause-btn" data-audio-id="politician_ad">▶️</button>
-                                <audio id="politician_ad_audio" class="section-audio" src="audios/politician_ad_audio.wav"></audio>
-
-                                <h3 class="text-xl sm:text-2xl font-bold text-orange-800 mb-4">చెల్లూరు గ్రామ ప్రజలకు<br>వినాయక చవితి శుభాకాంక్షలు!</h3>
-                                <blockquote class="text-gray-700 italic border-l-4 border-orange-400 pl-4 mb-4 text-left">
-                                    <p>"ఈ వినాయక చవితి మీ అందరి జీవితాల్లో కొత్త వెలుగులు నింపాలని, ఆ విఘ్నేశ్వరుని ఆశీస్సులతో మీరందరూ సుఖసంతోషాలతో, ఆయురారోగ్యాలతో వర్ధిల్లాలని మనస్ఫూర్తిగా కోరుకుంటున్నాను."</p>
-                                </blockquote>
-                                <p class="text-right text-orange-900 font-semibold mt-4">ఇట్లు,<br>మీ శ్రేయోభిలాషి,<br>శ్రీ సంజయ్ కుమార్.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Politician Ad Section -->
-
                  <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature07_problem_solution">▶️</button>
                     <audio id="feature07_problem_solution_audio" class="section-audio" src="audios/feature07_problem_solution_audio.wav"></audio>
@@ -1363,6 +1493,47 @@
                     </div>
                 </div>
 
+                <!-- Demo Webpages Carousel Section -->
+                <div class="audio-section md:col-span-2 lg:col-span-3 my-4 feature-card">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl font-bold text-[#58508d]">డెమో వెబ్ పేజీలు</h3>
+                        <p class="text-sm text-gray-500">మా నమూనా పేజీలను చూడటానికి స్లైడ్ చేయండి లేదా క్లిక్ చేయండి.</p>
+                    </div>
+                    <!-- Swiper -->
+                    <div class="swiper demo-pages-swiper">
+                        <div class="swiper-wrapper">
+                            <!-- Slide 1: Painter -->
+                            <div class="swiper-slide">
+                                <a href="webpages/PainterDigitalVisitingCard/index.html" target="_blank">
+                                    <img src="images/Test_image_ad.png" alt="డిజిటల్ విజిటింగ్ కార్డ్ డెమో">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                                        <h4 class="font-bold">పెయింటర్ డిజిటల్ కార్డ్</h4>
+                                        <p class="text-xs">నమూనా చూడటానికి క్లిక్ చేయండి</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- Slide 2: Politician -->
+                            <div class="swiper-slide">
+                                <a href="webpages/Politician/index.html" target="_blank">
+                                    <img src="images/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png" alt="రాజకీయ నాయకుల ప్రొఫైల్ డెమో">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                                        <h4 class="font-bold">రాజకీయ నాయకుల ప్రొఫైల్</h4>
+                                        <p class="text-xs">నమూనా చూడటానికి క్లిక్ చేయండి</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- Audio Player -->
+                        <audio id="demo_pages_audio" class="section-audio" src="audios/feature03_digital_card_audio.wav" loop></audio>
+                        <button class="play-pause-btn !top-4 !right-4 z-20" data-audio-id="demo_pages">▶️</button>
+                    </div>
+                </div>
+
                 <div class="audio-section feature-card group">
                     <button class="play-pause-btn" data-audio-id="feature10_school_updates">▶️</button>
                     <audio id="feature10_school_updates_audio" class="section-audio" src="audios/feature10_school_updates_audio.wav"></audio>
@@ -1427,6 +1598,35 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Village Memories Carousel Section -->
+        <section id="village-memories-section" class="audio-section my-16">
+            <div class="max-w-5xl mx-auto text-center">
+                <div class="inline-block p-4 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full mb-6">
+                    <span class="text-4xl">🎞️</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-[#003f5c] mb-4">మన జ్ఞాపకాలు - మన ఊరి ప్రయాణం</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+                    పాత ఫోటోలతో మన చెల్లూరు గతాన్ని గుర్తుచేసుకుంటూ, మన ఊరి పాటను విందాం.
+                </p>
+
+                <div class="relative rounded-2xl shadow-xl overflow-hidden border-4 border-white bg-gray-200">
+                    <!-- Carousel Container -->
+                    <div class="carousel-fade-container">
+                        <!-- గమనిక: ఈ చిత్రాలను మీ ఊరి పాత చిత్రాలతో మార్చండి -->
+                        <img src="images/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png" alt="చెల్లూరు పాత జ్ఞాపకం 1" class="carousel-slide">
+                        <img src="images/Test_image_ad.png" alt="చెల్లూరు పాత జ్ఞాపకం 2" class="carousel-slide">
+                        <img src="https://via.placeholder.com/800x500/cccccc/808080?text=మీ+గ్రామ+ఫోటో+3" alt="చెల్లూరు పాత జ్ఞాపకం 3" class="carousel-slide">
+                        <img src="https://via.placeholder.com/800x500/cccccc/808080?text=మీ+గ్రామ+ఫోటో+4" alt="చెల్లూరు పాత జ్ఞాపకం 4" class="carousel-slide">
+                    </div>
+                    
+                    <!-- Audio Player -->
+                    <!-- గమనిక: audios/village_song_audio.wav ఫైల్‌ను మీ సొంత పాటతో మార్చండి -->
+                    <audio id="village_song_audio" class="section-audio" src="audios/Chelluru_gurthupattalenandi_audio.mp3" loop></audio>
+                    <button class="play-pause-btn !top-auto !right-auto left-1/2 bottom-4 transform -translate-x-1/2" data-audio-id="village_song">▶️</button>
+                </div>
             </div>
         </section>
         
@@ -1500,6 +1700,58 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- Demo Songs Carousel Section -->
+        <section id="demo-songs-section" class="audio-section my-16">
+            <div class="max-w-5xl mx-auto text-center px-4">
+                <div class="inline-block p-4 bg-gradient-to-r from-teal-100 to-blue-100 rounded-full mb-6">
+                    <span class="text-4xl">🎵</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-[#003f5c] mb-4">మన ఊరి పాటలు - ఒక ప్రదర్శన</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+                    ఈ డెమో పాటలను వినడానికి స్లైడ్ చేయండి లేదా ప్రక్కన ఉన్న బాణం గుర్తులను ఉపయోగించండి.
+                </p>
+            </div>
+
+            <!-- Swiper -->
+            <div class="swiper demo-swiper mx-auto relative">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <img src="images/Test_image_ad.png" alt="డెమో పాట 1 చిత్రం" />
+                        <div class="slide-content">
+                            <h3>మన చెల్లూరు గీతం</h3>
+                            <p>మన ఊరి ఐక్యతను, అందాన్ని వర్ణించే ప్రత్యేక గీతం.</p>
+                        </div>
+                        <!-- గమనిక: మీ సొంత ఆడియో ఫైల్‌తో మార్చండి -->
+                        <audio class="demo-song-audio" id="demo_song_1_audio" src="audios/Bangarayya_01_audio.mp3"></audio>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <img src="images/Gemini_Generated_Image_bqk9rbqk9rbqk9rb.png" alt="డెమో పాట 2 చిత్రం" />
+                        <div class="slide-content">
+                            <h3>సంక్రాంతి సందడి</h3>
+                            <p>పండుగ వాతావరణాన్ని ప్రతిబింబించే ఉత్సాహభరితమైన పాట.</p>
+                        </div>
+                        <audio class="demo-song-audio" id="demo_song_2_audio" src="audios/Wedding_01_audio.mp3"></audio>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide">
+                        <img src="images/Test_image_ad.png" alt="డెమో పాట 3 చిత్రం" />
+                        <div class="slide-content">
+                            <h3>రైతన్న பெருமை</h3>
+                            <p>మన రైతుల కష్టాన్ని, గొప్పతనాన్ని తెలిపే జానపద గీతం.</p>
+                        </div>
+                        <audio class="demo-song-audio" id="demo_song_3_audio" src="audios/School_01_audio.mp3"></audio>
+                    </div>
+                </div>
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Main Play/Pause Button -->
+                <button class="play-pause-btn !top-auto !right-auto left-1/2 bottom-4 transform -translate-x-1/2 z-20" id="main-demo-play-pause-btn" data-audio-id="main_demo">▶️</button>
+             </div>
         </section>
 
         <!-- Footer -->
@@ -1729,6 +1981,88 @@
 
         document.addEventListener('DOMContentLoaded', () => {
 
+            // === Demo Songs Carousel Logic START ===
+            const demoSwiperEl = document.querySelector('.demo-swiper');
+            if (demoSwiperEl) {
+                const mainPlayPauseBtn = document.getElementById('main-demo-play-pause-btn');
+
+                const swiper = new Swiper('.demo-swiper', {
+                    loop: true,
+                    effect: 'fade',
+                    fadeEffect: {
+                        crossFade: true
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+
+                const getActiveAudio = () => {
+                    const activeSlide = demoSwiperEl.querySelector('.swiper-slide-active');
+                    return activeSlide ? activeSlide.querySelector('.demo-song-audio') : null;
+                };
+
+                const stopAllDemoAudios = () => {
+                    demoSwiperEl.querySelectorAll('.demo-song-audio').forEach(audio => {
+                        if (!audio.paused) {
+                            audio.pause();
+                            audio.currentTime = 0;
+                        }
+                    });
+                };
+
+                const updatePlayPauseIcon = (audio) => {
+                    if (audio && !audio.paused) {
+                        mainPlayPauseBtn.textContent = '⏸️';
+                    } else {
+                        mainPlayPauseBtn.textContent = '▶️';
+                    }
+                };
+
+                swiper.on('slideChangeTransitionStart', () => {
+                    // ఆటోప్లే అవుతున్నప్పుడు మాత్రమే స్లయిడ్ మారినప్పుడు కొత్త ఆడియో ప్లే చేయండి.
+                    // యూజర్ పాజ్ చేస్తే, స్లయిడ్ మారినా ఆడియో ఆగిపోవాలి.
+                    const activeAudio = getActiveAudio();
+                    const isUserPaused = userPaused.has('main_demo_audio');
+
+                    stopAllDemoAudios();
+
+                    if (activeAudio && !isUserPaused && currentlyPlayingAudio) {
+                        const playPromise = activeAudio.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(e => console.error("Demo audio play failed:", e));
+                        }
+                    }
+                    updatePlayPauseIcon(activeAudio);
+                });
+
+                mainPlayPauseBtn.addEventListener('click', () => {
+                    const activeAudio = getActiveAudio();
+                    if (!activeAudio) return;
+
+                    if (activeAudio.paused) {
+                        userPaused.delete('main_demo_audio');
+                        const playPromise = activeAudio.play();
+                         if (playPromise !== undefined) {
+                            playPromise.catch(e => console.error("Manual demo audio play failed:", e));
+                        }
+                        currentlyPlayingAudio = activeAudio; // ట్రాకింగ్ కోసం
+                    } else {
+                        userPaused.add('main_demo_audio');
+                        activeAudio.pause();
+                    }
+                });
+                
+                // అన్ని డెమో ఆడియోలకు ఈవెంట్ లిజనర్‌లను జోడించండి
+                demoSwiperEl.querySelectorAll('.demo-song-audio').forEach(audio => {
+                    audio.addEventListener('play', () => updatePlayPauseIcon(audio));
+                    audio.addEventListener('pause', () => updatePlayPauseIcon(audio));
+                    audio.addEventListener('ended', () => updatePlayPauseIcon(audio));
+                });
+            }
+            // === Demo Songs Carousel Logic END ===
+
             // వినియోగదారు ఏ ఆడియోను మాన్యువల్‌గా పాజ్ చేసారో ట్రాక్ చేయడానికి
             const userPaused = new Set();
             let currentlyPlayingAudio = null;
@@ -1777,6 +2111,9 @@
                         // కొత్తగా కనిపించే సెక్షన్ ఆడియో, ప్రస్తుతం ప్లే అవుతున్న ఆడియో ఒకటి కాకపోతేనే మార్చాలి
                         if (targetAudio && (!currentlyPlayingAudio || currentlyPlayingAudio.id !== targetAudio.id)) {
                                 pauseAllAudios();
+                                // డెమో స్లైడర్ ఆడియోలను ఆపండి
+                                demoSwiperEl && demoSwiperEl.querySelectorAll('.demo-song-audio').forEach(a => a.pause());
+
                             currentlyPlayingAudio = targetAudio;
 
                             if (!userPaused.has(targetAudio.id)) {
@@ -1790,12 +2127,24 @@
                                     });
                                 }
                             }
+                        } else if (mostVisibleEntry.target.id === 'demo-songs-section') {
+                            // ఇది డెమో సాంగ్స్ సెక్షన్ అయితే
+                             pauseAllAudios();
+                            const activeDemoAudio = demoSwiperEl.querySelector('.swiper-slide-active .demo-song-audio');
+                            if (activeDemoAudio && !userPaused.has('main_demo_audio')) {
+                                const playPromise = activeDemoAudio.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.catch(e => console.error("Demo audio play failed on scroll:", e));
+                                }
+                                currentlyPlayingAudio = activeDemoAudio;
+                            }
                         }
                     } else if (currentlyPlayingAudio) {
                         // ఏ సెక్షన్ కనిపించకపోతే, అన్నీ ఆపండి
-                    pauseAllAudios();
+                        pauseAllAudios();
+                        demoSwiperEl && demoSwiperEl.querySelectorAll('.demo-song-audio').forEach(a => a.pause());
                         currentlyPlayingAudio = null;
-                }
+                    }
                 }, 390); // 390 మిల్లీసెకన్ల చిన్న ఆలస్యం
 
             };
@@ -2007,6 +2356,52 @@
                 
             });
             // === Contact Modal Logic END ===
+
+
+            // === Image Carousel Logic START ===
+            const carouselContainer = document.querySelector('.carousel-fade-container');
+            if (carouselContainer) {
+                const slides = carouselContainer.querySelectorAll('.carousel-slide');
+                let currentSlide = 0;
+
+                if (slides.length > 0) {
+                    slides[0].classList.add('active'); // మొదటి స్లైడ్‌ను చూపించు
+
+                    setInterval(() => {
+                        if (slides[currentSlide]) {
+                            slides[currentSlide].classList.remove('active');
+                        }
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        if (slides[currentSlide]) {
+                            slides[currentSlide].classList.add('active');
+                        }
+                    }, 5000); // ప్రతి 5 సెకన్లకు చిత్రాన్ని మార్చు
+                }
+            }
+            // === Image Carousel Logic END ===
+
+
+            // === Demo Pages Carousel Logic START ===
+            const demoPagesSwiperEl = document.querySelector('.demo-pages-swiper');
+            if (demoPagesSwiperEl) {
+                new Swiper(demoPagesSwiperEl, {
+                    loop: true,
+                    autoplay: {
+                        delay: 5500,
+                        disableOnInteraction: false,
+                    },
+                    effect: 'fade',
+                    fadeEffect: {
+                        crossFade: true
+                    },
+                    navigation: {
+                        nextEl: '.demo-pages-swiper .swiper-button-next',
+                        prevEl: '.demo-pages-swiper .swiper-button-prev',
+                    },
+                });
+            }
+            // === Demo Pages Carousel Logic END ===
+
 
 
             // PWA Install button logic
