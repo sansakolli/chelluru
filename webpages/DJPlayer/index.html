@@ -534,8 +534,9 @@
                 if (!song || isReorderMode) return;
                 if (audioContext.state === 'suspended') audioContext.resume();
 
-                // Stop any song currently playing on this deck
-                if (deck.isPlaying) {
+                const wasPlaying = deck.isPlaying;
+
+                if (wasPlaying) {
                     handleDeckStop(deck);
                 }
 
@@ -544,12 +545,10 @@
                 deck.ui.title.textContent = song.title;
                 deck.ui.artist.textContent = song.artist;
                 checkAndApplyMarquee(deck.ui.title);
-                renderPlaylist(); // Render immediately to show the song is loaded
+                renderPlaylist();
 
-                // Determine if the other deck is playing to decide on auto-play
                 const otherDeck = deck.id === 'a' ? deckB : deckA;
-                if (otherDeck.isPlaying) {
-                    // Use a short delay to allow the new audio source to load before playing
+                if (otherDeck.isPlaying || wasPlaying) {
                     setTimeout(() => {
                         handleDeckPlayPause(deck);
                     }, 150); 
