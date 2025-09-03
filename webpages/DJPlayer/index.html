@@ -185,6 +185,7 @@
             border-radius: 50%; background: #444; border: 2px solid #333;
             cursor: ns-resize; /* Vertical drag cursor */
             position: relative;
+            touch-action: none; /* Prevent page scroll/zoom while dragging on mobile */
         }
         .knob::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 0; height: 0; }
         .knob::before {
@@ -421,6 +422,20 @@
                     knob.value = 0;
                     knob.dispatchEvent(new Event('input'));
                 });
+
+                // Mobile double-tap reset support
+                let lastTapTime = 0;
+                knob.addEventListener('touchend', (e) => {
+                    const now = Date.now();
+                    if (now - lastTapTime < 300) {
+                        e.preventDefault();
+                        knob.value = 0;
+                        knob.dispatchEvent(new Event('input'));
+                        lastTapTime = 0;
+                    } else {
+                        lastTapTime = now;
+                    }
+                }, { passive: false });
 
                 let isDragging = false;
                 let startY = 0;
