@@ -206,7 +206,7 @@
         }
         .playlist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-shrink: 0; }
         .playlist-actions button { background: #333; border: none; color: #fff; padding: 8px 12px; border-radius: 20px; cursor: pointer; margin-left: 5px; font-size: 0.9em; transition: background-color 0.2s; }
-        #auto-dj-btn.active, #reorder-btn.active { background-color: var(--accent-color); }
+        #auto-dj-btn.active, #reorder-btn.active, #server-songs-btn.active { background-color: var(--accent-color); }
         #upload-input { display: none; }
         .playlist { list-style: none; overflow-y: auto; flex-grow: 1; }
         .playlist li { border-bottom: 1px solid #282828; transition: background-color 0.2s; }
@@ -337,6 +337,7 @@
                 <h3>Queue</h3>
                 <div class="playlist-actions">
                     <button id="upload-btn" title="Add Songs"><i class="fas fa-plus"></i></button>
+                    <button id="server-songs-btn" title="Load Server Songs"><i class="fas fa-server"></i></button>
                     <button id="reorder-btn" title="Reorder Playlist"><i class="fas fa-bars-staggered"></i></button>
                     <button id="auto-dj-btn" title="Auto-DJ"><i class="fas fa-robot"></i></button>
                     <button id="fullscreen-playlist-btn" title="Fullscreen Playlist"><i class="fas fa-expand"></i></button>
@@ -366,6 +367,7 @@
             const autoDjBtn = document.getElementById('auto-dj-btn');
             const fullscreenPlaylistBtn = document.getElementById('fullscreen-playlist-btn');
             const reorderBtn = document.getElementById('reorder-btn');
+            const serverSongsBtn = document.getElementById('server-songs-btn');
 
             const deckAUi = {
                 container: document.getElementById('deck-a-ui'),
@@ -460,16 +462,19 @@
             let isSeeking = { a: false, b: false };
             let isAutoDjEnabled = false;
             let isReorderMode = false;
+            let areServerSongsLoaded = false;
             
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const deckA = createDeckState(deckAUi, 'a');
             const deckB = createDeckState(deckBUi, 'b');
 
-            // --- Default Server Songs (Simulated) ---
-            const defaultSongs = [
-                { title: "Retro Funk - A very long title to test the scrolling marquee effect", artist: "Gemini Beats", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-                { title: "Electronic Chill", artist: "Studio AI", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-                { title: "Acoustic Pop", artist: "Synth Weaver", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+            // --- Server Songs List ---
+            // Ekkada, 'djsongs' folder lo unna mee paatala perlu ivvandi.
+            const serverSongList = [
+                { title: "00GanaGana Gantalu mogenura", artist: "Local Mix", url: "djsongs/00GanaGana Gantalu mogenura.mp3", type: 'server' },
+                { title: "Naaroyalenfieldraja001", artist: "Local Mix", url: "djsongs/Naaroyalenfieldraja001.mp3", type: 'server' },
+                { title: "Naaroyalenfieldraja002", artist: "Local Mix", url: "djsongs/Naaroyalenfieldraja002.mp3", type: 'server' },
+                { title: "Naaroyalenfieldraja003", artist: "Local Mix", url: "djsongs/Naaroyalenfieldraja003.mp3", type: 'server' }
             ];
 
             // --- Functions ---
@@ -492,16 +497,20 @@
                 return deckState;
             }
 
-            function init() { loadDefaultSongs(); setupEventListeners(); updateCrossfader(); }
-            function loadDefaultSongs() { defaultSongs.forEach(song => addSongToPlaylist(song.title, song.artist, song.url)); }
-            function addSongToPlaylist(title, artist, url) { const song = { id: nextSongId++, title, artist, url }; playlist.push(song); renderPlaylist(); }
+            function init() { setupEventListeners(); updateCrossfader(); }
+
+            function addSongToPlaylist(songData) { 
+                const song = { id: nextSongId++, ...songData };
+                playlist.push(song); 
+                renderPlaylist(); 
+            }
 
             function renderPlaylist() {
                 playlistUl.innerHTML = '';
                 playlist.forEach(song => {
                     const li = document.createElement('li');
                     li.dataset.songId = song.id;
-                    li.draggable = isReorderMode; // Set draggable based on mode
+                    li.draggable = isReorderMode;
 
                     const isDeckA = deckA.song && deckA.song.id === song.id;
                     const isDeckB = deckB.song && deckB.song.id === song.id;
@@ -536,8 +545,8 @@
 
                 const wasPlaying = deck.isPlaying;
 
-                if (wasPlaying) {
-                    handleDeckStop(deck);
+                if (deck.song) { 
+                     handleDeckStop(deck);
                 }
 
                 deck.song = song; 
@@ -555,6 +564,40 @@
                 }
             }
             
+            async function cacheSong(url) {
+                try {
+                    const cacheName = 'dj-songs-cache';
+                    const cache = await caches.open(cacheName);
+                    const isCached = await cache.match(url);
+                    if (!isCached) {
+                        console.log(`Caching: ${url}`);
+                        await cache.add(url);
+                    }
+                } catch (error) {
+                    console.error(`Failed to cache ${url}:`, error);
+                }
+            }
+
+            function toggleServerSongs() {
+                if(areServerSongsLoaded) {
+                    // Hide server songs
+                    playlist = playlist.filter(song => song.type !== 'server');
+                    areServerSongsLoaded = false;
+                    serverSongsBtn.classList.remove('active');
+                    serverSongsBtn.title = "Load Server Songs";
+                } else {
+                    // Load and cache server songs
+                    serverSongList.forEach(song => {
+                        addSongToPlaylist(song);
+                        cacheSong(song.url);
+                    });
+                    areServerSongsLoaded = true;
+                    serverSongsBtn.classList.add('active');
+                    serverSongsBtn.title = "Hide Server Songs";
+                }
+                renderPlaylist();
+            }
+
             function handleDeckPlayPause(deck) {
                 if (!deck.song) return;
                 if (audioContext.state === 'suspended') audioContext.resume();
@@ -583,7 +626,6 @@
                 const nextSong = playlist[nextSongIndex];
                 if (!nextSong) return;
                 loadSongToDeck(endedDeck, nextSong.id);
-                setTimeout(() => handleDeckPlayPause(endedDeck), 500);
             }
 
             function updateDeckPlayPauseButton(deck) {
@@ -649,11 +691,15 @@
             function setupEventListeners() {
                 uploadBtn.addEventListener('click', () => uploadInput.click());
                 uploadInput.addEventListener('change', (e) => {
-                    [...e.target.files].forEach(file => addSongToPlaylist(file.name.replace(/\.[^/.]+$/, ""), 'Uploaded', URL.createObjectURL(file)));
+                    [...e.target.files].forEach(file => {
+                        const songData = { title: file.name.replace(/\.[^/.]+$/, ""), artist: 'Uploaded', url: URL.createObjectURL(file), type: 'user' };
+                        addSongToPlaylist(songData);
+                    });
                 });
                 autoDjBtn.addEventListener('click', () => { isAutoDjEnabled = !isAutoDjEnabled; autoDjBtn.classList.toggle('active', isAutoDjEnabled); });
                 playlistUl.addEventListener('click', (e) => { if (e.target.closest('.more-options-btn')) showContextMenu(e); });
                 crossfader.addEventListener('input', updateCrossfader);
+                serverSongsBtn.addEventListener('click', toggleServerSongs);
 
                 fullscreenPlaylistBtn.addEventListener('click', () => {
                     djApp.classList.toggle('playlist-fullscreen-active');
@@ -679,13 +725,11 @@
                          icon.classList.replace('fa-check', 'fa-bars-staggered');
                         reorderBtn.title = 'Reorder Playlist';
                     }
-                    renderPlaylist(); // Re-render to add/remove draggable attribute
+                    renderPlaylist(); 
                 });
 
                 // Drag and Drop Logic for Playlist
-                let draggedItem = null;
                 playlistUl.addEventListener('dragstart', (e) => {
-                    draggedItem = e.target;
                     setTimeout(() => e.target.classList.add('dragging'), 0);
                 });
                 playlistUl.addEventListener('dragend', (e) => {
@@ -706,7 +750,7 @@
                         const songId = parseInt(li.dataset.songId);
                         return playlist.find(song => song.id === songId);
                     });
-                    playlist = newPlaylistOrder; // Update the actual data array
+                    playlist = newPlaylistOrder;
                 });
 
                 function getDragAfterElement(container, y) {
