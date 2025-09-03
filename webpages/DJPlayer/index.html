@@ -596,11 +596,19 @@
             }
 
             function loadSongToDeck(deck, songId) {
-                const song = playlist.find(s => s.id === songId);
+                let song = playlist.find(s => s.id === songId);
                 if (!song || isReorderMode) return;
                 if (audioContext.state === 'suspended') audioContext.resume();
 
                 const wasPlaying = deck.isPlaying;
+
+                // If the requested song is currently playing on the other deck, pick a different next song
+                const otherDeck = deck.id === 'a' ? deckB : deckA;
+                if (otherDeck.song && song.id === otherDeck.song.id && otherDeck.isPlaying) {
+                    const avoidIds = new Set([deck.song ? deck.song.id : -1, otherDeck.song.id]);
+                    const alt = getNextPlayableSong(song.id, avoidIds);
+                    if (alt) song = alt; else return; // nothing suitable
+                }
 
                 if (deck.song) { 
                      handleDeckStop(deck);
@@ -613,7 +621,6 @@
                 checkAndApplyMarquee(deck.ui.title);
                 renderPlaylist();
 
-                const otherDeck = deck.id === 'a' ? deckB : deckA;
                 if (otherDeck.isPlaying || wasPlaying) {
                     setTimeout(() => {
                         handleDeckPlayPause(deck);
@@ -691,12 +698,26 @@
                 updateDeckPlayPauseButton(endedDeck);
                 renderPlaylist();
                 if (!isAutoDjEnabled || !endedDeck.song) return;
-                const currentSongIndex = playlist.findIndex(song => song.id === endedDeck.song.id);
-                if (currentSongIndex === -1) return;
-                const nextSongIndex = (currentSongIndex + 1) % playlist.length;
-                const nextSong = playlist[nextSongIndex];
+                const avoidIds = new Set([
+                    endedDeck.song.id,
+                    (endedDeck.id === 'a' ? deckB : deckA).song ? (endedDeck.id === 'a' ? deckB : deckA).song.id : -1
+                ]);
+                const nextSong = getNextPlayableSong(endedDeck.song.id, avoidIds);
                 if (!nextSong) return;
                 loadSongToDeck(endedDeck, nextSong.id);
+            }
+
+            // Find next song in playlist after given songId that is not in avoidIds
+            function getNextPlayableSong(fromSongId, avoidIds = new Set()) {
+                if (playlist.length === 0) return null;
+                let startIndex = playlist.findIndex(s => s.id === fromSongId);
+                if (startIndex === -1) startIndex = -1; // start from beginning
+                for (let i = 1; i <= playlist.length; i++) {
+                    const idx = (startIndex + i) % playlist.length;
+                    const candidate = playlist[idx];
+                    if (!avoidIds.has(candidate.id)) return candidate;
+                }
+                return null;
             }
 
             function updateDeckPlayPauseButton(deck) {
