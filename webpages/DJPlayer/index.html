@@ -543,7 +543,16 @@
                 return deckState;
             }
 
-            function init() { setupEventListeners(); updateCrossfader(); }
+            function init() { 
+                setupEventListeners(); 
+                updateCrossfader();
+                // Default enable Server Songs and Auto-DJ
+                if (!areServerSongsLoaded) {
+                    toggleServerSongs();
+                }
+                isAutoDjEnabled = true;
+                autoDjBtn.classList.add('active');
+            }
 
             function addSongToPlaylist(songData) { 
                 const song = { id: nextSongId++, ...songData };
