@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinayaka DJ Player - Digital DreamsTechnologies</title>
+    <!-- Font Awesome Icons Kosam -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* Basic Resets & Global Styles */
+        :root {
+            --bg-color: #121212;
+            --surface-color: #181818;
+            --primary-element-color: #282828;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #1DB954; /* Spotify green */
+            --deck-a-color: #4d8cff; /* Blue */
+            --deck-b-color: #4dff8c; /* Green */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main App Container */
+        .dj-app {
+            width: 100%;
+            height: 100%;
+            max-width: 480px; /* Mobile-first max width */
+            background-color: var(--surface-color);
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Decks Section Wrapper */
+        .deck-wrapper {
+            padding: 10px 15px;
+            background-color: var(--primary-element-color);
+        }
+        .dj-app > .deck-wrapper:first-of-type {
+            padding-top: 15px;
+        }
+
+
+        .deck {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 12px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .deck.deck-a-active { border-color: var(--deck-a-color); }
+        .deck.deck-b-active { border-color: var(--deck-b-color); }
+        
+        .deck-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .deck-label {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+        .deck-label.deck-a { color: var(--deck-a-color); }
+        .deck-label.deck-b { color: var(--deck-b-color); }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .deck-volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 5px;
+            background: #444;
+            border-radius: 5px;
+            outline: none;
+            transition: opacity 0.2s;
+        }
+        .deck-volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 15px; height: 15px;
+            background: var(--text-primary);
+            cursor: pointer; border-radius: 50%;
+        }
+
+
+        /* Song Title Marquee Effect */
+        .song-title-wrapper {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .song-display .song-title {
+            display: inline-block;
+            font-size: 1em;
+            min-height: 1.2em;
+            vertical-align: middle;
+        }
+        .song-title.scrolling-text {
+            animation: marquee 10s linear infinite;
+            padding-left: 100%;
+        }
+        @keyframes marquee {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        .song-display .song-artist {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        
+        .seek-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+        .seek-bar {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            flex-grow: 1;
+            height: 5px;
+            background: #444;
+            border-radius: 5px;
+            outline: none;
+        }
+        .seek-bar::-webkit-slider-thumb {
+           -webkit-appearance: none; appearance: none;
+            width: 15px; height: 15px;
+            background: var(--accent-color);
+            cursor: pointer; border-radius: 50%;
+        }
+
+        .deck-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .deck-control-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+        .deck-control-btn:active {
+            transform: scale(0.95);
+        }
+        .play-pause-deck-btn.playing {
+            background-color: var(--accent-color);
+        }
+
+
+        /* Mixer Section */
+        .mixer {
+            padding: 15px;
+            background-color: #202020;
+            border-block: 1px solid #333;
+        }
+        
+        .crossfader {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #444;
+            border-radius: 5px;
+            outline: none;
+        }
+        .crossfader::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 25px; height: 25px;
+            background: var(--accent-color);
+            cursor: pointer; border-radius: 50%;
+        }
+
+        /* Playlist Section */
+        .playlist-container {
+            flex-grow: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .playlist-actions button {
+            background: #333; border: none; color: #fff;
+            padding: 8px 12px; border-radius: 20px;
+            cursor: pointer; margin-left: 5px; font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+        #auto-dj-btn.active {
+            background-color: var(--accent-color);
+        }
+
+
+        #upload-input { display: none; }
+
+        .playlist { list-style: none; }
+        .playlist li {
+            border-bottom: 1px solid #282828;
+            transition: background-color 0.2s;
+        }
+        .playlist li:hover {
+            background-color: #2a2a2a;
+        }
+        .playlist li.deck-a-loaded { 
+            background-color: rgba(77, 140, 255, 0.15);
+            border-left: 4px solid var(--deck-a-color);
+        }
+        .playlist li.deck-b-loaded {
+            background-color: rgba(77, 255, 140, 0.15);
+            border-left: 4px solid var(--deck-b-color);
+        }
+
+        .song-item { display: flex; align-items: center; padding: 12px 5px; }
+        .now-playing-indicator {
+            width: 20px;
+            font-size: 1em;
+            color: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .now-playing .now-playing-indicator { opacity: 1; }
+        .song-info { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .more-options-btn { background: none; border: none; color: #b3b3b3; font-size: 1.2em; cursor: pointer; padding: 5px 10px; }
+        
+        #song-options-menu {
+            position: fixed; display: none; background-color: #333;
+            border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 1000;
+        }
+        #song-options-menu button {
+            display: block; width: 100%; padding: 12px 20px;
+            background: none; border: none; color: white; text-align: left;
+            cursor: pointer; font-size: 1em;
+        }
+        #song-options-menu button:hover { background-color: #444; }
+    </style>
+</head>
+<body>
+
+    <div class="dj-app">
+        <!-- ===== DECK A SECTION ===== -->
+        <section class="deck-wrapper">
+            <div class="deck" id="deck-a-ui">
+                <div class="deck-header">
+                    <div class="deck-label deck-a">DECK A</div>
+                    <div class="volume-control">
+                        <i class="fas fa-volume-high"></i>
+                        <input type="range" min="0" max="100" value="100" class="deck-volume-slider" id="deck-a-volume">
+                    </div>
+                </div>
+                <div class="song-display">
+                    <div class="song-title-wrapper"><h4 class="song-title">Load a Song</h4></div>
+                    <p class="song-artist">--</p>
+                </div>
+                <div class="seek-bar-container">
+                    <span class="current-time">0:00</span>
+                    <input type="range" min="0" max="100" value="0" class="seek-bar" id="deck-a-seek">
+                    <span class="duration">0:00</span>
+                </div>
+                <div class="deck-controls">
+                    <button class="deck-control-btn" id="cue-a-btn" title="Cue Deck A"><i class="fas fa-undo-alt"></i></button>
+                    <button class="deck-control-btn play-pause-deck-btn" id="play-pause-a-btn" title="Play/Pause Deck A"><i class="fas fa-play"></i></button>
+                    <button class="deck-control-btn" id="stop-a-btn" title="Stop Deck A"><i class="fas fa-stop"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MIXER SECTION ===== -->
+        <section class="mixer">
+            <input type="range" min="-100" max="100" value="0" class="crossfader" id="crossfader">
+        </section>
+
+        <!-- ===== DECK B SECTION ===== -->
+        <section class="deck-wrapper">
+            <div class="deck" id="deck-b-ui">
+                <div class="deck-header">
+                    <div class="deck-label deck-b">DECK B</div>
+                    <div class="volume-control">
+                        <i class="fas fa-volume-high"></i>
+                        <input type="range" min="0" max="100" value="100" class="deck-volume-slider" id="deck-b-volume">
+                    </div>
+                </div>
+                 <div class="song-display">
+                     <div class="song-title-wrapper"><h4 class="song-title">Load a Song</h4></div>
+                    <p class="song-artist">--</p>
+                </div>
+                 <div class="seek-bar-container">
+                    <span class="current-time">0:00</span>
+                    <input type="range" min="0" max="100" value="0" class="seek-bar" id="deck-b-seek">
+                    <span class="duration">0:00</span>
+                </div>
+                <div class="deck-controls">
+                    <button class="deck-control-btn" id="cue-b-btn" title="Cue Deck B"><i class="fas fa-undo-alt"></i></button>
+                    <button class="deck-control-btn play-pause-deck-btn" id="play-pause-b-btn" title="Play/Pause Deck B"><i class="fas fa-play"></i></button>
+                    <button class="deck-control-btn" id="stop-b-btn" title="Stop Deck B"><i class="fas fa-stop"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PLAYLIST SECTION ===== -->
+        <section class="playlist-container">
+            <div class="playlist-header">
+                <h3>Queue</h3>
+                <div class="playlist-actions">
+                    <button id="upload-btn"><i class="fas fa-plus"></i> Add</button>
+                    <button id="auto-dj-btn" title="Auto-DJ"><i class="fas fa-robot"></i></button>
+                    <input type="file" id="upload-input" accept="audio/*" multiple>
+                </div>
+            </div>
+            <ul class="playlist" id="playlist-ul">
+                <!-- Songs will be dynamically inserted here by JavaScript -->
+            </ul>
+        </section>
+    </div>
+
+    <!-- Context Menu for Songs -->
+    <div id="song-options-menu">
+        <button id="load-to-deck-a">Load to Deck A</button>
+        <button id="load-to-deck-b">Load to Deck B</button>
+        <button id="remove-from-list" style="color: #ff6b6b;">Remove</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const playlistUl = document.getElementById('playlist-ul');
+            const uploadBtn = document.getElementById('upload-btn');
+            const uploadInput = document.getElementById('upload-input');
+            const contextMenu = document.getElementById('song-options-menu');
+            const crossfader = document.getElementById('crossfader');
+            const autoDjBtn = document.getElementById('auto-dj-btn');
+
+            const deckAUi = {
+                container: document.getElementById('deck-a-ui'),
+                title: document.querySelector('#deck-a-ui .song-title'),
+                artist: document.querySelector('#deck-a-ui .song-artist'),
+                currentTime: document.querySelector('#deck-a-ui .current-time'),
+                duration: document.querySelector('#deck-a-ui .duration'),
+                playPauseBtn: document.getElementById('play-pause-a-btn'),
+                cueBtn: document.getElementById('cue-a-btn'),
+                stopBtn: document.getElementById('stop-a-btn'),
+                volumeSlider: document.getElementById('deck-a-volume'),
+                seekBar: document.getElementById('deck-a-seek'),
+            };
+            const deckBUi = {
+                container: document.getElementById('deck-b-ui'),
+                title: document.querySelector('#deck-b-ui .song-title'),
+                artist: document.querySelector('#deck-b-ui .song-artist'),
+                currentTime: document.querySelector('#deck-b-ui .current-time'),
+                duration: document.querySelector('#deck-b-ui .duration'),
+                playPauseBtn: document.getElementById('play-pause-b-btn'),
+                cueBtn: document.getElementById('cue-b-btn'),
+                stopBtn: document.getElementById('stop-b-btn'),
+                volumeSlider: document.getElementById('deck-b-volume'),
+                seekBar: document.getElementById('deck-b-seek'),
+            };
+
+            // --- State ---
+            let playlist = [];
+            let nextSongId = 0;
+            let activeContextMenuSongId = null;
+            let isSeeking = { a: false, b: false };
+            let isAutoDjEnabled = false;
+            
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const deckA = createDeckState(deckAUi, 'a');
+            const deckB = createDeckState(deckBUi, 'b');
+
+            // --- Default Server Songs (Simulated) ---
+            const defaultSongs = [
+                { title: "Retro Funk - A very long title to test the scrolling marquee effect", artist: "Gemini Beats", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+                { title: "Electronic Chill", artist: "Studio AI a very long artist name for testing purposes", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+                { title: "Acoustic Pop", artist: "Synth Weaver", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+            ];
+
+            // --- Functions ---
+            
+            function createDeckState(ui, deckId) {
+                const audio = new Audio();
+                const source = audioContext.createMediaElementSource(audio);
+                const volumeGain = audioContext.createGain();
+                const crossfadeGain = audioContext.createGain();
+                source.connect(volumeGain).connect(crossfadeGain).connect(audioContext.destination);
+
+                audio.addEventListener('timeupdate', () => updateDeckTime(deckState));
+                audio.addEventListener('loadedmetadata', () => updateDeckTime(deckState));
+                audio.addEventListener('ended', () => handleSongEnd(deckState));
+                
+                const deckState = {
+                    id: deckId,
+                    song: null,
+                    audio: audio,
+                    volumeGainNode: volumeGain,
+                    crossfadeGainNode: crossfadeGain,
+                    isPlaying: false,
+                    ui: ui
+                };
+                return deckState;
+            }
+
+            function init() {
+                loadDefaultSongs();
+                setupEventListeners();
+                updateCrossfader(); 
+            }
+            
+            function loadDefaultSongs() {
+                defaultSongs.forEach(song => addSongToPlaylist(song.title, song.artist, song.url));
+            }
+            
+            function addSongToPlaylist(title, artist, url) {
+                const song = { id: nextSongId++, title, artist, url };
+                playlist.push(song);
+                renderPlaylist();
+            }
+
+            function renderPlaylist() {
+                playlistUl.innerHTML = '';
+                playlist.forEach(song => {
+                    const li = document.createElement('li');
+                    li.dataset.songId = song.id;
+                    const isDeckA = deckA.song && deckA.song.id === song.id;
+                    const isDeckB = deckB.song && deckB.song.id === song.id;
+                    if (isDeckA) li.classList.add('deck-a-loaded');
+                    if (isDeckB) li.classList.add('deck-b-loaded');
+                    if ((isDeckA && deckA.isPlaying) || (isDeckB && deckB.isPlaying)) {
+                        li.classList.add('now-playing');
+                    }
+                    li.innerHTML = `<div class="song-item"><span class="now-playing-indicator"><i class="fas fa-volume-high"></i></span><div class="song-info"><span class="song-title">${song.title}</span><span class="song-artist">${song.artist}</span></div><button class="more-options-btn"><i class="fas fa-ellipsis-v"></i></button></div>`;
+                    playlistUl.appendChild(li);
+                });
+            }
+            
+            function checkAndApplyMarquee(element) {
+                const wrapper = element.parentElement;
+                element.classList.remove('scrolling-text');
+                setTimeout(() => { if (element.scrollWidth > wrapper.clientWidth) element.classList.add('scrolling-text'); }, 50);
+            }
+
+            function loadSongToDeck(deck, songId) {
+                const song = playlist.find(s => s.id === songId);
+                if (!song) return;
+                if (audioContext.state === 'suspended') audioContext.resume();
+                deck.song = song;
+                deck.audio.src = song.url;
+                deck.ui.title.textContent = song.title;
+                deck.ui.artist.textContent = song.artist;
+                checkAndApplyMarquee(deck.ui.title);
+                renderPlaylist();
+            }
+            
+            function handleDeckPlayPause(deck) {
+                if (!deck.song) return;
+                if (audioContext.state === 'suspended') audioContext.resume();
+
+                if (deck.isPlaying) {
+                    deck.audio.pause();
+                } else {
+                    deck.audio.play();
+                }
+                deck.isPlaying = !deck.isPlaying;
+                updateDeckPlayPauseButton(deck);
+                renderPlaylist();
+            }
+
+            function handleDeckStop(deck) {
+                if (!deck.song) return;
+                deck.audio.pause();
+                deck.audio.currentTime = 0;
+                deck.isPlaying = false;
+                updateDeckPlayPauseButton(deck);
+                renderPlaylist();
+            }
+            
+            function handleSongEnd(endedDeck) {
+                // Song aipogane, ee function call avutundi
+                endedDeck.isPlaying = false;
+                updateDeckPlayPauseButton(endedDeck);
+                renderPlaylist();
+
+                // Auto-DJ mode ON lo lekapothe, ikkaditho aapeyali
+                if (!isAutoDjEnabled || !endedDeck.song) return;
+
+                // Playlist lo ippudu aipoina song ekkada undo kanukkondi
+                const currentSongIndex = playlist.findIndex(song => song.id === endedDeck.song.id);
+                if (currentSongIndex === -1) return;
+
+                // Playlist lo tarvatha song ni select cheskondi
+                const nextSongIndex = (currentSongIndex + 1) % playlist.length;
+                const nextSong = playlist[nextSongIndex];
+                if (!nextSong) return;
+
+                // A kotha song ni, song aipoina ADE deck lo load cheyandi
+                loadSongToDeck(endedDeck, nextSong.id);
+                
+                // Konchem gap ichi, a kotha song ni automatic ga play cheyandi
+                setTimeout(() => handleDeckPlayPause(endedDeck), 500); // Small delay for smooth transition
+            }
+
+            function updateDeckPlayPauseButton(deck) {
+                const icon = deck.ui.playPauseBtn.querySelector('i');
+                deck.ui.playPauseBtn.classList.toggle('playing', deck.isPlaying);
+                if (deck.isPlaying) {
+                    icon.classList.replace('fa-play', 'fa-pause');
+                } else {
+                    icon.classList.replace('fa-pause', 'fa-play');
+                }
+            }
+            
+            function updateCrossfader() {
+                const value = parseInt(crossfader.value, 10); 
+                const a_gain = Math.cos((value + 100) / 200 * 0.5 * Math.PI);
+                const b_gain = Math.cos((100 - value) / 200 * 0.5 * Math.PI);
+                deckA.crossfadeGainNode.gain.setValueAtTime(a_gain, audioContext.currentTime);
+                deckB.crossfadeGainNode.gain.setValueAtTime(b_gain, audioContext.currentTime);
+                deckA.ui.container.classList.toggle('deck-a-active', value < 0);
+                deckB.ui.container.classList.toggle('deck-b-active', value > 0);
+            }
+
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+
+            function updateDeckTime(deck) {
+                if (isNaN(deck.audio.duration)) return;
+                const currentTime = deck.audio.currentTime;
+                const duration = deck.audio.duration;
+                deck.ui.currentTime.textContent = formatTime(currentTime);
+                deck.ui.duration.textContent = formatTime(duration);
+                deck.ui.seekBar.max = duration;
+                if (!isSeeking[deck.id]) {
+                    deck.ui.seekBar.value = currentTime;
+                }
+            }
+            
+            function handleVolumeChange(deck) {
+                const value = parseInt(deck.ui.volumeSlider.value, 10) / 100;
+                deck.volumeGainNode.gain.setValueAtTime(value, audioContext.currentTime);
+            }
+            
+            function handleSeek(deck) {
+                deck.audio.currentTime = deck.ui.seekBar.value;
+            }
+
+            function showContextMenu(e) {
+                e.preventDefault();
+                const songItem = e.target.closest('li');
+                if (!songItem) return;
+                activeContextMenuSongId = parseInt(songItem.dataset.songId, 10);
+                contextMenu.style.display = 'block';
+                const x = Math.min(e.clientX, window.innerWidth - contextMenu.offsetWidth - 10);
+                const y = Math.min(e.clientY, window.innerHeight - contextMenu.offsetHeight - 10);
+                contextMenu.style.left = `${x}px`;
+                contextMenu.style.top = `${y}px`;
+            }
+
+            function hideContextMenu() {
+                contextMenu.style.display = 'none';
+                activeContextMenuSongId = null;
+            }
+
+            // --- Event Listeners ---
+            function setupEventListeners() {
+                uploadBtn.addEventListener('click', () => uploadInput.click());
+                uploadInput.addEventListener('change', (e) => {
+                    [...e.target.files].forEach(file => {
+                        addSongToPlaylist(file.name.replace(/\.[^/.]+$/, ""), 'Uploaded', URL.createObjectURL(file));
+                    });
+                });
+                
+                autoDjBtn.addEventListener('click', () => {
+                    isAutoDjEnabled = !isAutoDjEnabled;
+                    autoDjBtn.classList.toggle('active', isAutoDjEnabled);
+                });
+
+                playlistUl.addEventListener('click', (e) => {
+                    const moreBtn = e.target.closest('.more-options-btn');
+                    if (moreBtn) showContextMenu(e);
+                });
+                
+                crossfader.addEventListener('input', updateCrossfader);
+
+                // Deck A Listeners
+                deckAUi.playPauseBtn.addEventListener('click', () => handleDeckPlayPause(deckA));
+                deckAUi.stopBtn.addEventListener('click', () => handleDeckStop(deckA));
+                deckAUi.cueBtn.addEventListener('click', () => { if (deckA.audio) deckA.audio.currentTime = 0; });
+                deckAUi.volumeSlider.addEventListener('input', () => handleVolumeChange(deckA));
+                deckAUi.seekBar.addEventListener('input', () => handleSeek(deckA));
+                deckAUi.seekBar.addEventListener('mousedown', () => isSeeking.a = true);
+                deckAUi.seekBar.addEventListener('mouseup', () => isSeeking.a = false);
+
+
+                // Deck B Listeners
+                deckBUi.playPauseBtn.addEventListener('click', () => handleDeckPlayPause(deckB));
+                deckBUi.stopBtn.addEventListener('click', () => handleDeckStop(deckB));
+                deckBUi.cueBtn.addEventListener('click', () => { if (deckB.audio) deckB.audio.currentTime = 0; });
+                deckBUi.volumeSlider.addEventListener('input', () => handleVolumeChange(deckB));
+                deckBUi.seekBar.addEventListener('input', () => handleSeek(deckB));
+                deckBUi.seekBar.addEventListener('mousedown', () => isSeeking.b = true);
+                deckBUi.seekBar.addEventListener('mouseup', () => isSeeking.b = false);
+
+                // Context menu actions
+                document.getElementById('load-to-deck-a').addEventListener('click', () => {
+                    if(activeContextMenuSongId !== null) loadSongToDeck(deckA, activeContextMenuSongId);
+                    hideContextMenu();
+                });
+                document.getElementById('load-to-deck-b').addEventListener('click', () => {
+                    if(activeContextMenuSongId !== null) loadSongToDeck(deckB, activeContextMenuSongId);
+                    hideContextMenu();
+                });
+                document.getElementById('remove-from-list').addEventListener('click', () => {
+                    if(activeContextMenuSongId !== null) {
+                        playlist = playlist.filter(s => s.id !== activeContextMenuSongId);
+                        renderPlaylist();
+                    }
+                    hideContextMenu();
+                });
+
+                window.addEventListener('click', (e) => {
+                    if (!contextMenu.contains(e.target) && !e.target.closest('.more-options-btn')) {
+                        hideContextMenu();
+                    }
+                });
+            }
+
+            // --- Start the App ---
+            init();
+        });
+    </script>
+</body>
+</html>
