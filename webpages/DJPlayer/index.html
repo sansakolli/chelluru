@@ -533,11 +533,27 @@
                 const song = playlist.find(s => s.id === songId);
                 if (!song || isReorderMode) return;
                 if (audioContext.state === 'suspended') audioContext.resume();
-                deck.song = song; deck.audio.src = song.url;
+
+                // Stop any song currently playing on this deck
+                if (deck.isPlaying) {
+                    handleDeckStop(deck);
+                }
+
+                deck.song = song; 
+                deck.audio.src = song.url;
                 deck.ui.title.textContent = song.title;
                 deck.ui.artist.textContent = song.artist;
                 checkAndApplyMarquee(deck.ui.title);
-                renderPlaylist();
+                renderPlaylist(); // Render immediately to show the song is loaded
+
+                // Determine if the other deck is playing to decide on auto-play
+                const otherDeck = deck.id === 'a' ? deckB : deckA;
+                if (otherDeck.isPlaying) {
+                    // Use a short delay to allow the new audio source to load before playing
+                    setTimeout(() => {
+                        handleDeckPlayPause(deck);
+                    }, 150); 
+                }
             }
             
             function handleDeckPlayPause(deck) {
