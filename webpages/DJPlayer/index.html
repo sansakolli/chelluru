@@ -226,7 +226,18 @@
         .playlist li.dragging { opacity: 0.4; }
         .playlist li.drag-over { border-top: 2px solid var(--accent-color); }
 
-
+        /* Server-available indicator */
+        .server-available-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e; /* green-500 */
+            border-radius: 50%;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+        
+ 
         /* Fullscreen Playlist Styles */
         .dj-app.playlist-fullscreen-active .main-console {
             display: none;
@@ -463,6 +474,7 @@
             let isAutoDjEnabled = false;
             let isReorderMode = false;
             let areServerSongsLoaded = false;
+            const cachedServerUrls = new Set();
             
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const deckA = createDeckState(deckAUi, 'a');
@@ -537,10 +549,12 @@
                     if (isDeckB) li.classList.add('deck-b-loaded');
                     if ((isDeckA && deckA.isPlaying) || (isDeckB && deckB.isPlaying)) li.classList.add('now-playing');
                     
+                    const isCachedUrl = cachedServerUrls.has(song.url);
                     li.innerHTML = `
                         <div class="song-item">
                             <span class="reorder-handle"><i class="fas fa-grip-vertical"></i></span>
                             <span class="now-playing-indicator"><i class="fas fa-volume-high"></i></span>
+                            ${isCachedUrl ? '<span class="server-available-dot" title="Cached from server"></span>' : ''}
                             <div class="song-info">
                                 <span class="song-title">${song.title}</span>
                                 <span class="song-artist">${song.artist}</span>
@@ -592,9 +606,21 @@
                         console.log(`Caching: ${url}`);
                         await cache.add(url);
                     }
+                    cachedServerUrls.add(url);
+                    renderPlaylist();
                 } catch (error) {
                     console.error(`Failed to cache ${url}:`, error);
                 }
+            }
+
+            async function checkIfUrlCached(url) {
+                try {
+                    const cache = await caches.open('dj-songs-cache');
+                    const match = await cache.match(url);
+                    if (match) {
+                        cachedServerUrls.add(url);
+                    }
+                } catch {}
             }
 
             function toggleServerSongs() {
@@ -608,6 +634,8 @@
                     // Load and cache server songs
                     serverSongList.forEach(song => {
                         addSongToPlaylist(song);
+                        // Check existing cache and then trigger caching
+                        checkIfUrlCached(song.url).then(() => renderPlaylist());
                         cacheSong(song.url);
                     });
                     areServerSongsLoaded = true;
